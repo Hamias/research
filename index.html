@@ -6,7 +6,7 @@
     <title>Исследование клиентского опыта в банках | Customer Choice Index</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -68,6 +68,41 @@
             font-size: 0.8rem;
             color: #94a3b8;
         }
+        .tab-button {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            background-color: transparent;
+            color: #94a3b8;
+            border: 1px solid transparent;
+            white-space: nowrap;
+        }
+        .tab-button.active {
+            color: #f8fafc;
+            background-color: #334155;
+            border-color: #475569;
+        }
+        .ranking-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #334155;
+        }
+        .ranking-item:last-child {
+            border-bottom: none;
+        }
+        /* For scrollable tabs */
+        #country-tabs-container::-webkit-scrollbar {
+            display: none;
+        }
+        #country-tabs-container {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+
         @media (max-width: 1280px) {
             .dashboard-container {
                 grid-template-columns: 1fr;
@@ -82,9 +117,9 @@
     <!-- Hero Section -->
     <header class="hero-bg py-20 md:py-32">
         <div class="container mx-auto px-6 text-center">
-            <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-white mb-4">Посмотрите на свой банк <br> <span class="gradient-text">глазами нового клиента</span></h1>
+            <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-white mb-4">Посмотрите на свой банк <br> <span class="gradient-text">глазами ваших клиентов</span></h1>
             <p class="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mb-8">
-                Новое исследование «Customer Choice Index» показывает, что на самом деле происходит на пути клиента до первой покупки. Узнайте, где вы теряете клиентов и как опередить конкурентов.
+                Новое исследование «Customer Choice Index» показывает, что на самом деле происходит на пути как новых, так и текущих клиентов. Узнайте, где вы теряете лояльность и как опередить конкурентов.
             </p>
             <a href="#contact" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-lg text-lg transition duration-300">
                 Получить демо-доступ
@@ -119,7 +154,7 @@
             <div class="text-center">
                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Что такое Customer Choice Index?</h2>
                 <p class="text-gray-400 max-w-3xl mx-auto mb-12">
-                    Это комплексное исследование методом «Тайный покупатель», которое анализирует весь путь нового клиента — от первого поиска в интернете до консультации в отделении. Мы не просто ставим оценки, мы измеряем ключевые индексы, которые напрямую влияют на решение клиента.
+                    Это комплексное исследование методом «Тайный покупатель», которое анализирует весь путь клиента — от первого поиска в интернете до сервисных операций в отделении. Мы не просто ставим оценки, мы измеряем ключевые индексы, которые напрямую влияют на решение клиента.
                 </p>
             </div>
             <div class="bg-gray-800 rounded-lg p-8 md:p-12">
@@ -130,8 +165,8 @@
                             <li class="flex items-start">
                                 <svg class="w-6 h-6 text-indigo-400 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 <div>
-                                    <h4 class="font-semibold text-white">Фокус на новых клиентах</h4>
-                                    <p class="text-gray-400">Наши тайные покупатели — это потенциальные новые клиенты, которые проходят весь путь привлечения "с нуля".</p>
+                                    <h4 class="font-semibold text-white">Полный клиентский путь</h4>
+                                    <p class="text-gray-400">Наши тайные покупатели проходят сценарии как для новых, так и для действующих клиентов, оценивая процессы привлечения и обслуживания.</p>
                                 </div>
                             </li>
                             <li class="flex items-start">
@@ -160,8 +195,8 @@
                             <p class="text-gray-300">Технологичность</p>
                         </div>
                         <div class="bg-gray-700 p-4 rounded-lg">
-                            <p class="text-2xl font-bold text-emerald-400">RM</p>
-                            <p class="text-gray-300">Отношения</p>
+                            <p class="text-2xl font-bold text-emerald-400">Sales</p>
+                            <p class="text-gray-300">Эффективность продаж</p>
                         </div>
                         <div class="bg-gray-700 p-4 rounded-lg">
                             <p class="text-2xl font-bold text-amber-400">Культура</p>
@@ -172,14 +207,81 @@
             </div>
         </section>
 
+        <!-- UPDATED Scope Section -->
+        <section class="mb-20 md:mb-32">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Масштаб нашего исследования</h2>
+                <p class="text-gray-400 max-w-3xl mx-auto">Мы предоставляем данные, которым можно доверять. Наше исследование охватывает несколько рынков для наиболее полного и объективного сравнения.</p>
+            </div>
+            <div class="bg-gray-800 rounded-lg p-8 md:p-12">
+                 <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center mb-10 pb-10 border-b border-gray-700">
+                    <div class="p-4">
+                        <div class="text-5xl font-extrabold gradient-text mb-2">2</div>
+                        <h3 class="font-bold text-xl text-white">Региона</h3>
+                    </div>
+                    <div class="p-4">
+                        <div class="text-5xl font-extrabold gradient-text mb-2">8</div>
+                        <h3 class="font-bold text-xl text-white">Стран</h3>
+                    </div>
+                    <div class="p-4">
+                        <div class="text-5xl font-extrabold gradient-text mb-2">15+</div>
+                        <h3 class="font-bold text-xl text-white">Банков</h3>
+                        <p class="text-gray-400 text-sm mt-1">в каждой стране</p>
+                    </div>
+                    <div class="p-4">
+                        <div class="text-5xl font-extrabold gradient-text mb-2">500+</div>
+                        <h3 class="font-bold text-xl text-white">Тайных визитов</h3>
+                         <p class="text-gray-400 text-sm mt-1">По сценариям Retail и SME</p>
+                    </div>
+                </div>
+                
+                <div class="flex justify-center mb-4">
+                     <div id="region-tabs" class="flex items-center bg-slate-900 rounded-lg p-1 space-x-1">
+                        <!-- Region tabs will be injected by JS -->
+                    </div>
+                </div>
+
+                <div id="country-tabs-container" class="flex justify-center overflow-x-auto py-2 mb-4">
+                    <div id="country-tabs" class="flex items-center space-x-2">
+                        <!-- Country tabs will be injected by JS -->
+                    </div>
+                </div>
+                
+                <div id="country-rankings-container" class="max-w-3xl mx-auto">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 id="ranking-country-title" class="font-semibold text-slate-200 text-lg">Рейтинг банков</h3>
+                        <div id="country-ranking-sorter" class="flex items-center bg-slate-700 rounded-lg p-0.5">
+                            <button class="tab-button active" data-sort="score">По индексу</button>
+                            <button class="tab-button" data-sort="volatility">По волатильности</button>
+                        </div>
+                    </div>
+                    <div id="country-rankings">
+                        <!-- Bank list will be rendered here by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Dashboard Section -->
         <section class="mb-20 md:mb-32">
             <div class="text-center mb-12">
                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Все данные — в одном интерактивном дашборде</h2>
                 <p class="text-gray-400 max-w-3xl mx-auto">
-                    Вы получаете не просто отчет, а живой инструмент для анализа. Сравнивайте себя с конкурентами, находите точки роста и принимайте решения, основанные на реальных данных.
+                    Вы получаете не просто отчет, а живой инструмент для анализа. Ниже представлена главная страница дашборда. Сравнивайте себя с конкурентами, находите точки роста и принимайте решения на основе реальных данных. В полной версии вы сможете изучить детальную оценку каждого шага на клиентском пути.
                 </p>
             </div>
+            
+            <div class="mb-8 text-center">
+                <h4 class="text-lg font-semibold text-slate-300 mb-3">Выберите сегмент</h4>
+                <div class="inline-flex justify-center items-center bg-slate-800 rounded-lg p-1">
+                    <div id="segment-tabs" class="flex items-center">
+                         <button class="tab-button" data-segment="All">All</button>
+                         <button class="tab-button active" data-segment="Retail">Retail</button>
+                         <button class="tab-button" data-segment="SME">SME</button>
+                    </div>
+                </div>
+            </div>
+
             <div class="rounded-lg shadow-2xl p-4 md:p-8" style="background-color: #0f172a;">
                 <!-- INTERACTIVE DASHBOARD START -->
                 <div class="dashboard-container">
@@ -191,12 +293,12 @@
                                 <div class="flex items-center gap-3">
                                     <img src="https://companieslogo.com/img/orig/KKS.F-9d710a31.png?t=1720244492" alt="Kaspi Bank Logo" class="h-10 w-10 rounded-lg object-contain flex-shrink-0">
                                     <div>
-                                        <h2 class="font-bold text-white text-lg leading-tight">Kaspi Bank</h2>
-                                        <p class="text-xs text-slate-400">Mass Segment</p>
+                                        <h2 class="font-bold text-white text-lg leading-tight">Банк A</h2>
+                                        <p id="segment-subtitle" class="text-xs text-slate-400">Retail Clients</p>
                                     </div>
                                 </div>
                                 <div class="text-right">
-                                    <span class="text-3xl font-extrabold text-white">1</span>
+                                    <span id="rank-value" class="text-3xl font-extrabold text-white">1</span>
                                     <span class="text-base font-semibold text-slate-300"> место</span>
                                     <p class="text-xs text-slate-500 uppercase mt-1">Общий рейтинг</p>
                                 </div>
@@ -222,7 +324,13 @@
 
                         <!-- КОНКУРЕНТЫ -->
                         <div class="card flex-grow">
-                            <h3 class="font-semibold text-slate-200 mb-3 text-base">Рейтинг банков</h3>
+                            <div class="flex justify-between items-center mb-3">
+                                <h3 class="font-semibold text-slate-200 text-base">Рейтинг банков</h3>
+                                <div id="ranking-tabs" class="flex items-center bg-slate-800 rounded-lg p-0.5">
+                                    <button class="tab-button active" data-sort="score">По индексу</button>
+                                    <button class="tab-button" data-sort="volatility">По волатильности</button>
+                                </div>
+                            </div>
                             <div id="competitors-ranking" class="space-y-3 text-sm flex-grow"></div>
                         </div>
 
@@ -239,8 +347,12 @@
 
                     <!-- ======== ПРАВАЯ КОЛОНКА ======== -->
                     <div class="grid grid-rows-[auto_1fr_auto] gap-4">
-                        <div class="card row-start-1">
-                                <h3 class="font-bold text-slate-100 text-2xl">Путь нового клиента</h3>
+                        <div class="card row-start-1 relative">
+                            <div class="flex justify-between items-start">
+                                <h3 class="font-bold text-slate-100 text-2xl">Путь клиента</h3>
+                                <div id="journey-legend" class="flex items-center gap-3 text-xs text-slate-400">
+                                </div>
+                            </div>
                             <div class="flex-grow relative h-52"><canvas id="choiceChart"></canvas></div>
                         </div>
                         
@@ -250,7 +362,7 @@
                                 <div id="index-criteria" class="space-y-3 text-sm flex-grow"></div>
                                 <div class="mt-auto pt-3 border-t border-slate-700">
                                     <h4 class="font-semibold text-sm text-slate-200 mb-1">Вывод</h4>
-                                    <p class="text-xs text-slate-400">Kaspi демонстрирует высокие оценки в базовом опыте. Для достижения абсолютного лидерства, необходимо усилить критерии 'GenAI' и 'RM', где наблюдается отставание от лидера рынка.</p>
+                                    <p class="text-xs text-slate-400">Банк А лидирует в базовом клиентском опыте (Онлайн/Офлайн). Однако для отрыва от конкурентов необходим фокус на инновационных ('GenAI') и человекоцентричных ('Культура') аспектах.</p>
                                 </div>
                             </div>
                             <div class="card">
@@ -265,63 +377,73 @@
                         
                         <div class="grid grid-cols-3 gap-4 row-start-3">
                                 <div class="card items-center justify-center text-center">
-                                <h3 class="font-semibold text-slate-200 text-lg mb-2">Индекс культуры</h3>
+                                <h3 class="font-semibold text-slate-200 text-lg mb-2">Эффективность продаж</h3>
                                 <div class="relative flex items-center justify-center">
                                     <svg viewBox="0 0 42 42" width="120" height="120">
                                         <defs>
-                                            <linearGradient id="cultureGradient">
+                                            <linearGradient id="salesGradient">
                                                 <stop stop-color="#22d3ee"/>
                                             </linearGradient>
                                         </defs>
                                         <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#334155" stroke-width="6"/>
-                                        <circle id="cultureDonutArc" cx="21" cy="21" r="15.915" fill="transparent" stroke="url(#cultureGradient)" stroke-width="6" stroke-linecap="round" transform="rotate(-90 21 21)"/>
+                                        <circle id="salesDonutArc" cx="21" cy="21" r="15.915" fill="transparent" stroke="url(#salesGradient)" stroke-width="6" stroke-linecap="round" transform="rotate(-90 21 21)"/>
                                     </svg>
                                     <div class="donut-center">
-                                        <div class="value" id="cultureDonutValue"></div>
+                                        <div class="value" id="salesDonutValue"></div>
                                         <div class="sub">из 5</div>
                                     </div>
                                 </div>
                                 <div class="mt-auto w-full pt-3 border-t border-slate-700 text-left">
-                                    <h4 class="font-semibold text-sm text-slate-200 mb-1 text-center">Вывод</h4>
-                                    <p class="text-xs text-slate-400">Индекс культуры 3.7/5 - зона риска. Недостаточно эмпатичный сервис в отделении (шаги 'Визит', 'Консультация') может нивелировать успехи цифровых каналов.</p>
+                                    <h4 class="font-semibold text-sm text-slate-200 mb-1">Вывод</h4>
+                                    <p class="text-xs text-slate-400">Высокая эффективность продаж — прямое следствие лучшего на рынке совокупного опыта. Это доказывает, что инвестиции в качественный сервис окупаются.</p>
                                 </div>
                             </div>
-                            <div class="col-span-2 card justify-center space-y-3">
-                                 <div>
-                                    <h4 class="text-sm font-bold text-slate-300 mb-2">Сравнение с конкурентами:</h4>
-                                    <div class="flex flex-col gap-2 text-sm text-slate-400">
-                                        <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-[#22d3ee]"></div>Kaspi</div>
-                                        <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-[#818cf8]"></div>Лидер рынка</div>
-                                        <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-[#64748b]"></div>Конкуренты (среднее)</div>
+                            <div class="col-span-2 card justify-start">
+                                <h3 class="font-semibold text-slate-200 text-base">Цифровая активность</h3>
+                                <div class="flex-grow grid grid-cols-2 gap-6 pt-2">
+                                    <div class="flex flex-col">
+                                        <div class="flex-grow">
+                                            <p class="text-sm text-slate-400 mb-2">Уникальные пользователи</p>
+                                            <div>
+                                                <span class="text-4xl font-extrabold text-white">125K</span>
+                                                <span class="text-base text-slate-400">/ мес</span>
+                                                <p class="text-xs text-slate-500 mt-1">1200K потенциальный рынок</p>
+                                            </div>
+                                            <p class="text-xs text-slate-400 mt-4 mb-2">Доля захвата рынка</p>
+                                            <div class="relative w-full bg-slate-700 rounded-full h-2.5">
+                                                <div class="bg-gradient-to-r from-cyan-600 to-cyan-400 h-2.5 rounded-full" style="width: 10.4%"></div>
+                                                <span class="absolute right-0 -top-5 text-xs font-bold text-white">10.4%</span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-auto pt-4 border-t border-slate-700">
+                                            <h4 class="font-semibold text-sm text-slate-200 mb-1">Вывод</h4>
+                                            <p class="text-xs text-slate-400">Низкий охват говорит о значительном потенциале роста. Фокус на SEO и SMM может привлечь новую аудиторию.</p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="border-t border-slate-700 pt-3">
-                                    <h4 class="text-sm font-bold text-slate-300 mb-2">Критерии Индекса:</h4>
-                                    <div id="criteria-legend" class="grid grid-cols-2 gap-x-4 gap-y-1 text-sm text-slate-400">
+                                    <div class="flex flex-col">
+                                       <div class="flex-grow">
+                                            <div class="grid grid-cols-2 gap-4">
+                                                <div class="bg-slate-900/50 rounded-lg p-4 text-center">
+                                                    <p class="text-xs text-slate-400">DAO</p>
+                                                    <p class="text-3xl font-bold text-white">32k</p>
+                                                </div>
+                                                <div class="bg-slate-900/50 rounded-lg p-4 text-center">
+                                                    <p class="text-xs text-slate-400">MAU</p>
+                                                    <p class="text-3xl font-bold text-white">48k</p>
+                                                </div>
+                                            </div>
+                                       </div>
+                                        <div class="mt-auto pt-4 border-t border-slate-700">
+                                            <h4 class="font-semibold text-sm text-slate-200 mb-1">Вывод</h4>
+                                            <p class="text-xs text-slate-400">Высокий показатель вовлеченности (DAU/MAU > 65%) подтверждает эффективность транзакционной бизнес-модели банка.</p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="border-t border-slate-700 pt-3 mt-auto">
-                                     <p class="text-xs text-slate-500">Для детализации и сравнения обращайтесь: <br><span class="font-semibold text-slate-400">a.shurygin@interisegroup.com</span></p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- INTERACTIVE DASHBOARD END -->
-            </div>
-             <div class="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-gray-800 p-6 rounded-lg">
-                    <h3 class="font-bold text-xl mb-2 text-white">Рейтинг банков</h3>
-                    <p class="text-gray-400">Узнайте свое реальное место на рынке по ключевым параметрам клиентского опыта.</p>
-                </div>
-                <div class="bg-gray-800 p-6 rounded-lg">
-                    <h3 class="font-bold text-xl mb-2 text-white">Анализ пути клиента</h3>
-                    <p class="text-gray-400">Оцените каждый этап: от поиска в сети до консультации, и найдите самые слабые звенья.</p>
-                </div>
-                 <div class="bg-gray-800 p-6 rounded-lg">
-                    <h3 class="font-bold text-xl mb-2 text-white">Сравнение каналов</h3>
-                    <p class="text-gray-400">Определите, какой канал (Web, Колл-центр, Отделение) работает лучше, а какой требует улучшений.</p>
-                </div>
             </div>
         </section>
 
@@ -372,200 +494,327 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    // --- 🎨 КОНСТАНТЫ И НАСТРОЙКИ ---
+    // --- GLOBAL VARS ---
+    let charts = {};
     const KASPI_COLOR = '#22d3ee';
     const LEADER_COLOR = '#818cf8';
     const MARKET_COLOR = '#64748b';
     const WHITE_COLOR = '#f8fafc';
 
-    // --- 📊 ДАННЫЕ ДЛЯ ДАШБОРДА ---
-
-    const generateRealisticScores = (min, max, count) => {
+    // --- DATA GENERATION ---
+    const generateRealisticScores = (min, max, count = 1) => {
+        if (count === 1) return parseFloat((Math.random() * (max - min) + min).toFixed(1));
         return Array.from({ length: count }, () => parseFloat((Math.random() * (max - min) + min).toFixed(1)));
     };
-    
-    // Палитра для 5 критериев индекса
-    const criteriaColors = {
-        'Онлайн': '#f97316', // Orange-500
-        'Офлайн': '#ec4899', // Pink-500
-        'Omni':   '#84cc16',   // Lime-500
-        'GenAI':  '#facc15',   // Yellow-400
-        'RM':     '#ef4444'    // Red-500
-    };
-
-    // Обновленные, конкретные этапы на пути нового клиента
-    const journeyLabels = ['Поиск в сети', 'Изучение сайта', 'Отзывы', 'Звонок', 'Визит', 'Консультация'];
-    
-    // Скорректированные данные для Kaspi, чтобы обеспечить первое место
-    const journeyData = {
-        'Онлайн': generateRealisticScores(4.0, 4.8, 6),
-        'Офлайн': generateRealisticScores(4.0, 4.8, 6),
-        'Omni':   generateRealisticScores(3.5, 4.5, 6),
-        'GenAI':  generateRealisticScores(3.0, 4.0, 6),
-        'RM':     generateRealisticScores(3.5, 4.5, 6)
-    };
-    
     const calculateAverage = arr => arr.reduce((a, b) => a + b, 0) / arr.length;
+
+    const generateBankList = (prefix, count) => {
+        return Array.from({length: count}, (_, i) => ({
+            name: `${prefix} Bank ${i + 1}`,
+            score: generateRealisticScores(3.5, 4.5),
+            volatility: generateRealisticScores(0.5, 1.8)
+        }));
+    };
+
+    const regionCountryMapping = {
+        'Регион 1': ['Страна 1', 'Страна 2', 'Страна 3', 'Страна 4'],
+        'Регион 2': ['Страна 5', 'Страна 6', 'Страна 7', 'Страна 8']
+    };
+
+    const allCountriesData = {
+        'Страна 1': generateBankList('Alpha', 15),
+        'Страна 2': generateBankList('Beta', 12),
+        'Страна 3': generateBankList('Gamma', 18),
+        'Страна 4': generateBankList('Delta', 14),
+        'Страна 5': generateBankList('Epsilon', 20),
+        'Страна 6': generateBankList('Zeta', 16),
+        'Страна 7': generateBankList('Eta', 13),
+        'Страна 8': generateBankList('Theta', 17),
+    };
+
+
+    const generateSegmentData = (segment) => {
+        const isRetail = segment === 'Retail';
+        const isSME = segment === 'SME';
+        
+        const journeyData = {
+            'Онлайн': generateRealisticScores(isSME ? 3.8 : 4.0, isSME ? 4.6 : 4.8, 6),
+            'Офлайн': generateRealisticScores(isSME ? 4.2 : 4.0, isSME ? 5.0 : 4.8, 6),
+            'Omni': generateRealisticScores(isSME ? 3.8 : 3.5, isSME ? 4.8 : 4.5, 6),
+            'GenAI': generateRealisticScores(isSME ? 3.5 : 3.0, isSME ? 4.2 : 4.0, 6),
+            'Культура': generateRealisticScores(isSME ? 3.8 : 3.4, isSME ? 4.5 : 4.0, 6)
+        };
+        
+        const criteriaData = Object.keys(journeyData).map(key => ({
+            name: key,
+            score: calculateAverage(journeyData[key]),
+            leader: calculateAverage(generateRealisticScores(isSME ? 4.0 : 3.8, 5.0, 6)),
+            market: calculateAverage(generateRealisticScores(isSME ? 3.0 : 2.8, 4.0, 6)),
+        }));
+
+        const mainIndex = calculateAverage(criteriaData.map(c => c.score));
+        
+        const banksData = [
+            { name: 'Банк A', score: mainIndex, volatility: calculateAverage(generateRealisticScores(0.5, 1.0, 6)) },
+            { name: 'Банк B', score: mainIndex - 0.2, volatility: 1.2 },
+            { name: 'Банк C', score: mainIndex - 0.4, volatility: 0.9 },
+            { name: 'Банк D', score: mainIndex - 0.6, volatility: 1.5 },
+            { name: 'Банк E', score: mainIndex - 0.9, volatility: 1.1 }
+        ];
+
+        return {
+            journeyData,
+            criteriaData,
+            mainIndex,
+            banksData,
+            totalJourneyData: generateRealisticScores(isSME ? 4.1 : 3.9, isSME ? 4.5 : 4.3, 6),
+            totalJourneyVolatility: generateRealisticScores(isSME ? 0.5 : 0.3, isSME ? 1.5 : 1.2, 6),
+            leaderJourneyData: generateRealisticScores(isSME ? 4.2 : 4.0, 4.9, 6),
+            marketJourneyData: generateRealisticScores(isSME ? 3.2 : 3.0, 4.0, 6),
+            salesEfficiencyIndex: calculateAverage([calculateAverage(journeyData['Онлайн']), calculateAverage(journeyData['Офлайн'])]),
+            radarData: [
+                { label: 'Банк A', data: [calculateAverage(journeyData['Офлайн']), 4.1, calculateAverage(journeyData['Онлайн'])] },
+                { label: 'Лидер', data: [4.0, 4.3, 4.4] },
+                { label: 'Рынок', data: [3.2, 3.4, 3.5] }
+            ]
+        };
+    };
+
+    // --- RENDER FUNCTIONS ---
+    const updateDashboard = (segment) => {
+        const data = generateSegmentData(segment);
+        
+        document.getElementById('gaugeValue').textContent = data.mainIndex.toFixed(1);
+        document.getElementById('gaugePath').style.strokeDashoffset = 251.2 * (1 - data.mainIndex / 5);
+        document.getElementById('segment-subtitle').textContent = segment === 'All' ? 'All Clients' : (segment === 'Retail' ? 'Retail Clients' : 'SME Clients');
+
+        const salesPercentage = (data.salesEfficiencyIndex / 5) * 100;
+        document.getElementById('salesDonutValue').textContent = data.salesEfficiencyIndex.toFixed(1);
+        document.getElementById('salesDonutArc').style.strokeDasharray = `${salesPercentage} 100`;
+
+        renderDashboardRanking(data.banksData, 'score');
+        renderIndexCriteria(data.criteriaData);
+        
+        updateChoiceChart(data);
+        updateScatterChart(data);
+        updateRadarChart(data);
+    };
     
-    // Агрегированные данные по критериям
-    const criteriaData = Object.keys(journeyData).map(key => ({
-        name: key,
-        score: calculateAverage(journeyData[key]),
-        leader: calculateAverage(generateRealisticScores(3.5, 5.0, 6)),
-        market: calculateAverage(generateRealisticScores(2.5, 4.0, 6)),
-        color: criteriaColors[key]
-    }));
+    const renderRegionTabs = () => {
+        const tabsContainer = document.getElementById('region-tabs');
+        tabsContainer.innerHTML = Object.keys(regionCountryMapping).map((region, index) =>
+            `<button class="tab-button ${index === 0 ? 'active' : ''}" data-region="${region}">${region}</button>`
+        ).join('');
+    };
 
-    const mainIndex = calculateAverage(criteriaData.map(c => c.score));
+    const renderCountryTabs = (region) => {
+        const tabsContainer = document.getElementById('country-tabs');
+        const countries = regionCountryMapping[region];
+        tabsContainer.innerHTML = countries.map((country, index) => 
+            `<button class="tab-button ${index === 0 ? 'active' : ''}" data-country="${country}">${country}</button>`
+        ).join('');
+    };
 
-    const totalJourneyData = journeyLabels.map((_, i) => 
-        parseFloat(calculateAverage(Object.values(journeyData).map(scores => scores[i])).toFixed(1))
-    );
+    const renderCountryRanking = (country, sortBy = 'score') => {
+        const rankingsEl = document.getElementById('country-rankings');
+        const titleEl = document.getElementById('ranking-country-title');
+        titleEl.textContent = `Рейтинг банков: ${country}`;
+
+        const data = [...allCountriesData[country]];
+        data.sort((a, b) => (sortBy === 'score' ? b.score - a.score : a.volatility - b.volatility));
+
+        rankingsEl.innerHTML = data.map((bank, index) => `
+            <div class="ranking-item">
+                <span class="w-8 font-bold text-slate-400">${index + 1}</span>
+                <span class="flex-grow font-semibold text-white">${bank.name}</span>
+                <div class="w-28 text-right flex items-center justify-end gap-3">
+                     <span class="font-bold text-white">${bank.score.toFixed(1)}</span>
+                    <span class="text-xs text-slate-400 flex items-center gap-1" title="Волатильность">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" /></svg>
+                        ${bank.volatility.toFixed(1)}
+                    </span>
+                </div>
+            </div>`).join('');
+    };
+
+    const renderDashboardRanking = (banksData, sortBy = 'score') => {
+        const sortedData = [...banksData].sort((a, b) => (sortBy === 'score' ? b.score - a.score : a.volatility - b.volatility));
+        document.getElementById('competitors-ranking').innerHTML = sortedData.map((item) => `
+            <div class="flex items-center">
+                <span class="w-20 truncate ${item.name === 'Банк A' ? 'text-cyan-300 font-semibold' : 'text-slate-300'}">${item.name}</span>
+                <div class="flex-1 mx-2 bg-slate-700 rounded-full h-2.5">
+                    <div class="${item.name === 'Банк A' ? 'bg-cyan-400' : 'bg-slate-500'} h-2.5 rounded-full" style="width: ${item.score / 5 * 100}%"></div>
+                </div>
+                <div class="w-20 text-right flex items-center justify-end gap-2">
+                    <span class="font-bold text-white">${item.score.toFixed(1)}</span>
+                    <span class="text-xs text-slate-400 flex items-center gap-1" title="Волатильность">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" /></svg>
+                        ${item.volatility.toFixed(1)}
+                    </span>
+                </div>
+            </div>`).join('');
+        
+        const rank = sortedData.findIndex(b => b.name === 'Банк A') + 1;
+        document.getElementById('rank-value').textContent = rank;
+    };
     
-    // Новые данные для сравнительных линий
-    const leaderJourneyData = generateRealisticScores(3.8, 4.8, 6);
-    const marketJourneyData = generateRealisticScores(3.2, 4.2, 6);
-
-    const cultureIndex = 3.7; // Статичное значение для примера
-
-    // --- 🎨 ОТРИСОВКА ЭЛЕМЕНТОВ ИНТЕРФЕЙСА ---
-
-    document.getElementById('gaugeValue').textContent = mainIndex.toFixed(1);
-    document.getElementById('gaugePath').style.strokeDashoffset = 251.2 * (1 - mainIndex / 5);
-
-    document.getElementById('competitors-ranking').innerHTML = [
-        { name: 'Kaspi', score: mainIndex }, { name: 'Bank B', score: 3.8 },
-        { name: 'Bank A', score: 3.6 }, { name: 'Bank D', score: 3.4 }, { name: 'Bank C', score: 3.0 }
-    ].sort((a, b) => b.score - a.score).map((item) => `
-        <div class="flex items-center">
-            <span class="w-20 truncate ${item.name === 'Kaspi' ? 'text-cyan-300 font-semibold' : 'text-slate-300'}">${item.name}</span>
-            <div class="flex-1 mx-2 bg-slate-700 rounded-full h-2.5">
-                <div class="${item.name === 'Kaspi' ? 'bg-cyan-400' : 'bg-slate-500'} h-2.5 rounded-full" style="width: ${item.score / 5 * 100}%"></div>
-            </div>
-            <span class="w-8 text-right font-bold text-white">${item.score.toFixed(1)}</span>
-        </div>`).join('');
-
-    document.getElementById('index-criteria').innerHTML = criteriaData.map(item => `
+    const criteriaColors = { 'Онлайн': '#f97316', 'Офлайн': '#ec4899', 'Omni': '#84cc16', 'GenAI': '#facc15', 'Культура': '#ef4444' };
+    const renderIndexCriteria = (criteriaData) => {
+        document.getElementById('index-criteria').innerHTML = criteriaData.map(item => `
         <div class="flex items-center">
             <span class="w-24 truncate text-slate-300">${item.name}</span>
             <div class="relative flex-1 mx-2 bg-slate-700 rounded-full h-2">
-                <div class="h-2 rounded-full" style="width: ${item.score / 5 * 100}%; background-color: ${item.color};"></div>
+                <div class="h-2 rounded-full" style="width: ${item.score / 5 * 100}%; background-color: ${criteriaColors[item.name]};"></div>
                 <div class="benchmark-dot" style="left: ${item.leader / 5 * 100}%; background-color:${LEADER_COLOR}" title="Лидер: ${item.leader.toFixed(1)}"></div>
                 <div class="benchmark-dot" style="left: ${item.market / 5 * 100}%; background-color:${MARKET_COLOR}" title="Рынок: ${item.market.toFixed(1)}"></div>
             </div>
             <span class="w-8 text-right font-bold text-white">${item.score.toFixed(1)}</span>
         </div>`).join('');
-    
-    document.getElementById('criteria-legend').innerHTML = criteriaData.map(c => `<div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full" style="background-color: ${c.color}"></div>${c.name}</div>`).join('');
-    
-    // Отрисовка "Индекса Культуры" - ИСПРАВЛЕНО
-    const culturePercentage = (cultureIndex / 5) * 100;
-    document.getElementById('cultureDonutValue').textContent = cultureIndex.toFixed(1);
-    document.getElementById('cultureDonutArc').style.strokeDasharray = `${culturePercentage} 100`;
+    };
 
+    // --- CHART SETUP ---
+    const setupCharts = () => {
+        Chart.register(ChartDataLabels);
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = "'Inter', sans-serif";
+        Chart.defaults.plugins.legend.display = false;
+        Chart.defaults.responsive = true;
+        Chart.defaults.maintainAspectRatio = false;
+        
+        const journeyLabels = ['Поиск в сети', 'Изучение сайта', 'Отзывы', 'Звонок', 'Визит', 'Консультация'];
 
-    // --- 📈 НАСТРОЙКА ГРАФИКОВ (Chart.js) ---
-    Chart.register(ChartDataLabels);
-    Chart.defaults.color = '#94a3b8';
-    Chart.defaults.font.family = "'Inter', sans-serif";
-    Chart.defaults.plugins.legend.display = false;
-    Chart.defaults.responsive = true;
-    Chart.defaults.maintainAspectRatio = false;
-    
-    // Главный график: Путь Нового Клиента
-    new Chart('choiceChart', {
-        type: 'line',
-        data: {
-            labels: journeyLabels,
-            datasets: [
-                // Добавлена линия для Лидера рынка
-                {
-                    label: 'Лидер рынка',
-                    data: leaderJourneyData,
-                    borderColor: LEADER_COLOR,
-                    borderWidth: 1.5,
-                    pointRadius: 0,
-                    tension: 0.4,
-                    datalabels: { display: false },
-                    order: 1
-                },
-                // Основная линия - теперь рисуется поверх
-                { 
-                    label: 'Итоговый Индекс', 
-                    data: totalJourneyData,
-                    borderColor: KASPI_COLOR, 
-                    borderWidth: 4, 
-                    pointBackgroundColor: KASPI_COLOR,
-                    pointBorderColor: '#0f172a', 
-                    pointBorderWidth: 2, 
-                    pointRadius: 5,
-                    tension: 0.4, 
-                    datalabels: { display: true }, // Включаем подписи только для главной линии
-                    order: 3
-                },
-                 // Добавлена линия для Конкурентов - рисуется под основной
-                {
-                    label: 'Конкуренты (среднее)',
-                    data: marketJourneyData,
-                    borderColor: MARKET_COLOR,
-                    borderWidth: 1.5,
-                    pointRadius: 0,
-                    tension: 0.4,
-                    datalabels: { display: false },
-                    order: 2
-                }
-            ]
-        },
-        options: {
-            plugins: {
-                datalabels: {
-                    align: 'top', 
-                    offset: 8, 
-                    color: WHITE_COLOR,
-                    font: { size: 14, weight: 'bold' },
-                    formatter: (v) => v.toFixed(1)
-                }
-            },
-            scales: {
-                y: { display: false, min: 0, max: 5.5 },
-                x: { grid: { display: false }, ticks: { color: '#94a3b8', font: {size: 10} } }
+        charts.choice = new Chart('choiceChart', {
+            type: 'line', data: { labels: journeyLabels, datasets: [] },
+            options: {
+                plugins: { datalabels: { display: false } },
+                scales: { y: { display: false, min: 1, max: 5.5 }, x: { grid: { display: false }, ticks: { color: '#94a3b8', font: {size: 10} } } }
             }
+        });
+        charts.scatter = new Chart('scatterChart', {
+            type: 'bubble', data: { datasets: [] },
+            options: { 
+                scales: { 
+                    x: { title: { display: true, text: 'Онлайн опыт', font: { size: 10 } }, min: 2, max: 5.0, grid: { color: '#334155' }, ticks: { stepSize: 1, font: {size: 10} } }, 
+                    y: { title: { display: true, text: 'Офлайн опыт', font: { size: 10 } }, min: 2, max: 5.0, grid: { color: '#334155' }, ticks: { stepSize: 1, font: {size: 10} } } 
+                }, 
+                plugins: { datalabels: { display: false }, tooltip: { backgroundColor: '#1e293b', borderColor: '#334155', borderWidth: 1 } }
+            }
+        });
+        charts.radar = new Chart('radarChart', {
+            type: 'radar', data: { labels: ['Отделение', 'Колл-центр', 'Web'], datasets: [] },
+            options: { 
+                plugins: { datalabels: { display: false } }, 
+                scales: { r: { angleLines: { color: '#334155' }, grid: { color: '#334155' }, pointLabels: { color: '#94a3b8', font: { size: 10 } }, ticks: { display: false, stepSize: 1 }, suggestedMin: 0, suggestedMax: 5 }} 
+            }
+        });
+        
+        document.getElementById('journey-legend').innerHTML = `
+        <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full" style="background-color: ${KASPI_COLOR}"></div>Банк A</div>
+        <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full" style="background-color: ${LEADER_COLOR}"></div>Лидер</div>
+        <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full" style="background-color: ${MARKET_COLOR}"></div>Рынок</div>
+        <div class="flex items-center gap-2"><div class="w-3 h-3" style="background-color: rgba(34, 211, 238, 0.05); border: 1px solid rgba(34, 211, 238, 0.1)"></div>Волатильность</div>
+     `;
+    };
+
+    // --- CHART UPDATE LOGIC ---
+    const updateChoiceChart = (data) => {
+        const maxVolatilityData = data.totalJourneyData.map((p, i) => Math.min(5.0, p + data.totalJourneyVolatility[i] / 2));
+        const minVolatilityData = data.totalJourneyData.map((p, i) => Math.max(0.0, p - data.totalJourneyVolatility[i] / 2));
+        
+        charts.choice.data.datasets = [
+             { label: 'Min Vol', data: minVolatilityData, borderColor: 'rgba(34, 211, 238, 0.1)', borderWidth: 1, pointRadius: 0, tension: 0.4, fill: '+1', backgroundColor: 'rgba(34, 211, 238, 0.05)'},
+             { label: 'Max Vol', data: maxVolatilityData, borderColor: 'rgba(34, 211, 238, 0.1)', borderWidth: 1, pointRadius: 0, tension: 0.4, fill: false},
+             { label: 'Лидер', data: data.leaderJourneyData, borderColor: LEADER_COLOR, borderWidth: 1.5, pointRadius: 0, tension: 0.4 },
+             { label: 'Рынок', data: data.marketJourneyData, borderColor: MARKET_COLOR, borderWidth: 1.5, pointRadius: 0, tension: 0.4 },
+             { label: 'Банк A', data: data.totalJourneyData, borderColor: KASPI_COLOR, borderWidth: 4, pointBackgroundColor: KASPI_COLOR, pointBorderColor: '#0f172a', pointBorderWidth: 2, pointRadius: 5, tension: 0.4, datalabels: { display: true, align: 'top', offset: 8, color: WHITE_COLOR, font: { size: 14, weight: 'bold' }, formatter: (v) => v.toFixed(1) } }
+        ];
+        charts.choice.update();
+    };
+
+    const updateScatterChart = (data) => {
+        charts.scatter.data.datasets = [
+            { label: 'Конкуренты', data: [{x: 3.2, y: 3.5, r: 8}, {x: 4.0, y: 3.1, r: 8}, {x: 3.4, y: 4.0, r: 8}], backgroundColor: MARKET_COLOR }, 
+            { label: 'Лидер рынка', data: [{x: 3.8, y: 4.1, r: 10}], backgroundColor: LEADER_COLOR }, 
+            { label: 'Банк A', data: [{x: calculateAverage(data.journeyData['Онлайн']), y: calculateAverage(data.journeyData['Офлайн']), r: 12}], backgroundColor: KASPI_COLOR }
+        ];
+        charts.scatter.update();
+    };
+    
+    const updateRadarChart = (data) => {
+        charts.radar.data.datasets = [
+            { label: 'Банк A', data: data.radarData[0].data, backgroundColor: 'rgba(34, 211, 238, 0.2)', borderColor: KASPI_COLOR, borderWidth: 2 },
+            { label: 'Лидер', data: data.radarData[1].data, backgroundColor: 'rgba(129, 140, 248, 0.2)', borderColor: LEADER_COLOR, borderWidth: 2 },
+            { label: 'Рынок', data: data.radarData[2].data, backgroundColor: 'rgba(100, 116, 139, 0.2)', borderColor: MARKET_COLOR, borderWidth: 2}
+        ];
+        charts.radar.update();
+    };
+
+    // --- EVENT LISTENERS ---
+    const rankingTabs = document.getElementById('ranking-tabs');
+    rankingTabs.addEventListener('click', (e) => {
+        if (e.target.tagName === 'BUTTON') {
+            rankingTabs.querySelector('.active').classList.remove('active');
+            e.target.classList.add('active');
+            const currentSegment = document.querySelector('#segment-tabs .active').dataset.segment;
+            const data = generateSegmentData(currentSegment);
+            renderDashboardRanking(data.banksData, e.target.dataset.sort);
         }
     });
 
-    // Scatter plot: Опыт в Каналах
-    new Chart('scatterChart', { 
-        type: 'bubble', 
-        data: { datasets: [
-            { label: 'Конкуренты', data: [{x: 3.2, y: 3.5, r: 8}, {x: 4.0, y: 3.1, r: 8}, {x: 3.4, y: 4.0, r: 8}], backgroundColor: MARKET_COLOR }, 
-            { label: 'Лидер рынка', data: [{x: 3.8, y: 4.1, r: 10}], backgroundColor: LEADER_COLOR }, 
-            { label: 'Kaspi', data: [{x: calculateAverage(journeyData['Онлайн']), y: calculateAverage(journeyData['Офлайн']), r: 12}], backgroundColor: KASPI_COLOR }
-        ]}, 
-        options: { 
-            scales: { 
-                x: { title: { display: true, text: 'Онлайн опыт', font: { size: 10 } }, min: 2, max: 5.0, grid: { color: '#334155' }, ticks: { stepSize: 1, font: {size: 10} } }, 
-                y: { title: { display: true, text: 'Офлайн опыт', font: { size: 10 } }, min: 2, max: 5.0, grid: { color: '#334155' }, ticks: { stepSize: 1, font: {size: 10} } } 
-            }, 
-            plugins: { datalabels: { display: false }, tooltip: { backgroundColor: '#1e293b', borderColor: '#334155', borderWidth: 1 } }
-        } 
-    });
-       
-    // Radar Chart: Эффективность Точек Контакта
-    new Chart('radarChart', { 
-        type: 'radar', 
-        data: { labels: ['Отделение', 'Колл-центр', 'Web'], datasets: [
-            { label: 'Kaspi', data: [3.9, 4.1, 4.5], backgroundColor: 'rgba(34, 211, 238, 0.2)', borderColor: KASPI_COLOR, borderWidth: 2 }, 
-            { label: 'Лидер рынка', data: [4.0, 4.3, 4.4], backgroundColor: 'rgba(129, 140, 248, 0.2)', borderColor: LEADER_COLOR, borderWidth: 2 },
-            { label: 'Среднее', data: [3.2, 3.4, 3.5], backgroundColor: 'rgba(100, 116, 139, 0.2)', borderColor: MARKET_COLOR, borderWidth: 2}
-        ]}, 
-        options: { 
-            plugins: { datalabels: { display: false } }, 
-            scales: { r: { angleLines: { color: '#334155' }, grid: { color: '#334155' }, pointLabels: { color: '#94a3b8', font: { size: 10 } }, ticks: { display: false, stepSize: 1 }, suggestedMin: 0, suggestedMax: 5 }} 
-        } 
+    const segmentTabs = document.getElementById('segment-tabs');
+    segmentTabs.addEventListener('click', (e) => {
+        if (e.target.tagName === 'BUTTON' && !e.target.classList.contains('active')) {
+            segmentTabs.querySelector('.active').classList.remove('active');
+            e.target.classList.add('active');
+            updateDashboard(e.target.dataset.segment);
+        }
     });
 
+    const regionTabs = document.getElementById('region-tabs');
+    regionTabs.addEventListener('click', (e) => {
+        if (e.target.tagName === 'BUTTON' && !e.target.classList.contains('active')) {
+            regionTabs.querySelector('.active').classList.remove('active');
+            e.target.classList.add('active');
+            const newRegion = e.target.dataset.region;
+            renderCountryTabs(newRegion);
+            
+            // Automatically render the ranking for the first country of the new region
+            const firstCountry = regionCountryMapping[newRegion][0];
+            const sorter = document.querySelector('#country-ranking-sorter .active').dataset.sort;
+            renderCountryRanking(firstCountry, sorter);
+        }
+    });
+
+    const countryTabs = document.getElementById('country-tabs');
+    countryTabs.addEventListener('click', (e) => {
+        if (e.target.tagName === 'BUTTON' && !e.target.classList.contains('active')) {
+            countryTabs.querySelector('.active').classList.remove('active');
+            e.target.classList.add('active');
+            const currentSort = document.querySelector('#country-ranking-sorter .active').dataset.sort;
+            renderCountryRanking(e.target.dataset.country, currentSort);
+        }
+    });
+    
+    const countrySorter = document.getElementById('country-ranking-sorter');
+    countrySorter.addEventListener('click', (e) => {
+        if (e.target.tagName === 'BUTTON' && !e.target.classList.contains('active')) {
+            countrySorter.querySelector('.active').classList.remove('active');
+            e.target.classList.add('active');
+            const currentCountry = document.querySelector('#country-tabs .active').dataset.country;
+            renderCountryRanking(currentCountry, e.target.dataset.sort);
+        }
+    });
+
+
+    // --- INITIALIZATION ---
+    setupCharts();
+    updateDashboard('Retail');
+    renderRegionTabs();
+    renderCountryTabs('Регион 1');
+    renderCountryRanking('Страна 1', 'score');
 });
 </script>
 
 </body>
 </html>
+
