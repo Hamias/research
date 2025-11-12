@@ -11,8 +11,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        /* Стили лендинга */
         body {
             font-family: 'Inter', sans-serif;
+            background-color: #0f172a; /* Взято из дешборда для единства */
+            color: #CBD5E1;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
         .gradient-text {
             background: linear-gradient(90deg, #4f46e5, #ec4899);
@@ -25,7 +30,7 @@
             background-size: 20px 20px;
         }
         
-        /* Styles for the interactive dashboard */
+        /* === СТИЛИ ДЕШБОРДА (ИНТЕГРИРОВАНЫ) === */
         .dashboard-container {
             display: grid;
             grid-template-columns: 320px 1fr;
@@ -33,8 +38,10 @@
             gap: 16px;
             width: 100%;
             max-width: 1600px;
-            margin: 0 auto; /* Center the dashboard */
+            /* aspect-ratio: 16 / 9; Убрано для интеграции в лендинг */
+            margin: 0 auto; /* Центрирование */
         }
+
         .card {
             background-color: #1e293b;
             border: 1px solid #334155;
@@ -44,7 +51,9 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            position: relative;
         }
+
         .benchmark-dot {
             position: absolute;
             top: 50%;
@@ -55,23 +64,28 @@
             border: 1px solid rgba(255, 255, 255, 0.6);
             z-index: 10;
         }
+
         .donut-center {
             position: absolute;
             text-align: center;
         }
+
         .donut-center .value {
             font-size: 2.25rem;
             font-weight: 800;
             line-height: 1;
         }
+
         .donut-center .sub {
             font-size: 0.8rem;
             color: #94a3b8;
         }
+
+        /* Общий стиль для всех таб-кнопок */
         .tab-button {
-            padding: 8px 16px;
+            padding: 8px 16px; /* Увеличен для лендинга */
             border-radius: 8px;
-            font-size: 14px;
+            font-size: 14px; /* Увеличен для лендинга */
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease-in-out;
@@ -80,12 +94,91 @@
             border: 1px solid transparent;
             white-space: nowrap;
         }
+
         .tab-button.active {
             color: #f8fafc;
             background-color: #334155;
             border-color: #475569;
         }
-        .ranking-item {
+        
+        /* Стили для селектора банка (из дешборда) */
+        #bank-selector {
+            width: 320px;
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            color: #f8fafc;
+            border-radius: 8px;
+            padding: 10px 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='2' stroke='%2394a3b8' class='w-6 h-6'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5' /%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 16px;
+        }
+
+        /* Стили для скролла в рейтинге (из дешборда) */
+        #competitors-ranking {
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 8px;
+        }
+        
+        /* Стили для кликабельных строк рейтинга (из дешборда) */
+        .ranking-row {
+            padding: 4px 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .ranking-row:hover {
+            background-color: #334155;
+        }
+
+        /* Стили для скроллбара (из дешборда) */
+        #competitors-ranking::-webkit-scrollbar { width: 6px; }
+        #competitors-ranking::-webkit-scrollbar-track { background: #1e293b; border-radius: 3px; }
+        #competitors-ranking::-webkit-scrollbar-thumb { background: #475569; border-radius: 3px; }
+        #competitors-ranking::-webkit-scrollbar-thumb:hover { background: #64748b; }
+
+        /* Стили для заглушки (из дешборда) */
+        .card-blurred {
+            filter: blur(5px);
+            user-select: none;
+            pointer-events: none;
+        }
+
+        .card-overlay {
+            /* Стили для оверлея-заглушки */
+            display: none; /* Управляется JS */
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100; /* Выше контента дешборда */
+            background-color: rgba(30, 41, 59, 0.8); /* Полупрозрачный фон */
+        }
+
+        .card-overlay-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #f8fafc;
+            padding: 16px 24px;
+            background-color: rgba(15, 23, 42, 0.8);
+            border-radius: 12px;
+            border: 1px solid #334155;
+            text-align: center;
+        }
+
+        /* Стили для рейтинга стран (из лендинга) */
+         .ranking-item {
             display: flex;
             align-items: center;
             padding: 8px 0;
@@ -94,7 +187,8 @@
         .ranking-item:last-child {
             border-bottom: none;
         }
-        /* For scrollable tabs */
+        
+        /* Скрытие скроллбара для табов стран (из лендинга) */
         #country-tabs-container::-webkit-scrollbar {
             display: none;
         }
@@ -103,19 +197,21 @@
             scrollbar-width: none;  /* Firefox */
         }
 
+        /* Адаптивность (из дешборда) */
         @media (max-width: 1280px) {
             .dashboard-container {
                 grid-template-columns: 1fr;
                 aspect-ratio: auto;
                 height: auto;
             }
+
+            #bank-selector {
+                width: 100%;
+            }
         }
     </style>
 </head>
-<body class="bg-gray-900 text-gray-200">
-
-    <!-- Hero Section -->
-    <header class="hero-bg py-20 md:py-32">
+<body class="bg-gray-900 text-gray-200"> <header class="hero-bg py-20 md:py-32">
         <div class="container mx-auto px-6 text-center">
             <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-white mb-4">Посмотрите на свой банк <br> <span class="gradient-text">глазами ваших клиентов</span></h1>
             <p class="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mb-8">
@@ -129,10 +225,9 @@
 
     <main class="container mx-auto px-6 py-16 md:py-24">
 
-        <!-- Problem Section -->
         <section class="text-center mb-20 md:mb-32">
             <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Почему клиенты уходят, так и не начав с вами работать?</h2>
-            <p class="text-gray-400 max-w-3xl mx-auto mb-12">Вы вкладываете миллионы в маркетинг и цифровые каналы, но конверсия не растет. Проблема скрыта в разрывах клиентского пути, которые невозможно увидеть изнутри.</p>
+            <p class="text-gray-400 max-w-3xl mx-auto mb-12">Возможно, вы вкладываете миллионы в маркетинг и цифровые каналы, но конверсия не растет. Проблема скрыта в разрывах клиентского пути, которые невозможно увидеть изнутри.</p>
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="bg-gray-800 p-6 rounded-lg">
                     <h3 class="font-bold text-xl mb-2 text-white">Невидимые барьеры</h3>
@@ -149,7 +244,6 @@
             </div>
         </section>
 
-        <!-- What is Customer Choice Index -->
         <section class="mb-20 md:mb-32">
             <div class="text-center">
                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Что такое Customer Choice Index?</h2>
@@ -173,7 +267,7 @@
                                 <svg class="w-6 h-6 text-indigo-400 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 <div>
                                     <h4 class="font-semibold text-white">Две детальные скор-карты</h4>
-                                    <p class="text-gray-400">Мы отдельно оцениваем Online-путь (сайт, приложение, чаты) и Offline-путь (звонок, визит в отделение).</p>
+                                    <p class="text-gray-400">Мы отдельно оцениваем Online-путь (сайт, приложение, звонок, чаты) и Offline-путь (визит в отделение).</p>
                                 </div>
                             </li>
                              <li class="flex items-start">
@@ -192,7 +286,7 @@
                         </div>
                         <div class="bg-gray-700 p-4 rounded-lg">
                             <p class="text-2xl font-bold text-pink-400">GenAI</p>
-                            <p class="text-gray-300">Технологичность</p>
+                            <p class="text-gray-300">Использование GenAI</p>
                         </div>
                         <div class="bg-gray-700 p-4 rounded-lg">
                             <p class="text-2xl font-bold text-emerald-400">Sales</p>
@@ -207,43 +301,42 @@
             </div>
         </section>
 
-        <!-- UPDATED Scope Section -->
         <section class="mb-20 md:mb-32">
             <div class="text-center mb-12">
                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Масштаб нашего исследования</h2>
-                <p class="text-gray-400 max-w-3xl mx-auto">Мы предоставляем данные, которым можно доверять. Наше исследование охватывает несколько рынков для наиболее полного и объективного сравнения.</p>
+                <p class="text-gray-400 max-w-3xl mx-auto">Мы предоставляем данные, которым можно доверять. На текущий момент наше исследование охватывает только один регион. До конца 2026 года планируется проведение еще в 10 странах.</p>
             </div>
             <div class="bg-gray-800 rounded-lg p-8 md:p-12">
                  <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center mb-10 pb-10 border-b border-gray-700">
                     <div class="p-4">
-                        <div class="text-5xl font-extrabold gradient-text mb-2">2</div>
-                        <h3 class="font-bold text-xl text-white">Региона</h3>
+                        <div class="text-5xl font-extrabold gradient-text mb-2">1</div>
+                        <h3 class="font-bold text-xl text-white">Регион</h3>
                     </div>
                     <div class="p-4">
-                        <div class="text-5xl font-extrabold gradient-text mb-2">8</div>
-                        <h3 class="font-bold text-xl text-white">Стран</h3>
+                        <div class="text-5xl font-extrabold gradient-text mb-2">1</div>
+                        <h3 class="font-bold text-xl text-white">Страна</h3>
                     </div>
                     <div class="p-4">
-                        <div class="text-5xl font-extrabold gradient-text mb-2">15+</div>
+                        <div class="text-5xl font-extrabold gradient-text mb-2">15</div>
                         <h3 class="font-bold text-xl text-white">Банков</h3>
                         <p class="text-gray-400 text-sm mt-1">в каждой стране</p>
                     </div>
                     <div class="p-4">
-                        <div class="text-5xl font-extrabold gradient-text mb-2">500+</div>
-                        <h3 class="font-bold text-xl text-white">Тайных визитов</h3>
+                        <div class="text-5xl font-extrabold gradient-text mb-2">141</div>
+                        <h3 class="font-bold text-xl text-white">Тайный визит</h3>
                          <p class="text-gray-400 text-sm mt-1">По сценариям Retail и SME</p>
                     </div>
                 </div>
                 
                 <div class="flex justify-center mb-4">
                      <div id="region-tabs" class="flex items-center bg-slate-900 rounded-lg p-1 space-x-1">
-                        <!-- Region tabs will be injected by JS -->
-                    </div>
+                         <button class="tab-button active" data-region="Центральная Азия">Центральная Азия</button>
+                     </div>
                 </div>
 
                 <div id="country-tabs-container" class="flex justify-center overflow-x-auto py-2 mb-4">
                     <div id="country-tabs" class="flex items-center space-x-2">
-                        <!-- Country tabs will be injected by JS -->
+                        <button class="tab-button active" data-country="Узбекистан">Узбекистан</button>
                     </div>
                 </div>
                 
@@ -256,13 +349,12 @@
                         </div>
                     </div>
                     <div id="country-rankings">
-                        <!-- Bank list will be rendered here by JS -->
+                        <!-- Рендерится через JS -->
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Dashboard Section -->
         <section class="mb-20 md:mb-32">
             <div class="text-center mb-12">
                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Все данные — в одном интерактивном дашборде</h2>
@@ -272,33 +364,32 @@
             </div>
             
             <div class="mb-8 text-center">
-                <h4 class="text-lg font-semibold text-slate-300 mb-3">Выберите сегмент</h4>
+                <h4 class="text-lg font-semibold text-slate-300 mb-3">Выберите разрез результатов</h4>
                 <div class="inline-flex justify-center items-center bg-slate-800 rounded-lg p-1">
                     <div id="segment-tabs" class="flex items-center">
-                         <button class="tab-button" data-segment="All">All</button>
-                         <button class="tab-button active" data-segment="Retail">Retail</button>
-                         <button class="tab-button" data-segment="SME">SME</button>
+                         <button class="tab-button active" data-segment="CCI">Общий CCI</button>
+                         <button class="tab-button" data-segment="Online">Online</button>
+                         <button class="tab-button" data-segment="Offline">Offline</button>
                     </div>
                 </div>
             </div>
 
-            <div class="rounded-lg shadow-2xl p-4 md:p-8" style="background-color: #0f172a;">
-                <!-- INTERACTIVE DASHBOARD START -->
-                <div class="dashboard-container">
-                    <!-- ======== ЛЕВАЯ КОЛОНКА ======== -->
+            <div class="rounded-lg shadow-2xl p-4 md:p-8" style="background-color: #0f172a; position: relative;">
+                
+                <select id="bank-selector"></select>
+
+                <div class="dashboard-container" id="main-dashboard-content">
                     <div class="flex flex-col gap-4">
-                        <!-- КАРТА КЛИЕНТА -->
                         <div class="card">
                             <div class="flex justify-between items-start mb-4">
                                 <div class="flex items-center gap-3">
-                                    <img src="https://companieslogo.com/img/orig/KKS.F-9d710a31.png?t=1720244492" alt="Kaspi Bank Logo" class="h-10 w-10 rounded-lg object-contain flex-shrink-0">
                                     <div>
-                                        <h2 class="font-bold text-white text-lg leading-tight">Банк A</h2>
-                                        <p id="segment-subtitle" class="text-xs text-slate-400">Retail Clients</p>
+                                        <h2 id="bank-name" class="font-bold text-white text-xl leading-tight">...</h2>
+                                        <p class="text-xs text-slate-400">Retail Clients</p>
                                     </div>
                                 </div>
                                 <div class="text-right">
-                                    <span id="rank-value" class="text-3xl font-extrabold text-white">1</span>
+                                    <span id="bank-rank" class="text-3xl font-extrabold text-white">...</span>
                                     <span class="text-base font-semibold text-slate-300"> место</span>
                                     <p class="text-xs text-slate-500 uppercase mt-1">Общий рейтинг</p>
                                 </div>
@@ -308,11 +399,14 @@
                                     <svg class="w-[180px] h-[90px]" viewBox="0 0 192 96">
                                         <defs>
                                             <linearGradient id="gaugeGradient">
-                                                <stop stop-color="#22d3ee"/>
+                                                <stop stop-color="#22d3ee" />
                                             </linearGradient>
                                         </defs>
-                                        <path d="M 16 96 A 80 80 0 0 1 176 96" fill="none" stroke="#334155" stroke-width="20" stroke-linecap="round"/>
-                                        <path id="gaugePath" d="M 16 96 A 80 80 0 0 1 176 96" fill="none" stroke="url(#gaugeGradient)" stroke-width="20" stroke-linecap="round" stroke-dasharray="251.2"/>
+                                        <path d="M 16 96 A 80 80 0 0 1 176 96" fill="none" stroke="#334155" stroke-width="20"
+                                            stroke-linecap="round" />
+                                        <path id="gaugePath" d="M 16 96 A 80 80 0 0 1 176 96" fill="none"
+                                            stroke="url(#gaugeGradient)" stroke-width="20" stroke-linecap="round"
+                                            stroke-dasharray="251.2" />
                                     </svg>
                                     <div class="absolute inset-0 flex items-center justify-center pt-4">
                                         <span id="gaugeValue" class="text-4xl font-extrabold text-white"></span>
@@ -322,7 +416,6 @@
                             </div>
                         </div>
 
-                        <!-- КОНКУРЕНТЫ -->
                         <div class="card flex-grow">
                             <div class="flex justify-between items-center mb-3">
                                 <h3 class="font-semibold text-slate-200 text-base">Рейтинг банков</h3>
@@ -334,18 +427,51 @@
                             <div id="competitors-ranking" class="space-y-3 text-sm flex-grow"></div>
                         </div>
 
-                        <!-- РЕКОМЕНДАЦИИ -->
                         <div class="card">
                             <h3 class="font-semibold text-slate-200 mb-3 text-base">Рекомендации</h3>
                             <div class="space-y-3">
-                                <div class="bg-slate-800/50 p-3 rounded-lg flex items-center gap-3"><svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-cyan-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg><div><h4 class="font-semibold text-white text-sm">Сегментация</h4><p class="text-xs text-slate-300">Углубление сегментации и внедрение предиктивных моделей.</p></div></div>
-                                <div class="bg-slate-800/50 p-3 rounded-lg flex items-center gap-3"><svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-cyan-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg><div><h4 class="font-semibold text-white text-sm">Клиентский опыт</h4><p class="text-xs text-slate-300">Создание Phygital-среды, где цифровые инструменты обогащают визит.</p></div></div>
-                                <div class="bg-slate-800/50 p-3 rounded-lg flex items-center gap-3"><svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-cyan-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" /></svg><div><h4 class="font-semibold text-white text-sm">Работа с данными</h4><p class="text-xs text-slate-300">Переход к проактивному сервису на базе GenAI.</p></div></div>
+                                <div class="bg-slate-800/50 p-3 rounded-lg flex items-center gap-3"><svg
+                                        xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-cyan-400 flex-shrink-0" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                    </svg>
+                                    <div>
+                                        <h4 class="font-semibold text-white text-sm">Сегментация</h4>
+                                        <p class="text-xs text-slate-300">Углубление сегментации и внедрение
+                                            предиктивных моделей.</p>
+                                    </div>
+                                </div>
+                                <div class="bg-slate-800/50 p-3 rounded-lg flex items-center gap-3"><svg
+                                        xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-cyan-400 flex-shrink-0" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                    </svg>
+                                    <div>
+                                        <h4 class="font-semibold text-white text-sm">Клиентский
+                                            опыт</h4>
+                                        <p class="text-xs text-slate-300">Создание
+                                            Phygital-среды, где цифровые инструменты обогащают
+                                            визит.</p>
+                                    </div>
+                                </div>
+                                <div class="bg-slate-800/50 p-3 rounded-lg flex items-center gap-3"><svg
+                                        xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-cyan-400 flex-shrink-0" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
+                                    </svg>
+                                    <div>
+                                        <h4 class="font-semibold text-white text-sm">Работа с данными</h4>
+                                        <p class="text-xs text-slate-300">Переход к проактивному сервису на базе
+                                            GenAI.</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- ======== ПРАВАЯ КОЛОНКА ======== -->
                     <div class="grid grid-rows-[auto_1fr_auto] gap-4">
                         <div class="card row-start-1 relative">
                             <div class="flex justify-between items-start">
@@ -355,14 +481,14 @@
                             </div>
                             <div class="flex-grow relative h-52"><canvas id="choiceChart"></canvas></div>
                         </div>
-                        
+
                         <div class="grid grid-cols-3 gap-4 row-start-2">
                             <div class="card">
                                 <h3 class="font-semibold text-slate-200 mb-3 text-base">Критерии индекса</h3>
                                 <div id="index-criteria" class="space-y-3 text-sm flex-grow"></div>
                                 <div class="mt-auto pt-3 border-t border-slate-700">
                                     <h4 class="font-semibold text-sm text-slate-200 mb-1">Вывод</h4>
-                                    <p class="text-xs text-slate-400">Банк А лидирует в базовом клиентском опыте (Онлайн/Офлайн). Однако для отрыва от конкурентов необходим фокус на инновационных ('GenAI') и человекоцентричных ('Культура') аспектах.</p>
+                                    <p class="text-xs text-slate-400">Выявлены значительные барьеры. Основная зона роста – онлайн и офлайн каналы</p>
                                 </div>
                             </div>
                             <div class="card">
@@ -374,19 +500,21 @@
                                 <div class="flex-grow relative"><canvas id="radarChart"></canvas></div>
                             </div>
                         </div>
-                        
+
                         <div class="grid grid-cols-3 gap-4 row-start-3">
-                                <div class="card items-center justify-center text-center">
+                            <div class="card items-center justify-center text-center">
                                 <h3 class="font-semibold text-slate-200 text-lg mb-2">Эффективность продаж</h3>
                                 <div class="relative flex items-center justify-center">
                                     <svg viewBox="0 0 42 42" width="120" height="120">
                                         <defs>
                                             <linearGradient id="salesGradient">
-                                                <stop stop-color="#22d3ee"/>
+                                                <stop stop-color="#22d3ee" />
                                             </linearGradient>
                                         </defs>
-                                        <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#334155" stroke-width="6"/>
-                                        <circle id="salesDonutArc" cx="21" cy="21" r="15.915" fill="transparent" stroke="url(#salesGradient)" stroke-width="6" stroke-linecap="round" transform="rotate(-90 21 21)"/>
+                                        <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#334155" stroke-width="6" />
+                                        <circle id="salesDonutArc" cx="21" cy="21" r="15.915" fill="transparent"
+                                            stroke="url(#salesGradient)" stroke-width="6" stroke-linecap="round"
+                                            transform="rotate(-90 21 21)" />
                                     </svg>
                                     <div class="donut-center">
                                         <div class="value" id="salesDonutValue"></div>
@@ -395,59 +523,73 @@
                                 </div>
                                 <div class="mt-auto w-full pt-3 border-t border-slate-700 text-left">
                                     <h4 class="font-semibold text-sm text-slate-200 mb-1">Вывод</h4>
-                                    <p class="text-xs text-slate-400">Высокая эффективность продаж — прямое следствие лучшего на рынке совокупного опыта. Это доказывает, что инвестиции в качественный сервис окупаются.</p>
+                                    <p class="text-xs text-slate-400">Нестабильная. Выявлены упущенные возможности для доп. продаж и отсутствие проактивности.</p>
                                 </div>
                             </div>
+
                             <div class="col-span-2 card justify-start">
-                                <h3 class="font-semibold text-slate-200 text-base">Цифровая активность</h3>
-                                <div class="flex-grow grid grid-cols-2 gap-6 pt-2">
-                                    <div class="flex flex-col">
-                                        <div class="flex-grow">
-                                            <p class="text-sm text-slate-400 mb-2">Уникальные пользователи</p>
-                                            <div>
-                                                <span class="text-4xl font-extrabold text-white">125K</span>
-                                                <span class="text-base text-slate-400">/ мес</span>
-                                                <p class="text-xs text-slate-500 mt-1">1200K потенциальный рынок</p>
-                                            </div>
-                                            <p class="text-xs text-slate-400 mt-4 mb-2">Доля захвата рынка</p>
-                                            <div class="relative w-full bg-slate-700 rounded-full h-2.5">
-                                                <div class="bg-gradient-to-r from-cyan-600 to-cyan-400 h-2.5 rounded-full" style="width: 10.4%"></div>
-                                                <span class="absolute right-0 -top-5 text-xs font-bold text-white">10.4%</span>
-                                            </div>
-                                        </div>
-                                        <div class="mt-auto pt-4 border-t border-slate-700">
-                                            <h4 class="font-semibold text-sm text-slate-200 mb-1">Вывод</h4>
-                                            <p class="text-xs text-slate-400">Низкий охват говорит о значительном потенциале роста. Фокус на SEO и SMM может привлечь новую аудиторию.</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col">
-                                       <div class="flex-grow">
-                                            <div class="grid grid-cols-2 gap-4">
-                                                <div class="bg-slate-900/50 rounded-lg p-4 text-center">
-                                                    <p class="text-xs text-slate-400">DAU</p>
-                                                    <p class="text-3xl font-bold text-white">32k</p>
+                                <div id="digital-activity-content">
+                                    <h3 class="font-semibold text-slate-200 text-base">Цифровая активность</h3>
+                                    <div class="flex-grow grid grid-cols-2 gap-6 pt-2">
+                                        <div class="flex flex-col">
+                                            <div class="flex-grow">
+                                                <p class="text-sm text-slate-400 mb-2">Уникальные пользователи</p>
+                                                <div>
+                                                    <span class="text-4xl font-extrabold text-white">125K</span>
+                                                    <span class="text-base text-slate-400">/ мес</span>
+                                                    <p class="text-xs text-slate-500 mt-1">1200K потенциальный рынок</p>
                                                 </div>
-                                                <div class="bg-slate-900/50 rounded-lg p-4 text-center">
-                                                    <p class="text-xs text-slate-400">MAU</p>
-                                                    <p class="text-3xl font-bold text-white">48k</p>
+                                                <p class="text-xs text-slate-400 mt-4 mb-2">Доля захвата рынка</p>
+                                                <div class="relative w-full bg-slate-700 rounded-full h-2.5">
+                                                    <div class="bg-gradient-to-r from-cyan-600 to-cyan-400 h-2.5 rounded-full"
+                                                        style="width: 10.4%"></div>
+                                                    <span class="absolute right-0 -top-5 text-xs font-bold text-white">10.4%</span>
                                                 </div>
                                             </div>
-                                       </div>
-                                        <div class="mt-auto pt-4 border-t border-slate-700">
-                                            <h4 class="font-semibold text-sm text-slate-200 mb-1">Вывод</h4>
-                                            <p class="text-xs text-slate-400">Высокий показатель вовлеченности (DAU/MAU > 65%) подтверждает эффективность транзакционной бизнес-модели банка.</p>
+                                            <div class="mt-auto pt-4 border-t border-slate-700">
+                                                <h4 class="font-semibold text-sm text-slate-200 mb-1">Вывод</h4>
+                                                <p class="text-xs text-slate-400">Низкий охват говорит о значительном потенциале
+                                                    роста.
+                                                    Фокус на SEO и SMM может привлечь новую аудиторию.</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <div class="flex-grow">
+                                                <div class="grid grid-cols-2 gap-4">
+                                                    <div class="bg-slate-900/50 rounded-lg p-4 text-center">
+                                                        <p class="text-xs text-slate-400">DAO</p>
+                                                        <p class="text-3xl font-bold text-white">32k</p>
+                                                    </div>
+                                                    <div class="bg-slate-900/50 rounded-lg p-4 text-center">
+                                                        <p class="text-xs text-slate-400">MAU</p>
+                                                        <p class="text-3xl font-bold text-white">48k</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mt-auto pt-4 border-t border-slate-700">
+                                                <h4 class="font-semibold text-sm text-slate-200 mb-1">Вывод</h4>
+                                                <p class="text-xs text-slate-400">Высокий показатель вовлеченности (DAU/MAU > 65%)
+                                                    подтверждает эффективность транзакционной бизнес-модели банка.</p>
+                                            </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="card-overlay" style="display: flex; position: absolute; background-color: rgba(30, 41, 59, 0.5);">
+                                    <div class="card-overlay-text" style="font-size: 1.125rem; padding: 12px 20px; background-color: rgba(15, 23, 42, 0.7); border-radius: 10px; border: 1px solid #334155;">Будет доступно позже</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- INTERACTIVE DASHBOARD END -->
+                <div id="dashboard-overlay" class="card-overlay" style="display: none;">
+                    <div class="card-overlay-text">
+                        Получить доступ к деталям исследования
+                    </div>
+                </div>
+                
             </div>
         </section>
 
-        <!-- Why Buy Section -->
         <section class="mb-20 md:mb-32" id="value">
             <div class="text-center">
                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-12">Что вы получите, купив доступ к исследованию?</h2>
@@ -472,7 +614,6 @@
             </div>
         </section>
 
-        <!-- Call to Action Section -->
         <section class="text-center bg-gray-800 rounded-lg py-16" id="contact">
             <h2 class="text-3xl font-bold text-white mb-4">Готовы увидеть свой бизнес глазами клиента?</h2>
             <p class="text-gray-400 max-w-2xl mx-auto mb-8">
@@ -493,328 +634,1105 @@
     </footer>
 
 <script>
+// !!!!!!!!!!! ДАННЫЕ И ЛОГИКА ДЕШБОРДА (ИНТЕГРИРОВАНЫ И ОБНОВЛЕНЫ) !!!!!!!!!!!
 document.addEventListener('DOMContentLoaded', () => {
-    // --- GLOBAL VARS ---
-    let charts = {};
-    const KASPI_COLOR = '#22d3ee';
+    // === 1. ДАННЫЕ (Обновлено из ALL Uz - Final.csv) ===
+    const appData = {
+        "bankNames": [
+            "Гарант банк",
+            "Давр-банк",
+            "Ипак Йули банк",
+            "Ипотека-банк",
+            "Капиталбанк",
+            "Народный банк",
+            "ОриентФинансБанк",
+            "Asakabank",
+            "Asia Alliance Bank",
+            "BRB",
+            "Hamkorbank",
+            "InFinBank",
+            "NBU",
+            "SQB",
+            "Tenge Bank"
+        ],
+        "allBanksData": [
+            {
+                "Bank": "Гарант банк",
+                "Индекс CCI": 2.78,
+                "Волатильность CCI": 2.23,
+                "Критерии индекса: Онлайн": 2.95,
+                "Критерии индекса: Офлайн": 2.61,
+                "Критерии индекса: Omni": 2.26,
+                "Критерии индекса: GenAI": 1.87,
+                "Критерии индекса: Культура": 2.89,
+                "Волатильность Онлайн": 2.08,
+                "Волатильность Офлайн": 2.38,
+                "Эффективность продаж": 2.58,
+                "Место по Индекс CCI": 6,
+                "Место по Волатильность общая": 15,
+                "Место по Онлайн": 2,
+                "Место по Офлайн": 10,
+                "Место по Omni": 11,
+                "Место по GenAI": 4,
+                "Место по Culture": 8,
+                "Сравнение каналов: Отделение": 2.61,
+                "Сравнение каналов: Web": 3.07,
+                "Сравнение каналов: Контакт центр": 2.93,
+                "Путь клиента: Первое касание": 3.47,
+                "Путь клиента: Изучение сайта": 2.67,
+                "Путь клиента: Звонок": 3.6,
+                "Путь клиента: Общение в чате": 2.27,
+                "Путь клиента: Визит": 2.74,
+                "Путь клиента: Обслуживание": 2.83
+            },
+            {
+                "Bank": "Давр-банк",
+                "Индекс CCI": 2.37,
+                "Волатильность CCI": 1.76,
+                "Критерии индекса: Онлайн": 2.64,
+                "Критерии индекса: Офлайн": 2.1,
+                "Критерии индекса: Omni": 2.11,
+                "Критерии индекса: GenAI": 2.07,
+                "Критерии индекса: Культура": 2.07,
+                "Волатильность Онлайн": 1.63,
+                "Волатильность Офлайн": 1.89,
+                "Эффективность продаж": 2.09,
+                "Место по Индекс CCI": 14,
+                "Место по Волатильность общая": 6,
+                "Место по Онлайн": 12,
+                "Место по Офлайн": 14,
+                "Место по Omni": 13,
+                "Место по GenAI": 3,
+                "Место по Culture": 14,
+                "Сравнение каналов: Отделение": 2.1,
+                "Сравнение каналов: Web": 3.13,
+                "Сравнение каналов: Контакт центр": 2.37,
+                "Путь клиента: Первое касание": 3.13,
+                "Путь клиента: Изучение сайта": 3.13,
+                "Путь клиента: Звонок": 2.07,
+                "Путь клиента: Общение в чате": 2.67,
+                "Путь клиента: Визит": 2.29,
+                "Путь клиента: Обслуживание": 2.1
+            },
+            {
+                "Bank": "Ипак Йули банк",
+                "Индекс CCI": 2.81,
+                "Волатильность CCI": 1.77,
+                "Критерии индекса: Онлайн": 2.77,
+                "Критерии индекса: Офлайн": 2.85,
+                "Критерии индекса: Omni": 2.56,
+                "Критерии индекса: GenAI": 1.67,
+                "Критерии индекса: Культура": 3.0,
+                "Волатильность Онлайн": 1.37,
+                "Волатильность Офлайн": 2.17,
+                "Эффективность продаж": 2.73,
+                "Место по Индекс CCI": 4,
+                "Место по Волатильность общая": 8,
+                "Место по Онлайн": 8,
+                "Место по Офлайн": 4,
+                "Место по Omni": 1,
+                "Место по GenAI": 12,
+                "Место по Culture": 4,
+                "Сравнение каналов: Отделение": 2.85,
+                "Сравнение каналов: Web": 3.03,
+                "Сравнение каналов: Контакт центр": 2.33,
+                "Путь клиента: Первое касание": 3.13,
+                "Путь клиента: Изучение сайта": 2.93,
+                "Путь клиента: Звонок": 3.13,
+                "Путь клиента: Общение в чате": 1.53,
+                "Путь клиента: Визит": 3.1,
+                "Путь клиента: Обслуживание": 2.9
+            },
+            {
+                "Bank": "Ипотека-банк",
+                "Индекс CCI": 2.74,
+                "Волатильность CCI": 1.5,
+                "Критерии индекса: Онлайн": 2.8,
+                "Критерии индекса: Офлайн": 2.69,
+                "Критерии индекса: Omni": 2.48,
+                "Критерии индекса: GenAI": 1.8,
+                "Критерии индекса: Культура": 3.02,
+                "Волатильность Онлайн": 1.31,
+                "Волатильность Офлайн": 1.69,
+                "Эффективность продаж": 2.36,
+                "Место по Индекс CCI": 7,
+                "Место по Волатильность общая": 1,
+                "Место по Онлайн": 6,
+                "Место по Офлайн": 7,
+                "Место по Omni": 3,
+                "Место по GenAI": 8,
+                "Место по Culture": 3,
+                "Сравнение каналов: Отделение": 2.69,
+                "Сравнение каналов: Web": 3.1,
+                "Сравнение каналов: Контакт центр": 2.63,
+                "Путь клиента: Первое касание": 3.27,
+                "Путь клиента: Изучение сайта": 2.93,
+                "Путь клиента: Звонок": 2.8,
+                "Путь клиента: Общение в чате": 2.47,
+                "Путь клиента: Визит": 2.36,
+                "Путь клиента: Обслуживание": 3.17
+            },
+            {
+                "Bank": "Капиталбанк",
+                "Индекс CCI": 2.74,
+                "Волатильность CCI": 2.18,
+                "Критерии индекса: Онлайн": 2.91,
+                "Критерии индекса: Офлайн": 2.57,
+                "Критерии индекса: Omni": 2.52,
+                "Критерии индекса: GenAI": 1.67,
+                "Критерии индекса: Культура": 2.81,
+                "Волатильность Онлайн": 1.93,
+                "Волатильность Офлайн": 2.43,
+                "Эффективность продаж": 2.56,
+                "Место по Индекс CCI": 8,
+                "Место по Волатильность общая": 14,
+                "Место по Онлайн": 4,
+                "Место по Офлайн": 11,
+                "Место по Omni": 2,
+                "Место по GenAI": 12,
+                "Место по Culture": 11,
+                "Сравнение каналов: Отделение": 2.57,
+                "Сравнение каналов: Web": 3.0,
+                "Сравнение каналов: Контакт центр": 2.6,
+                "Путь клиента: Первое касание": 3.07,
+                "Путь клиента: Изучение сайта": 2.93,
+                "Путь клиента: Звонок": 3.4,
+                "Путь клиента: Общение в чате": 1.8,
+                "Путь клиента: Визит": 2.83,
+                "Путь клиента: Обслуживание": 2.65
+            },
+            {
+                "Bank": "Народный банк",
+                "Индекс CCI": 2.31,
+                "Волатильность CCI": 1.71,
+                "Критерии индекса: Онлайн": 2.73,
+                "Критерии индекса: Офлайн": 1.89,
+                "Критерии индекса: Omni": 2.04,
+                "Критерии индекса: GenAI": 1.73,
+                "Критерии индекса: Культура": 1.82,
+                "Волатильность Онлайн": 1.8,
+                "Волатильность Офлайн": 1.62,
+                "Эффективность продаж": 1.93,
+                "Место по Индекс CCI": 15,
+                "Место по Волатильность общая": 4,
+                "Место по Онлайн": 9,
+                "Место по Офлайн": 15,
+                "Место по Omni": 14,
+                "Место по GenAI": 10,
+                "Место по Culture": 15,
+                "Сравнение каналов: Отделение": 1.89,
+                "Сравнение каналов: Web": 3.2,
+                "Сравнение каналов: Контакт центр": 2.3,
+                "Путь клиента: Первое касание": 3.13,
+                "Путь клиента: Изучение сайта": 3.27,
+                "Путь клиента: Звонок": 2.6,
+                "Путь клиента: Общение в чате": 2.0,
+                "Путь клиента: Визит": 2.33,
+                "Путь клиента: Обслуживание": 1.88
+            },
+            {
+                "Bank": "ОриентФинансБанк",
+                "Индекс CCI": 2.85,
+                "Волатильность CCI": 1.87,
+                "Критерии индекса: Онлайн": 2.73,
+                "Критерии индекса: Офлайн": 2.97,
+                "Критерии индекса: Omni": 2.22,
+                "Критерии индекса: GenAI": 2.13,
+                "Критерии индекса: Культура": 2.89,
+                "Волатильность Онлайн": 1.55,
+                "Волатильность Офлайн": 2.2,
+                "Эффективность продаж": 2.62,
+                "Место по Индекс CCI": 3,
+                "Место по Волатильность общая": 11,
+                "Место по Онлайн": 10,
+                "Место по Офлайн": 2,
+                "Место по Omni": 12,
+                "Место по GenAI": 2,
+                "Место по Culture": 8,
+                "Сравнение каналов: Отделение": 2.97,
+                "Сравнение каналов: Web": 3.27,
+                "Сравнение каналов: Контакт центр": 2.2,
+                "Путь клиента: Первое касание": 3.2,
+                "Путь клиента: Изучение сайта": 3.33,
+                "Путь клиента: Звонок": 1.93,
+                "Путь клиента: Общение в чате": 2.47,
+                "Путь клиента: Визит": 3.45,
+                "Путь клиента: Обслуживание": 3.02
+            },
+            {
+                "Bank": "Asakabank",
+                "Индекс CCI": 2.45,
+                "Волатильность CCI": 1.92,
+                "Критерии индекса: Онлайн": 2.51,
+                "Критерии индекса: Офлайн": 2.39,
+                "Критерии индекса: Omni": 2.04,
+                "Критерии индекса: GenAI": 1.4,
+                "Критерии индекса: Культура": 2.35,
+                "Волатильность Онлайн": 1.77,
+                "Волатильность Офлайн": 2.07,
+                "Эффективность продаж": 2.2,
+                "Место по Индекс CCI": 13,
+                "Место по Волатильность общая": 12,
+                "Место по Онлайн": 15,
+                "Место по Офлайн": 12,
+                "Место по Omni": 14,
+                "Место по GenAI": 15,
+                "Место по Culture": 12,
+                "Сравнение каналов: Отделение": 2.39,
+                "Сравнение каналов: Web": 3.47,
+                "Сравнение каналов: Контакт центр": 1.9,
+                "Путь клиента: Первое касание": 3.73,
+                "Путь клиента: Изучение сайта": 3.2,
+                "Путь клиента: Звонок": 2.4,
+                "Путь клиента: Общение в чате": 1.4,
+                "Путь клиента: Визит": 3.0,
+                "Путь клиента: Обслуживание": 2.33
+            },
+            {
+                "Bank": "Asia Alliance Bank",
+                "Индекс CCI": 2.68,
+                "Волатильность CCI": 1.77,
+                "Критерии индекса: Онлайн": 2.64,
+                "Критерии индекса: Офлайн": 2.71,
+                "Критерии индекса: Omni": 2.37,
+                "Критерии индекса: GenAI": 1.8,
+                "Критерии индекса: Культура": 2.96,
+                "Волатильность Онлайн": 1.91,
+                "Волатильность Офлайн": 1.62,
+                "Эффективность продаж": 2.6,
+                "Место по Индекс CCI": 10,
+                "Место по Волатильность общая": 7,
+                "Место по Онлайн": 12,
+                "Место по Офлайн": 6,
+                "Место по Omni": 6,
+                "Место по GenAI": 8,
+                "Место по Culture": 6,
+                "Сравнение каналов: Отделение": 2.71,
+                "Сравнение каналов: Web": 2.8,
+                "Сравнение каналов: Контакт центр": 2.3,
+                "Путь клиента: Первое касание": 2.8,
+                "Путь клиента: Изучение сайта": 2.8,
+                "Путь клиента: Звонок": 2.93,
+                "Путь клиента: Общение в чате": 1.67,
+                "Путь клиента: Визит": 2.74,
+                "Путь клиента: Обслуживание": 2.88
+            },
+            {
+                "Bank": "BRB",
+                "Индекс CCI": 2.91,
+                "Волатильность CCI": 1.81,
+                "Критерии индекса: Онлайн": 2.72,
+                "Критерии индекса: Офлайн": 3.11,
+                "Критерии индекса: Omni": 2.33,
+                "Критерии индекса: GenAI": 1.87,
+                "Критерии индекса: Культура": 3.11,
+                "Волатильность Онлайн": 1.27,
+                "Волатильность Офлайн": 2.36,
+                "Эффективность продаж": 3.04,
+                "Место по Индекс CCI": 2,
+                "Место по Волатильность общая": 9,
+                "Место по Онлайн": 11,
+                "Место по Офлайн": 1,
+                "Место по Omni": 9,
+                "Место по GenAI": 4,
+                "Место по Culture": 1,
+                "Сравнение каналов: Отделение": 3.11,
+                "Сравнение каналов: Web": 3.33,
+                "Сравнение каналов: Контакт центр": 2.2,
+                "Путь клиента: Первое касание": 3.4,
+                "Путь клиента: Изучение сайта": 3.27,
+                "Путь клиента: Звонок": 2.53,
+                "Путь клиента: Общение в чате": 1.87,
+                "Путь клиента: Визит": 3.4,
+                "Путь клиента: Обслуживание": 3.13
+            },
+            {
+                "Bank": "Hamkorbank",
+                "Индекс CCI": 2.72,
+                "Волатильность CCI": 2.08,
+                "Критерии индекса: Онлайн": 2.83,
+                "Критерии индекса: Офлайн": 2.62,
+                "Критерии индекса: Omni": 2.41,
+                "Критерии индекса: GenAI": 1.87,
+                "Критерии индекса: Культура": 2.91,
+                "Волатильность Онлайн": 1.84,
+                "Волатильность Офлайн": 2.32,
+                "Эффективность продаж": 2.71,
+                "Место по Индекс CCI": 9,
+                "Место по Волатильность общая": 13,
+                "Место по Онлайн": 5,
+                "Место по Офлайн": 9,
+                "Место по Omni": 5,
+                "Место по GenAI": 4,
+                "Место по Culture": 7,
+                "Сравнение каналов: Отделение": 2.62,
+                "Сравнение каналов: Web": 3.23,
+                "Сравнение каналов: Контакт центр": 2.57,
+                "Путь клиента: Первое касание": 3.4,
+                "Путь клиента: Изучение сайта": 3.07,
+                "Путь клиента: Звонок": 3.0,
+                "Путь клиента: Общение в чате": 2.13,
+                "Путь клиента: Визит": 2.26,
+                "Путь клиента: Обслуживание": 2.9
+            },
+            {
+                "Bank": "InFinBank",
+                "Индекс CCI": 2.55,
+                "Волатильность CCI": 1.7,
+                "Критерии индекса: Онлайн": 2.95,
+                "Критерии индекса: Офлайн": 2.16,
+                "Критерии индекса: Omni": 2.33,
+                "Критерии индекса: GenAI": 1.73,
+                "Критерии индекса: Культура": 2.35,
+                "Волатильность Онлайн": 1.44,
+                "Волатильность Офлайн": 1.96,
+                "Эффективность продаж": 2.11,
+                "Место по Индекс CCI": 12,
+                "Место по Волатильность общая": 3,
+                "Место по Онлайн": 2,
+                "Место по Офлайн": 13,
+                "Место по Omni": 9,
+                "Место по GenAI": 10,
+                "Место по Culture": 12,
+                "Сравнение каналов: Отделение": 2.16,
+                "Сравнение каналов: Web": 3.27,
+                "Сравнение каналов: Контакт центр": 2.53,
+                "Путь клиента: Первое касание": 3.2,
+                "Путь клиента: Изучение сайта": 3.33,
+                "Путь клиента: Звонок": 3.13,
+                "Путь клиента: Общение в чате": 1.93,
+                "Путь клиента: Визит": 2.26,
+                "Путь клиента: Обслуживание": 2.33
+            },
+            {
+                "Bank": "NBU",
+                "Индекс CCI": 2.81,
+                "Волатильность CCI": 1.74,
+                "Критерии индекса: Онлайн": 2.79,
+                "Критерии индекса: Офлайн": 2.83,
+                "Критерии индекса: Omni": 2.37,
+                "Критерии индекса: GenAI": 1.87,
+                "Критерии индекса: Культура": 3.05,
+                "Волатильность Онлайн": 1.35,
+                "Волатильность Офлайн": 2.14,
+                "Эффективность продаж": 2.76,
+                "Место по Индекс CCI": 5,
+                "Место по Волатильность общая": 5,
+                "Место по Онлайн": 7,
+                "Место по Офлайн": 5,
+                "Место по Omni": 6,
+                "Место по GenAI": 4,
+                "Место по Culture": 2,
+                "Сравнение каналов: Отделение": 2.83,
+                "Сравнение каналов: Web": 3.13,
+                "Сравнение каналов: Контакт центр": 2.6,
+                "Путь клиента: Первое касание": 3.33,
+                "Путь клиента: Изучение сайта": 2.93,
+                "Путь клиента: Звонок": 3.07,
+                "Путь клиента: Общение в чате": 2.13,
+                "Путь клиента: Визит": 3.1,
+                "Путь клиента: Обслуживание": 2.92
+            },
+            {
+                "Bank": "SQB",
+                "Индекс CCI": 2.93,
+                "Волатильность CCI": 1.85,
+                "Критерии индекса: Онлайн": 3.0,
+                "Критерии индекса: Офлайн": 2.86,
+                "Критерии индекса: Omni": 2.37,
+                "Критерии индекса: GenAI": 2.2,
+                "Критерии индекса: Культура": 2.98,
+                "Волатильность Онлайн": 1.43,
+                "Волатильность Офлайн": 2.27,
+                "Эффективность продаж": 2.8,
+                "Место по Индекс CCI": 1,
+                "Место по Волатильность общая": 10,
+                "Место по Онлайн": 1,
+                "Место по Офлайн": 3,
+                "Место по Omni": 6,
+                "Место по GenAI": 1,
+                "Место по Culture": 5,
+                "Сравнение каналов: Отделение": 2.86,
+                "Сравнение каналов: Web": 3.1,
+                "Сравнение каналов: Контакт центр": 2.97,
+                "Путь клиента: Первое касание": 3.27,
+                "Путь клиента: Изучение сайта": 2.93,
+                "Путь клиента: Звонок": 3.27,
+                "Путь клиента: Общение в чате": 2.67,
+                "Путь клиента: Визит": 3.24,
+                "Путь клиента: Обслуживание": 2.96
+            },
+            {
+                "Bank": "Tenge Bank",
+                "Индекс CCI": 2.63,
+                "Волатильность CCI": 1.56,
+                "Критерии индекса: Онлайн": 2.57,
+                "Критерии индекса: Офлайн": 2.69,
+                "Критерии индекса: Omni": 2.44,
+                "Критерии индекса: GenAI": 1.47,
+                "Критерии индекса: Культура": 2.82,
+                "Волатильность Онлайн": 1.63,
+                "Волатильность Офлайн": 1.49,
+                "Эффективность продаж": 2.47,
+                "Место по Индекс CCI": 11,
+                "Место по Волатильность общая": 2,
+                "Место по Онлайн": 14,
+                "Место по Офлайн": 7,
+                "Место по Omni": 4,
+                "Место по GenAI": 14,
+                "Место по Culture": 10,
+                "Сравнение каналов: Отделение": 2.69,
+                "Сравнение каналов: Web": 3.07,
+                "Сравнение каналов: Контакт центр": 2.03,
+                "Путь клиента: Первое касание": 3.0,
+                "Путь клиента: Изучение сайта": 3.13,
+                "Путь клиента: Звонок": 2.6,
+                "Путь клиента: Общение в чате": 1.47,
+                "Путь клиента: Визит": 2.83,
+                "Путь клиента: Обслуживание": 2.9
+            }
+        ],
+        "marketData": {
+            "criteria": {
+                "average": {
+                    "Критерии индекса: Онлайн": 2.7693333333333334,
+                    "Критерии индекса: Офлайн": 2.603333333333333,
+                    "Критерии индекса: Omni": 2.3173333333333335,
+                    "Критерии индекса: GenAI": 1.8046666666666667,
+                    "Критерии индекса: Культура": 2.750666666666667,
+                    "Волатильность Онлайн": 1.6286666666666666,
+                    "Волатильность Офлайн": 2.043333333333333
+                },
+                "leader": {
+                    "Критерии индекса: Онлайн": 3.0,
+                    "Критерии индекса: Офлайн": 3.11,
+                    "Критерии индекса: Omni": 2.56,
+                    "Критерии индекса: GenAI": 2.2,
+                    "Критерии индекса: Культура": 3.11,
+                    "Волатильность Онлайн": 2.08,
+                    "Волатильность Офлайн": 2.43
+                }
+            },
+            "journey": {
+                "average": {
+                    "Путь клиента: Первое касание": 3.262,
+                    "Путь клиента: Изучение сайта": 3.082,
+                    "Путь клиента: Звонок": 2.8633333333333333,
+                    "Путь клиента: Общение в чате": 2.04,
+                    "Путь клиента: Визит": 2.798666666666667,
+                    "Путь клиента: Обслуживание": 2.782666666666667
+                },
+                "leader": {
+                    "Путь клиента: Первое касание": 3.73,
+                    "Путь клиента: Изучение сайта": 3.33,
+                    "Путь клиента: Звонок": 3.6,
+                    "Путь клиента: Общение в чате": 2.67,
+                    "Путь клиента: Визит": 3.45,
+                    "Путь клиента: Обслуживание": 3.17
+                }
+            },
+            "channels": {
+                "average": {
+                    "Сравнение каналов: Отделение": 2.603333333333333,
+                    "Сравнение каналов: Web": 3.146666666666667,
+                    "Сравнение каналов: Контакт центр": 2.45
+                },
+                "leader": {
+                    "Сравнение каналов: Отделение": 3.11,
+                    "Сравнение каналов: Web": 3.47,
+                    "Сравнение каналов: Контакт центр": 2.97
+                }
+            },
+            "all_banks_scatter": [
+                {
+                    "Bank": "Гарант банк",
+                    "Критерии индекса: Онлайн": 2.95,
+                    "Критерии индекса: Офлайн": 2.61
+                },
+                {
+                    "Bank": "Давр-банк",
+                    "Критерии индекса: Онлайн": 2.64,
+                    "Критерии индекса: Офлайн": 2.1
+                },
+                {
+                    "Bank": "Ипак Йули банк",
+                    "Критерии индекса: Онлайн": 2.77,
+                    "Критерии индекса: Офлайн": 2.85
+                },
+                {
+                    "Bank": "Ипотека-банк",
+                    "Критерии индекса: Онлайн": 2.8,
+                    "Критерии индекса: Офлайн": 2.69
+                },
+                {
+                    "Bank": "Капиталбанк",
+                    "Критерии индекса: Онлайн": 2.91,
+                    "Критерии индекса: Офлайн": 2.57
+                },
+                {
+                    "Bank": "Народный банк",
+                    "Критерии индекса: Онлайн": 2.73,
+                    "Критерии индекса: Офлайн": 1.89
+                },
+                {
+                    "Bank": "ОриентФинансБанк",
+                    "Критерии индекса: Онлайн": 2.73,
+                    "Критерии индекса: Офлайн": 2.97
+                },
+                {
+                    "Bank": "Asakabank",
+                    "Критерии индекса: Онлайн": 2.51,
+                    "Критерии индекса: Офлайн": 2.39
+                },
+                {
+                    "Bank": "Asia Alliance Bank",
+                    "Критерии индекса: Онлайн": 2.64,
+                    "Критерии индекса: Офлайн": 2.71
+                },
+                {
+                    "Bank": "BRB",
+                    "Критерии индекса: Онлайн": 2.72,
+                    "Критерии индекса: Офлайн": 3.11
+                },
+                {
+                    "Bank": "Hamkorbank",
+                    "Критерии индекса: Онлайн": 2.83,
+                    "Критерии индекса: Офлайн": 2.62
+                },
+                {
+                    "Bank": "InFinBank",
+                    "Критерии индекса: Онлайн": 2.95,
+                    "Критерии индекса: Офлайн": 2.16
+                },
+                {
+                    "Bank": "NBU",
+                    "Критерии индекса: Онлайн": 2.79,
+                    "Критерии индекса: Офлайн": 2.83
+                },
+                {
+                    "Bank": "SQB",
+                    "Критерии индекса: Онлайн": 3.0,
+                    "Критерии индекса: Офлайн": 2.86
+                },
+                {
+                    "Bank": "Tenge Bank",
+                    "Критерии индекса: Онлайн": 2.57,
+                    "Критерии индекса: Офлайн": 2.69
+                }
+            ]
+        }
+    };
+
+    // === 2. ЛОГИКА ДЕШБОРДА ===
+
+    const SELECTED_BANK_COLOR = '#22d3ee'; // Цвет для выделенного банка
     const LEADER_COLOR = '#818cf8';
     const MARKET_COLOR = '#64748b';
     const WHITE_COLOR = '#f8fafc';
 
-    // --- DATA GENERATION ---
-    const generateRealisticScores = (min, max, count = 1) => {
-        if (count === 1) return parseFloat((Math.random() * (max - min) + min).toFixed(1));
-        return Array.from({ length: count }, () => parseFloat((Math.random() * (max - min) + min).toFixed(1)));
-    };
-    const calculateAverage = arr => arr.reduce((a, b) => a + b, 0) / arr.length;
-
-    const generateBankList = (prefix, count) => {
-        return Array.from({length: count}, (_, i) => ({
-            name: `${prefix} Bank ${i + 1}`,
-            score: generateRealisticScores(3.5, 4.5),
-            volatility: generateRealisticScores(0.5, 1.8)
-        }));
+    const criteriaColors = {
+        'Критерии индекса: Онлайн': '#f97316',
+        'Критерии индекса: Офлайн': '#ec4899',
+        'Критерии индекса: Omni': '#84cc16',
+        'Критерии индекса: GenAI': '#facc15',
+        'Критерии индекса: Культура': '#ef4444'
     };
 
-    const regionCountryMapping = {
-        'Регион 1': ['Страна 1', 'Страна 2', 'Страна 3', 'Страна 4'],
-        'Регион 2': ['Страна 5', 'Страна 6', 'Страна 7', 'Страна 8']
-    };
-
-    const allCountriesData = {
-        'Страна 1': generateBankList('Alpha', 15),
-        'Страна 2': generateBankList('Beta', 12),
-        'Страна 3': generateBankList('Gamma', 18),
-        'Страна 4': generateBankList('Delta', 14),
-        'Страна 5': generateBankList('Epsilon', 20),
-        'Страна 6': generateBankList('Zeta', 16),
-        'Страна 7': generateBankList('Eta', 13),
-        'Страна 8': generateBankList('Theta', 17),
-    };
-
-
-    const generateSegmentData = (segment) => {
-        const isRetail = segment === 'Retail';
-        const isSME = segment === 'SME';
-        
-        const journeyData = {
-            'Онлайн': generateRealisticScores(isSME ? 3.8 : 4.0, isSME ? 4.6 : 4.8, 6),
-            'Офлайн': generateRealisticScores(isSME ? 4.2 : 4.0, isSME ? 5.0 : 4.8, 6),
-            'Omni': generateRealisticScores(isSME ? 3.8 : 3.5, isSME ? 4.8 : 4.5, 6),
-            'GenAI': generateRealisticScores(isSME ? 3.5 : 3.0, isSME ? 4.2 : 4.0, 6),
-            'Культура': generateRealisticScores(isSME ? 3.8 : 3.4, isSME ? 4.5 : 4.0, 6)
-        };
-        
-        const criteriaData = Object.keys(journeyData).map(key => ({
-            name: key,
-            score: calculateAverage(journeyData[key]),
-            leader: calculateAverage(generateRealisticScores(isSME ? 4.0 : 3.8, 5.0, 6)),
-            market: calculateAverage(generateRealisticScores(isSME ? 3.0 : 2.8, 4.0, 6)),
-        }));
-
-        const mainIndex = calculateAverage(criteriaData.map(c => c.score));
-        
-        const banksData = [
-            { name: 'Банк A', score: mainIndex, volatility: calculateAverage(generateRealisticScores(0.5, 1.0, 6)) },
-            { name: 'Банк B', score: mainIndex - 0.2, volatility: 1.2 },
-            { name: 'Банк C', score: mainIndex - 0.4, volatility: 0.9 },
-            { name: 'Банк D', score: mainIndex - 0.6, volatility: 1.5 },
-            { name: 'Банк E', score: mainIndex - 0.9, volatility: 1.1 }
-        ];
-
-        return {
-            journeyData,
-            criteriaData,
-            mainIndex,
-            banksData,
-            totalJourneyData: generateRealisticScores(isSME ? 4.1 : 3.9, isSME ? 4.5 : 4.3, 6),
-            totalJourneyVolatility: generateRealisticScores(isSME ? 0.5 : 0.3, isSME ? 1.5 : 1.2, 6),
-            leaderJourneyData: generateRealisticScores(isSME ? 4.2 : 4.0, 4.9, 6),
-            marketJourneyData: generateRealisticScores(isSME ? 3.2 : 3.0, 4.0, 6),
-            salesEfficiencyIndex: calculateAverage([calculateAverage(journeyData['Онлайн']), calculateAverage(journeyData['Офлайн'])]),
-            radarData: [
-                { label: 'Банк A', data: [calculateAverage(journeyData['Офлайн']), 4.1, calculateAverage(journeyData['Онлайн'])] },
-                { label: 'Лидер', data: [4.0, 4.3, 4.4] },
-                { label: 'Рынок', data: [3.2, 3.4, 3.5] }
-            ]
-        };
-    };
-
-    // --- RENDER FUNCTIONS ---
-    const updateDashboard = (segment) => {
-        const data = generateSegmentData(segment);
-        
-        document.getElementById('gaugeValue').textContent = data.mainIndex.toFixed(1);
-        document.getElementById('gaugePath').style.strokeDashoffset = 251.2 * (1 - data.mainIndex / 5);
-        document.getElementById('segment-subtitle').textContent = segment === 'All' ? 'All Clients' : (segment === 'Retail' ? 'Retail Clients' : 'SME Clients');
-
-        const salesPercentage = (data.salesEfficiencyIndex / 5) * 100;
-        document.getElementById('salesDonutValue').textContent = data.salesEfficiencyIndex.toFixed(1);
-        document.getElementById('salesDonutArc').style.strokeDasharray = `${salesPercentage} 100`;
-
-        renderDashboardRanking(data.banksData, 'score');
-        renderIndexCriteria(data.criteriaData);
-        
-        updateChoiceChart(data);
-        updateScatterChart(data);
-        updateRadarChart(data);
-    };
-    
-    const renderRegionTabs = () => {
-        const tabsContainer = document.getElementById('region-tabs');
-        tabsContainer.innerHTML = Object.keys(regionCountryMapping).map((region, index) =>
-            `<button class="tab-button ${index === 0 ? 'active' : ''}" data-region="${region}">${region}</button>`
-        ).join('');
-    };
-
-    const renderCountryTabs = (region) => {
-        const tabsContainer = document.getElementById('country-tabs');
-        const countries = regionCountryMapping[region];
-        tabsContainer.innerHTML = countries.map((country, index) => 
-            `<button class="tab-button ${index === 0 ? 'active' : ''}" data-country="${country}">${country}</button>`
-        ).join('');
-    };
-
-    const renderCountryRanking = (country, sortBy = 'score') => {
-        const rankingsEl = document.getElementById('country-rankings');
-        const titleEl = document.getElementById('ranking-country-title');
-        titleEl.textContent = `Рейтинг банков: ${country}`;
-
-        const data = [...allCountriesData[country]];
-        data.sort((a, b) => (sortBy === 'score' ? b.score - a.score : a.volatility - b.volatility));
-
-        rankingsEl.innerHTML = data.map((bank, index) => `
-            <div class="ranking-item">
-                <span class="w-8 font-bold text-slate-400">${index + 1}</span>
-                <span class="flex-grow font-semibold text-white">${bank.name}</span>
-                <div class="w-28 text-right flex items-center justify-end gap-3">
-                     <span class="font-bold text-white">${bank.score.toFixed(1)}</span>
-                    <span class="text-xs text-slate-400 flex items-center gap-1" title="Волатильность">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" /></svg>
-                        ${bank.volatility.toFixed(1)}
-                    </span>
-                </div>
-            </div>`).join('');
-    };
-
-    const renderDashboardRanking = (banksData, sortBy = 'score') => {
-        const sortedData = [...banksData].sort((a, b) => (sortBy === 'score' ? b.score - a.score : a.volatility - b.volatility));
-        document.getElementById('competitors-ranking').innerHTML = sortedData.map((item) => `
-            <div class="flex items-center">
-                <span class="w-20 truncate ${item.name === 'Банк A' ? 'text-cyan-300 font-semibold' : 'text-slate-300'}">${item.name}</span>
-                <div class="flex-1 mx-2 bg-slate-700 rounded-full h-2.5">
-                    <div class="${item.name === 'Банк A' ? 'bg-cyan-400' : 'bg-slate-500'} h-2.5 rounded-full" style="width: ${item.score / 5 * 100}%"></div>
-                </div>
-                <div class="w-20 text-right flex items-center justify-end gap-2">
-                    <span class="font-bold text-white">${item.score.toFixed(1)}</span>
-                    <span class="text-xs text-slate-400 flex items-center gap-1" title="Волатильность">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" /></svg>
-                        ${item.volatility.toFixed(1)}
-                    </span>
-                </div>
-            </div>`).join('');
-        
-        const rank = sortedData.findIndex(b => b.name === 'Банк A') + 1;
-        document.getElementById('rank-value').textContent = rank;
-    };
-    
-    const criteriaColors = { 'Онлайн': '#f97316', 'Офлайн': '#ec4899', 'Omni': '#84cc16', 'GenAI': '#facc15', 'Культура': '#ef4444' };
-    const renderIndexCriteria = (criteriaData) => {
-        document.getElementById('index-criteria').innerHTML = criteriaData.map(item => `
-        <div class="flex items-center">
-            <span class="w-24 truncate text-slate-300">${item.name}</span>
-            <div class="relative flex-1 mx-2 bg-slate-700 rounded-full h-2">
-                <div class="h-2 rounded-full" style="width: ${item.score / 5 * 100}%; background-color: ${criteriaColors[item.name]};"></div>
-                <div class="benchmark-dot" style="left: ${item.leader / 5 * 100}%; background-color:${LEADER_COLOR}" title="Лидер: ${item.leader.toFixed(1)}"></div>
-                <div class="benchmark-dot" style="left: ${item.market / 5 * 100}%; background-color:${MARKET_COLOR}" title="Рынок: ${item.market.toFixed(1)}"></div>
-            </div>
-            <span class="w-8 text-right font-bold text-white">${item.score.toFixed(1)}</span>
-        </div>`).join('');
-    };
-
-    // --- CHART SETUP ---
-    const setupCharts = () => {
-        Chart.register(ChartDataLabels);
-        Chart.defaults.color = '#94a3b8';
-        Chart.defaults.font.family = "'Inter', sans-serif";
-        Chart.defaults.plugins.legend.display = false;
-        Chart.defaults.responsive = true;
-        Chart.defaults.maintainAspectRatio = false;
-        
-        const journeyLabels = ['Поиск в сети', 'Изучение сайта', 'Отзывы', 'Звонок', 'Визит', 'Консультация'];
-
-        charts.choice = new Chart('choiceChart', {
-            type: 'line', data: { labels: journeyLabels, datasets: [] },
-            options: {
-                plugins: { datalabels: { display: false } },
-                scales: { y: { display: false, min: 1, max: 5.5 }, x: { grid: { display: false }, ticks: { color: '#94a3b8', font: {size: 10} } } }
-            }
-        });
-        charts.scatter = new Chart('scatterChart', {
-            type: 'bubble', data: { datasets: [] },
-            options: { 
-                scales: { 
-                    x: { title: { display: true, text: 'Онлайн опыт', font: { size: 10 } }, min: 2, max: 5.0, grid: { color: '#334155' }, ticks: { stepSize: 1, font: {size: 10} } }, 
-                    y: { title: { display: true, text: 'Офлайн опыт', font: { size: 10 } }, min: 2, max: 5.0, grid: { color: '#334155' }, ticks: { stepSize: 1, font: {size: 10} } } 
-                }, 
-                plugins: { datalabels: { display: false }, tooltip: { backgroundColor: '#1e293b', borderColor: '#334155', borderWidth: 1 } }
-            }
-        });
-        charts.radar = new Chart('radarChart', {
-            type: 'radar', data: { labels: ['Отделение', 'Колл-центр', 'Web'], datasets: [] },
-            options: { 
-                plugins: { datalabels: { display: false } }, 
-                scales: { r: { angleLines: { color: '#334155' }, grid: { color: '#334155' }, pointLabels: { color: '#94a3b8', font: { size: 10 } }, ticks: { display: false, stepSize: 1 }, suggestedMin: 0, suggestedMax: 5 }} 
-            }
-        });
-        
-        document.getElementById('journey-legend').innerHTML = `
-        <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full" style="background-color: ${KASPI_COLOR}"></div>Банк A</div>
-        <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full" style="background-color: ${LEADER_COLOR}"></div>Лидер</div>
-        <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full" style="background-color: ${MARKET_COLOR}"></div>Рынок</div>
-        <div class="flex items-center gap-2"><div class="w-3 h-3" style="background-color: rgba(34, 211, 238, 0.05); border: 1px solid rgba(34, 211, 238, 0.1)"></div>Волатильность</div>
-     `;
-    };
-
-    // --- CHART UPDATE LOGIC ---
-    const updateChoiceChart = (data) => {
-        const maxVolatilityData = data.totalJourneyData.map((p, i) => Math.min(5.0, p + data.totalJourneyVolatility[i] / 2));
-        const minVolatilityData = data.totalJourneyData.map((p, i) => Math.max(0.0, p - data.totalJourneyVolatility[i] / 2));
-        
-        charts.choice.data.datasets = [
-             { label: 'Min Vol', data: minVolatilityData, borderColor: 'rgba(34, 211, 238, 0.1)', borderWidth: 1, pointRadius: 0, tension: 0.4, fill: '+1', backgroundColor: 'rgba(34, 211, 238, 0.05)'},
-             { label: 'Max Vol', data: maxVolatilityData, borderColor: 'rgba(34, 211, 238, 0.1)', borderWidth: 1, pointRadius: 0, tension: 0.4, fill: false},
-             { label: 'Лидер', data: data.leaderJourneyData, borderColor: LEADER_COLOR, borderWidth: 1.5, pointRadius: 0, tension: 0.4 },
-             { label: 'Рынок', data: data.marketJourneyData, borderColor: MARKET_COLOR, borderWidth: 1.5, pointRadius: 0, tension: 0.4 },
-             { label: 'Банк A', data: data.totalJourneyData, borderColor: KASPI_COLOR, borderWidth: 4, pointBackgroundColor: KASPI_COLOR, pointBorderColor: '#0f172a', pointBorderWidth: 2, pointRadius: 5, tension: 0.4, datalabels: { display: true, align: 'top', offset: 8, color: WHITE_COLOR, font: { size: 14, weight: 'bold' }, formatter: (v) => v.toFixed(1) } }
-        ];
-        charts.choice.update();
-    };
-
-    const updateScatterChart = (data) => {
-        charts.scatter.data.datasets = [
-            { label: 'Конкуренты', data: [{x: 3.2, y: 3.5, r: 8}, {x: 4.0, y: 3.1, r: 8}, {x: 3.4, y: 4.0, r: 8}], backgroundColor: MARKET_COLOR }, 
-            { label: 'Лидер рынка', data: [{x: 3.8, y: 4.1, r: 10}], backgroundColor: LEADER_COLOR }, 
-            { label: 'Банк A', data: [{x: calculateAverage(data.journeyData['Онлайн']), y: calculateAverage(data.journeyData['Офлайн']), r: 12}], backgroundColor: KASPI_COLOR }
-        ];
-        charts.scatter.update();
-    };
-    
-    const updateRadarChart = (data) => {
-        charts.radar.data.datasets = [
-            { label: 'Банк A', data: data.radarData[0].data, backgroundColor: 'rgba(34, 211, 238, 0.2)', borderColor: KASPI_COLOR, borderWidth: 2 },
-            { label: 'Лидер', data: data.radarData[1].data, backgroundColor: 'rgba(129, 140, 248, 0.2)', borderColor: LEADER_COLOR, borderWidth: 2 },
-            { label: 'Рынок', data: data.radarData[2].data, backgroundColor: 'rgba(100, 116, 139, 0.2)', borderColor: MARKET_COLOR, borderWidth: 2}
-        ];
-        charts.radar.update();
-    };
-
-    // --- EVENT LISTENERS ---
+    // --- DOM Элементы ---
+    const bankSelector = document.getElementById('bank-selector');
+    const rankingContainer = document.getElementById('competitors-ranking');
     const rankingTabs = document.getElementById('ranking-tabs');
+    const digitalActivityContent = document.getElementById('digital-activity-content');
+    
+    // Новые DOM элементы из лендинга
+    const countryRankingContainer = document.getElementById('country-rankings');
+    const countrySorter = document.getElementById('country-ranking-sorter');
+    const segmentTabs = document.getElementById('segment-tabs');
+    const mainDashboardContent = document.getElementById('main-dashboard-content');
+    const dashboardOverlay = document.getElementById('dashboard-overlay');
+
+
+    // --- Экземпляры чартов ---
+    let choiceChart, scatterChart, radarChart;
+
+    // --- Глобальное состояние ---
+    let currentSelectedBank = appData.bankNames[0];
+
+    // --- Глобальные настройки Chart.js ---
+    Chart.register(ChartDataLabels);
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = "'Inter', sans-serif";
+    Chart.defaults.plugins.legend.display = false;
+    Chart.defaults.responsive = true;
+    Chart.defaults.maintainAspectRatio = false;
+
+    // --- 3. ФУНКЦИИ РЕНДЕРА ---
+
+    // --- Функция обновления рейтинга (ОБНОВЛЕНА для 2-х списков) ---
+    function renderRanking(sortBy = 'score') {
+        const sortKey = sortBy === 'score' ? 'Индекс CCI' : 'Волатильность CCI';
+
+        const sortedData = [...appData.allBanksData].sort((a, b) => {
+            if (sortBy === 'score') return b[sortKey] - a[sortKey];
+            return a[sortKey] - b[sortKey]; // По волатильности - от меньшей к большей
+        });
+
+        // 1. Рендер рейтинга ВНУТРИ дешборда
+        if (rankingContainer) {
+            rankingContainer.innerHTML = sortedData.map((item) => {
+                const isSelected = item.Bank === currentSelectedBank;
+                return `
+                <div class="ranking-row flex items-center" data-bank-name="${item.Bank}">
+                    <span class="w-20 truncate ${isSelected ? 'text-cyan-300 font-semibold' : 'text-slate-300'}">${item.Bank}</span>
+                    <div class="flex-1 mx-2 bg-slate-700 rounded-full h-2.5">
+                        <div class="${isSelected ? 'bg-cyan-400' : 'bg-slate-500'} h-2.5 rounded-full" style="width: ${item['Индекс CCI'] / 5 * 100}%"></div>
+                    </div>
+                    <div class="w-20 text-right flex items-center justify-end gap-2">
+                        <span class="font-bold text-white">${item['Индекс CCI'].toFixed(2)}</span>
+                        <span class="text-xs text-slate-400 flex items-center gap-1" title="Волатильность">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" /></svg>
+                            ${item['Волатильность CCI'].toFixed(2)}
+                        </span>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        // 2. Рендер рейтинга в секции "Масштаб"
+        if (countryRankingContainer) {
+            document.getElementById('ranking-country-title').textContent = 'Рейтинг банков: Узбекистан';
+            countryRankingContainer.innerHTML = sortedData.map((item, index) => {
+                const isSelected = item.Bank === currentSelectedBank;
+                return `
+                <div class="ranking-item" data-bank-name="${item.Bank}" style="cursor: pointer; ${isSelected ? 'background-color: #334155;' : ''}">
+                    <span class="w-8 font-bold text-slate-400">${index + 1}</span>
+                    <span class="flex-grow font-semibold ${isSelected ? 'text-cyan-300' : 'text-white'}">${item.Bank}</span>
+                    <div class="w-28 text-right flex items-center justify-end gap-3">
+                        <span class="font-bold text-white">${item['Индекс CCI'].toFixed(2)}</span>
+                        <span class="text-xs text-slate-400 flex items-center gap-1" title="Волатильность">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" /></svg>
+                            ${item['Волатильность CCI'].toFixed(2)}
+                        </span>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+    };
+
+    // --- Главная функция обновления дешборда ---
+    function updateDashboard(selectedBankName) {
+        const bankData = appData.allBanksData.find(b => b.Bank === selectedBankName);
+        if (!bankData) {
+            console.error("Банк не найден:", selectedBankName);
+            return;
+        }
+
+        // === ЛЕВАЯ КОЛОНКА ===
+        document.getElementById('bank-name').textContent = bankData.Bank;
+        document.getElementById('bank-rank').textContent = bankData['Место по Индекс CCI'];
+
+        const cciScore = bankData['Индекс CCI'];
+        document.getElementById('gaugeValue').textContent = cciScore.toFixed(2);
+        document.getElementById('gaugePath').style.strokeDashoffset = 251.2 * (1 - cciScore / 5);
+
+        // Обновляем ОБА рейтинга, чтобы подсветить выбранный банк
+        const currentSort = rankingTabs.querySelector('.active').dataset.sort;
+        renderRanking(currentSort);
+
+        // === ПРАВАЯ КОЛОНКА ===
+        updateChoiceChart(bankData);
+        updateIndexCriteria(bankData);
+        updateScatterChart(bankData);
+        updateRadarChart(bankData);
+
+        const salesScore = bankData['Эффективность продаж'];
+        const salesPercentage = (salesScore / 5) * 100;
+        document.getElementById('salesDonutValue').textContent = salesScore.toFixed(2);
+        document.getElementById('salesDonutArc').style.strokeDasharray = `${salesPercentage} 100`;
+    }
+
+    // --- 4. ФУНКЦИИ ОБНОВЛЕНИЯ ГРАФИКОВ ---
+    // (Эти функции остались без изменений из прошлого шага)
+    function updateChoiceChart(bankData) {
+        const marketJourney = appData.marketData.journey;
+        const leaderBank = appData.allBanksData.find(b => b['Место по Индекс CCI'] === 1);
+        const journeyKeys = Object.keys(marketJourney.average);
+        const journeyLabels = journeyKeys.map(k => k.replace('Путь клиента: ', ''));
+        const selectedBankJourney = journeyKeys.map(key => bankData[key]);
+        const leaderJourney = journeyKeys.map(key => leaderBank[key]);
+        const marketJourneyAvg = Object.values(marketJourney.average);
+
+        document.getElementById('journey-legend').innerHTML = `
+            <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full" style="background-color: ${SELECTED_BANK_COLOR}"></div>${bankData.Bank}</div>
+            <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full" style="background-color: ${LEADER_COLOR}"></div>${leaderBank.Bank} (Лидер)</div>
+            <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full" style="background-color: ${MARKET_COLOR}"></div>Рынок</div>
+        `;
+
+        if (choiceChart) {
+            choiceChart.destroy();
+        }
+
+        choiceChart = new Chart('choiceChart', {
+            type: 'line',
+            data: {
+                labels: journeyLabels,
+                datasets: [
+                    {
+                        label: `${leaderBank.Bank} (Лидер)`,
+                        data: leaderJourney,
+                        borderColor: LEADER_COLOR,
+                        borderWidth: 1.5,
+                        pointRadius: 0,
+                        tension: 0.4,
+                        datalabels: { display: false }
+                    },
+                    {
+                        label: 'Рынок (среднее)',
+                        data: marketJourneyAvg,
+                        borderColor: MARKET_COLOR,
+                        borderWidth: 1.5,
+                        pointRadius: 0,
+                        tension: 0.4,
+                        datalabels: { display: false }
+                    },
+                    {
+                        label: bankData.Bank,
+                        data: selectedBankJourney,
+                        borderColor: SELECTED_BANK_COLOR,
+                        borderWidth: 4,
+                        pointBackgroundColor: SELECTED_BANK_COLOR,
+                        pointBorderColor: '#0f172a',
+                        pointBorderWidth: 2,
+                        pointRadius: 5,
+                        tension: 0.4,
+                        datalabels: {
+                            display: true,
+                            align: 'top',
+                            offset: 8,
+                            color: WHITE_COLOR,
+                            font: { size: 14, weight: 'bold' },
+                            formatter: (v) => v.toFixed(2)
+                        },
+                    },
+                ]
+            },
+            options: {
+                plugins: {
+                    datalabels: {
+                        display: false
+                    },
+                },
+                scales: {
+                    y: { display: false, min: 1, max: 5.5 },
+                    x: { grid: { display: false }, ticks: { color: '#94a3b8', font: { size: 10 } } }
+                }
+            },
+        });
+    }
+
+    function updateIndexCriteria(bankData) {
+        const criteriaContainer = document.getElementById('index-criteria');
+        const marketCriteria = appData.marketData.criteria;
+
+        criteriaContainer.innerHTML = Object.keys(marketCriteria.average)
+            .filter(key => key.startsWith('Критерии индекса:'))
+            .map(key => {
+                const shortName = key.replace('Критерии индекса: ', '');
+                const score = bankData[key];
+                const leaderScore = marketCriteria.leader[key];
+                const marketScore = marketCriteria.average[key];
+
+                return `
+                <div class="flex items-center">
+                    <span class="w-24 truncate text-slate-300">${shortName}</span>
+                    <div class="relative flex-1 mx-2 bg-slate-700 rounded-full h-2">
+                        <div class="h-2 rounded-full" style="width: ${score / 5 * 100}%; background-color: ${criteriaColors[key]};"></div>
+                        <div class="benchmark-dot" style="left: ${leaderScore / 5 * 100}%; background-color:${LEADER_COLOR}" title="Лидер: ${leaderScore.toFixed(2)}"></div>
+                        <div class="benchmark-dot" style="left: ${marketScore / 5 * 100}%; background-color:${MARKET_COLOR}" title="Рынок: ${marketScore.toFixed(2)}"></div>
+                    </div>
+                    <span class="w-8 text-right font-bold text-white">${score.toFixed(2)}</span>
+                </div>`;
+            }).join('');
+    }
+
+    function updateScatterChart(bankData) {
+        const leaderBank = appData.allBanksData.find(b => b['Место по Индекс CCI'] === 1);
+
+        const allBanksPoints = appData.marketData.all_banks_scatter
+            .filter(b => b.Bank !== bankData.Bank && b.Bank !== leaderBank.Bank)
+            .map(b => ({
+                x: b['Критерии индекса: Онлайн'],
+                y: b['Критерии индекса: Офлайн'],
+                r: 8
+            }));
+        
+        const selectedBankPoint = {
+            x: bankData['Критерии индекса: Онлайн'],
+            y: bankData['Критерии индекса: Офлайн'],
+            r: 12
+        };
+        
+        const datasets = [
+            {
+                label: 'Конкуренты',
+                data: allBanksPoints,
+                backgroundColor: MARKET_COLOR
+            }
+        ];
+
+        if (bankData.Bank === leaderBank.Bank) {
+            datasets.push({
+                label: bankData.Bank + " (Лидер)",
+                data: [selectedBankPoint],
+                backgroundColor: SELECTED_BANK_COLOR
+            });
+        } else {
+            datasets.push({
+                label: leaderBank.Bank + " (Лидер)",
+                data: [{
+                    x: leaderBank['Критерии индекса: Онлайн'],
+                    y: leaderBank['Критерии индекса: Офлайн'],
+                    r: 10
+                }],
+                backgroundColor: LEADER_COLOR
+            });
+            datasets.push({
+                label: bankData.Bank,
+                data: [selectedBankPoint],
+                backgroundColor: SELECTED_BANK_COLOR
+            });
+        }
+
+
+        if (scatterChart) {
+            scatterChart.destroy();
+        }
+
+        scatterChart = new Chart('scatterChart', {
+            type: 'bubble',
+            data: { datasets: datasets },
+            options: {
+                scales: {
+                    x: {
+                        title: { display: true, text: 'Онлайн опыт', font: { size: 10 } },
+                        min: 2.0, max: 3.2,
+                        grid: { color: '#334155' },
+                        ticks: { stepSize: 0.2, font: { size: 10 } }
+                    },
+                    y: {
+                        title: { display: true, text: 'Офлайн опыт', font: { size: 10 } },
+                        min: 1.5, max: 3.5,
+                        grid: { color: '#334155' },
+                        ticks: { stepSize: 0.5, font: { size: 10 } }
+                    }
+                },
+                plugins: {
+                    datalabels: { display: false },
+                    tooltip: {
+                        backgroundColor: '#1e293b',
+                        borderColor: '#334155',
+                        borderWidth: 1,
+                        callbacks: {
+                            label: function (context) {
+                                const label = context.dataset.label;
+                                const d = context.raw;
+                                return `${label}: (Онлайн: ${d.x.toFixed(2)}, Офлайн: ${d.y.toFixed(2)})`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    function updateRadarChart(bankData) {
+        const marketChannels = appData.marketData.channels;
+        const leaderBank = appData.allBanksData.find(b => b['Место по Индекс CCI'] === 1);
+
+        const channelKeys = Object.keys(marketChannels.average);
+        const channelLabels = channelKeys.map(k => k.replace('Сравнение каналов: ', ''));
+
+        const selectedBankChannels = channelKeys.map(key => bankData[key]);
+        const leaderChannels = channelKeys.map(key => leaderBank[key]);
+        const marketChannelsAvg = Object.values(marketChannels.average);
+
+        if (radarChart) {
+            radarChart.destroy();
+        }
+
+        radarChart = new Chart('radarChart', {
+            type: 'radar',
+            data: {
+                labels: channelLabels,
+                datasets: [
+                    {
+                        label: bankData.Bank,
+                        data: selectedBankChannels,
+                        backgroundColor: 'rgba(34, 211, 238, 0.2)',
+                        borderColor: SELECTED_BANK_COLOR,
+                        borderWidth: 2
+                    },
+                    {
+                        label: leaderBank.Bank + " (Лидер)",
+                        data: leaderChannels,
+                        backgroundColor: 'rgba(129, 140, 248, 0.2)',
+                        borderColor: LEADER_COLOR,
+                        borderWidth: 2
+                    },
+                    {
+                        label: 'Среднее',
+                        data: marketChannelsAvg,
+                        backgroundColor: 'rgba(100, 116, 139, 0.2)',
+                        borderColor: MARKET_COLOR,
+                        borderWidth: 2
+                    }
+                ]
+            },
+            options: {
+                plugins: {
+                    datalabels: { display: false },
+                    tooltip: {
+                        enabled: true,
+                        backgroundColor: '#1e293b',
+                        borderColor: '#334155',
+                        borderWidth: 1,
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                let value = context.raw;
+                                return `${label}: ${value.toFixed(2)}`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    r: {
+                        angleLines: { color: '#334155' },
+                        grid: { color: '#334155' },
+                        pointLabels: { color: '#94a3b8', font: { size: 10 } },
+                        ticks: { display: false, stepSize: 1 },
+                        suggestedMin: 0,
+                        suggestedMax: 5
+                    }
+                }
+            }
+        });
+    }
+
+    // --- 5. СЛУШАТЕЛИ СОБЫТИЙ ---
+
+    // --- Заполнение селектора ---
+    appData.bankNames.forEach(name => {
+        const option = document.createElement('option');
+        option.value = name;
+        option.textContent = name;
+        bankSelector.appendChild(option);
+    });
+
+    // "Блюрим" блок цифровой активности
+    if (digitalActivityContent) {
+        digitalActivityContent.classList.add('card-blurred');
+    }
+
+    // --- Слушатель селектора банка ---
+    bankSelector.addEventListener('change', (e) => {
+        currentSelectedBank = e.target.value;
+        updateDashboard(currentSelectedBank);
+    });
+
+    // --- Слушатель табов рейтинга (ВНУТРИ дешборда) ---
     rankingTabs.addEventListener('click', (e) => {
         if (e.target.tagName === 'BUTTON') {
             rankingTabs.querySelector('.active').classList.remove('active');
             e.target.classList.add('active');
-            const currentSegment = document.querySelector('#segment-tabs .active').dataset.segment;
-            const data = generateSegmentData(currentSegment);
-            renderDashboardRanking(data.banksData, e.target.dataset.sort);
-        }
-    });
-
-    const segmentTabs = document.getElementById('segment-tabs');
-    segmentTabs.addEventListener('click', (e) => {
-        if (e.target.tagName === 'BUTTON' && !e.target.classList.contains('active')) {
-            segmentTabs.querySelector('.active').classList.remove('active');
-            e.target.classList.add('active');
-            updateDashboard(e.target.dataset.segment);
-        }
-    });
-
-    const regionTabs = document.getElementById('region-tabs');
-    regionTabs.addEventListener('click', (e) => {
-        if (e.target.tagName === 'BUTTON' && !e.target.classList.contains('active')) {
-            regionTabs.querySelector('.active').classList.remove('active');
-            e.target.classList.add('active');
-            const newRegion = e.target.dataset.region;
-            renderCountryTabs(newRegion);
             
-            // Automatically render the ranking for the first country of the new region
-            const firstCountry = regionCountryMapping[newRegion][0];
-            const sorter = document.querySelector('#country-ranking-sorter .active').dataset.sort;
-            renderCountryRanking(firstCountry, sorter);
-        }
-    });
-
-    const countryTabs = document.getElementById('country-tabs');
-    countryTabs.addEventListener('click', (e) => {
-        if (e.target.tagName === 'BUTTON' && !e.target.classList.contains('active')) {
-            countryTabs.querySelector('.active').classList.remove('active');
-            e.target.classList.add('active');
-            const currentSort = document.querySelector('#country-ranking-sorter .active').dataset.sort;
-            renderCountryRanking(e.target.dataset.country, currentSort);
+            // Синхронизируем с другим сортировщиком
+            const countrySorterButton = document.querySelector(`#country-ranking-sorter button[data-sort="${e.target.dataset.sort}"]`);
+            if (countrySorterButton) {
+                document.querySelector('#country-ranking-sorter .active').classList.remove('active');
+                countrySorterButton.classList.add('active');
+            }
+            
+            renderRanking(e.target.dataset.sort);
         }
     });
     
-    const countrySorter = document.getElementById('country-ranking-sorter');
-    countrySorter.addEventListener('click', (e) => {
-        if (e.target.tagName === 'BUTTON' && !e.target.classList.contains('active')) {
-            countrySorter.querySelector('.active').classList.remove('active');
-            e.target.classList.add('active');
-            const currentCountry = document.querySelector('#country-tabs .active').dataset.country;
-            renderCountryRanking(currentCountry, e.target.dataset.sort);
+    // --- Слушатель клика по строке рейтинга (ВНУТРИ дешборда) ---
+    rankingContainer.addEventListener('click', (e) => {
+        const bankRow = e.target.closest('[data-bank-name]');
+        if (!bankRow) return;
+
+        const bankName = bankRow.dataset.bankName;
+        if (bankName) {
+            currentSelectedBank = bankName;
+            bankSelector.value = bankName;
+            updateDashboard(bankName);
         }
     });
+    
+    // --- НОВЫЙ Слушатель табов рейтинга (Секция "Масштаб") ---
+    if (countrySorter) {
+        countrySorter.addEventListener('click', (e) => {
+            if (e.target.tagName === 'BUTTON') {
+                countrySorter.querySelector('.active').classList.remove('active');
+                e.target.classList.add('active');
+                
+                // Синхронизируем с другим сортировщиком
+                const otherSorterButton = document.querySelector(`#ranking-tabs button[data-sort="${e.target.dataset.sort}"]`);
+                if (otherSorterButton) {
+                    document.querySelector('#ranking-tabs .active').classList.remove('active');
+                    otherSorterButton.classList.add('active');
+                }
+                
+                renderRanking(e.target.dataset.sort);
+            }
+        });
+    }
+    
+    // --- НОВЫЙ Слушатель клика по строке рейтинга (Секция "Масштаб") ---
+    if (countryRankingContainer) {
+        countryRankingContainer.addEventListener('click', (e) => {
+            const bankRow = e.target.closest('[data-bank-name]');
+            if (!bankRow) return;
 
+            const bankName = bankRow.dataset.bankName;
+            if (bankName) {
+                currentSelectedBank = bankName;
+                bankSelector.value = bankName;
+                updateDashboard(bankName);
+                
+                // Плавный скролл к дешборду
+                document.getElementById('main-dashboard-content').scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    }
+    
+    // --- НОВЫЙ Слушатель табов "Разреза результатов" (CCI / Online / Offline) ---
+    if (segmentTabs) {
+        segmentTabs.addEventListener('click', (e) => {
+            if (e.target.tagName === 'BUTTON' && !e.target.classList.contains('active')) {
+                segmentTabs.querySelector('.active').classList.remove('active');
+                e.target.classList.add('active');
+                
+                const segment = e.target.dataset.segment;
+                const isCCI = segment === 'CCI';
 
-    // --- INITIALIZATION ---
-    setupCharts();
-    updateDashboard('Retail');
-    renderRegionTabs();
-    renderCountryTabs('Регион 1');
-    renderCountryRanking('Страна 1', 'score');
+                mainDashboardContent.style.filter = isCCI ? 'none' : 'blur(5px)';
+                mainDashboardContent.style.pointerEvents = isCCI ? 'auto' : 'none';
+                bankSelector.style.filter = isCCI ? 'none' : 'blur(5px)';
+                bankSelector.style.pointerEvents = isCCI ? 'auto' : 'none';
+                dashboardOverlay.style.display = isCCI ? 'none' : 'flex';
+            }
+        });
+    }
+
+    // --- 6. ПЕРВЫЙ ЗАПУСК ---
+    updateDashboard(currentSelectedBank);
+    
+    // Первый рендер рейтинга в секции "Масштаб" (уже вызывается в updateDashboard)
+    // renderRanking('score'); 
 });
 </script>
 
 </body>
 </html>
-
