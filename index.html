@@ -11,10 +11,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* Стили лендинга */
+        /* === СТИЛИ ЛЕНДИНГА === */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0f172a; /* Взято из дешборда для единства */
+            background-color: #0f172a;
             color: #CBD5E1;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
@@ -30,7 +30,7 @@
             background-size: 20px 20px;
         }
         
-        /* === СТИЛИ ДЕШБОРДА (ИНТЕГРИРОВАНЫ) === */
+        /* === СТИЛИ ДЕШБОРДА (ОБНОВЛЕННЫЕ) === */
         .dashboard-container {
             display: grid;
             grid-template-columns: 320px 1fr;
@@ -38,8 +38,7 @@
             gap: 16px;
             width: 100%;
             max-width: 1600px;
-            /* aspect-ratio: 16 / 9; Убрано для интеграции в лендинг */
-            margin: 0 auto; /* Центрирование */
+            margin: 0 auto;
         }
 
         .card {
@@ -81,11 +80,10 @@
             color: #94a3b8;
         }
 
-        /* Общий стиль для всех таб-кнопок */
         .tab-button {
-            padding: 8px 16px; /* Увеличен для лендинга */
+            padding: 6px 14px;
             border-radius: 8px;
-            font-size: 14px; /* Увеличен для лендинга */
+            font-size: 13px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease-in-out;
@@ -101,7 +99,6 @@
             border-color: #475569;
         }
         
-        /* Стили для селектора банка (из дешборда) */
         #bank-selector {
             width: 320px;
             background-color: #1e293b;
@@ -118,16 +115,19 @@
             background-repeat: no-repeat;
             background-position: right 16px center;
             background-size: 16px;
+            cursor: pointer;
         }
 
-        /* Стили для скролла в рейтинге (из дешборда) */
-        #competitors-ranking {
-            max-height: 300px;
+        /* Кастомный скролл */
+        .custom-scroll {
             overflow-y: auto;
-            padding-right: 8px;
+            padding-right: 4px;
         }
-        
-        /* Стили для кликабельных строк рейтинга (из дешборда) */
+        .custom-scroll::-webkit-scrollbar { width: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: #1e293b; border-radius: 3px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #475569; border-radius: 3px; }
+        .custom-scroll::-webkit-scrollbar-thumb:hover { background: #64748b; }
+
         .ranking-row {
             padding: 4px 8px;
             border-radius: 6px;
@@ -138,13 +138,6 @@
             background-color: #334155;
         }
 
-        /* Стили для скроллбара (из дешборда) */
-        #competitors-ranking::-webkit-scrollbar { width: 6px; }
-        #competitors-ranking::-webkit-scrollbar-track { background: #1e293b; border-radius: 3px; }
-        #competitors-ranking::-webkit-scrollbar-thumb { background: #475569; border-radius: 3px; }
-        #competitors-ranking::-webkit-scrollbar-thumb:hover { background: #64748b; }
-
-        /* Стили для заглушки (из дешборда) */
         .card-blurred {
             filter: blur(5px);
             user-select: none;
@@ -152,27 +145,22 @@
         }
 
         .card-overlay {
-            /* Стили для оверлея-заглушки */
-            display: none; /* Управляется JS */
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 100; /* Выше контента дешборда */
-            background-color: rgba(30, 41, 59, 0.8); /* Полупрозрачный фон */
+            z-index: 100;
+            background-color: rgba(30, 41, 59, 0.7);
         }
 
         .card-overlay-text {
-            font-size: 1.25rem;
+            font-size: 1.125rem;
             font-weight: 700;
             color: #f8fafc;
-            padding: 16px 24px;
-            background-color: rgba(15, 23, 42, 0.8);
-            border-radius: 12px;
+            padding: 12px 20px;
+            background-color: rgba(15, 23, 42, 0.85);
+            border-radius: 10px;
             border: 1px solid #334155;
             text-align: center;
         }
@@ -188,30 +176,46 @@
             border-bottom: none;
         }
         
-        /* Скрытие скроллбара для табов стран (из лендинга) */
-        #country-tabs-container::-webkit-scrollbar {
-            display: none;
+        #country-tabs-container::-webkit-scrollbar { display: none; }
+        #country-tabs-container { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Стиль для блока рекомендаций (НОВОЕ) */
+        .rec-card {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: border-color 0.2s;
+            height: 100%;
         }
-        #country-tabs-container {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
+        .rec-card:hover {
+            border-color: #475569;
+        }
+        .rec-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 700;
+            margin-bottom: 4px;
+            display: block;
         }
 
-        /* Адаптивность (из дешборда) */
         @media (max-width: 1280px) {
             .dashboard-container {
                 grid-template-columns: 1fr;
                 aspect-ratio: auto;
                 height: auto;
             }
-
-            #bank-selector {
-                width: 100%;
-            }
+            #bank-selector { width: 100%; }
         }
     </style>
 </head>
-<body class="bg-gray-900 text-gray-200"> <header class="hero-bg py-20 md:py-32">
+<body class="bg-gray-900 text-gray-200"> 
+
+    <header class="hero-bg py-20 md:py-32">
         <div class="container mx-auto px-6 text-center">
             <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-white mb-4">Посмотрите на свой банк <br> <span class="gradient-text">глазами ваших клиентов</span></h1>
             <p class="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mb-8">
@@ -227,7 +231,7 @@
 
         <section class="text-center mb-20 md:mb-32">
             <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Почему клиенты уходят, так и не начав с вами работать?</h2>
-            <p class="text-gray-400 max-w-3xl mx-auto mb-12">Возможно, вы вкладываете миллионы в маркетинг и цифровые каналы, но конверсия не растет. Проблема скрыта в разрывах клиентского пути, которые невозможно увидеть изнутри.</p>
+            <p class="text-gray-400 max-w-3xl mx-auto mb-12">Вы вкладываете миллионы в маркетинг и цифровые каналы, но конверсия не растет. Проблема скрыта в разрывах клиентского пути, которые невозможно увидеть изнутри.</p>
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="bg-gray-800 p-6 rounded-lg">
                     <h3 class="font-bold text-xl mb-2 text-white">Невидимые барьеры</h3>
@@ -267,7 +271,7 @@
                                 <svg class="w-6 h-6 text-indigo-400 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 <div>
                                     <h4 class="font-semibold text-white">Две детальные скор-карты</h4>
-                                    <p class="text-gray-400">Мы отдельно оцениваем Online-путь (сайт, звонок, чат) и Offline-путь (визит в отделение).</p>
+                                    <p class="text-gray-400">Мы отдельно оцениваем Online-путь (сайт, приложение, чаты) и Offline-путь (звонок, визит в отделение).</p>
                                 </div>
                             </li>
                              <li class="flex items-start">
@@ -286,7 +290,7 @@
                         </div>
                         <div class="bg-gray-700 p-4 rounded-lg">
                             <p class="text-2xl font-bold text-pink-400">GenAI</p>
-                            <p class="text-gray-300">Использование GenAI</p>
+                            <p class="text-gray-300">Технологичность</p>
                         </div>
                         <div class="bg-gray-700 p-4 rounded-lg">
                             <p class="text-2xl font-bold text-emerald-400">Sales</p>
@@ -304,7 +308,7 @@
         <section class="mb-20 md:mb-32">
             <div class="text-center mb-12">
                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Масштаб нашего исследования</h2>
-                <p class="text-gray-400 max-w-3xl mx-auto">Мы предоставляем данные, которым можно доверять. На текущий момент наше исследование охватывает только один регион. До конца 2026 года планируется проведение еще в 10 странах.</p>
+                <p class="text-gray-400 max-w-3xl mx-auto">Мы предоставляем данные, которым можно доверять. Наше исследование охватывает несколько рынков для наиболее полного и объективного сравнения.</p>
             </div>
             <div class="bg-gray-800 rounded-lg p-8 md:p-12">
                  <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center mb-10 pb-10 border-b border-gray-700">
@@ -349,8 +353,7 @@
                         </div>
                     </div>
                     <div id="country-rankings">
-                        <!-- Рендерится через JS -->
-                    </div>
+                        </div>
                 </div>
             </div>
         </section>
@@ -379,7 +382,11 @@
                 <select id="bank-selector"></select>
 
                 <div class="dashboard-container" id="main-dashboard-content">
+                    
+                    <!-- ЛЕВАЯ КОЛОНКА -->
                     <div class="flex flex-col gap-4">
+                        
+                        <!-- Карточка банка -->
                         <div class="card">
                             <div class="flex justify-between items-start mb-4">
                                 <div class="flex items-center gap-3">
@@ -402,11 +409,8 @@
                                                 <stop stop-color="#22d3ee" />
                                             </linearGradient>
                                         </defs>
-                                        <path d="M 16 96 A 80 80 0 0 1 176 96" fill="none" stroke="#334155" stroke-width="20"
-                                            stroke-linecap="round" />
-                                        <path id="gaugePath" d="M 16 96 A 80 80 0 0 1 176 96" fill="none"
-                                            stroke="url(#gaugeGradient)" stroke-width="20" stroke-linecap="round"
-                                            stroke-dasharray="251.2" />
+                                        <path d="M 16 96 A 80 80 0 0 1 176 96" fill="none" stroke="#334155" stroke-width="20" stroke-linecap="round" />
+                                        <path id="gaugePath" d="M 16 96 A 80 80 0 0 1 176 96" fill="none" stroke="url(#gaugeGradient)" stroke-width="20" stroke-linecap="round" stroke-dasharray="251.2" />
                                     </svg>
                                     <div class="absolute inset-0 flex items-center justify-center pt-4">
                                         <span id="gaugeValue" class="text-4xl font-extrabold text-white"></span>
@@ -416,7 +420,8 @@
                             </div>
                         </div>
 
-                        <div class="card flex-grow">
+                        <!-- Рейтинг банков -->
+                        <div class="card flex-grow" style="height: 520px;">
                             <div class="flex justify-between items-center mb-3">
                                 <h3 class="font-semibold text-slate-200 text-base">Рейтинг банков</h3>
                                 <div id="ranking-tabs" class="flex items-center bg-slate-800 rounded-lg p-0.5">
@@ -424,64 +429,25 @@
                                     <button class="tab-button" data-sort="volatility">По волатильности</button>
                                 </div>
                             </div>
-                            <div id="competitors-ranking" class="space-y-3 text-sm flex-grow"></div>
-                        </div>
-
-                        <div class="card">
-                            <h3 class="font-semibold text-slate-200 mb-3 text-base">Рекомендации</h3>
-                            <div class="space-y-3">
-                                <div class="bg-slate-800/50 p-3 rounded-lg flex items-center gap-3"><svg
-                                        xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-cyan-400 flex-shrink-0" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                                    </svg>
-                                    <div>
-                                        <h4 class="font-semibold text-white text-sm">Сегментация</h4>
-                                        <p class="text-xs text-slate-300">Углубление сегментации и внедрение
-                                            предиктивных моделей.</p>
-                                    </div>
-                                </div>
-                                <div class="bg-slate-800/50 p-3 rounded-lg flex items-center gap-3"><svg
-                                        xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-cyan-400 flex-shrink-0" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                    </svg>
-                                    <div>
-                                        <h4 class="font-semibold text-white text-sm">Клиентский
-                                            опыт</h4>
-                                        <p class="text-xs text-slate-300">Создание
-                                            Phygital-среды, где цифровые инструменты обогащают
-                                            визит.</p>
-                                    </div>
-                                </div>
-                                <div class="bg-slate-800/50 p-3 rounded-lg flex items-center gap-3"><svg
-                                        xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-cyan-400 flex-shrink-0" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
-                                    </svg>
-                                    <div>
-                                        <h4 class="font-semibold text-white text-sm">Работа с данными</h4>
-                                        <p class="text-xs text-slate-300">Переход к проактивному сервису на базе
-                                            GenAI.</p>
-                                    </div>
-                                </div>
-                            </div>
+                            <div id="competitors-ranking" class="space-y-3 text-sm flex-grow custom-scroll"></div>
                         </div>
                     </div>
 
+                    <!-- ПРАВАЯ КОЛОНКА -->
                     <div class="grid grid-rows-[auto_1fr_auto] gap-4">
+                        
+                        <!-- Путь клиента -->
                         <div class="card row-start-1 relative">
                             <div class="flex justify-between items-start">
                                 <h3 class="font-bold text-slate-100 text-2xl">Путь клиента</h3>
                                 <div id="journey-legend" class="flex items-center gap-3 text-xs text-slate-400">
+                                    <!-- Легенда генерируется JS -->
                                 </div>
                             </div>
                             <div class="flex-grow relative h-52"><canvas id="choiceChart"></canvas></div>
                         </div>
 
+                        <!-- Средний ряд: Критерии, Scatter, Radar -->
                         <div class="grid grid-cols-3 gap-4 row-start-2">
                             <div class="card">
                                 <h3 class="font-semibold text-slate-200 mb-3 text-base">Критерии индекса</h3>
@@ -501,7 +467,9 @@
                             </div>
                         </div>
 
+                        <!-- Нижний ряд: Эффективность и Цифровая активность -->
                         <div class="grid grid-cols-3 gap-4 row-start-3">
+                            <!-- Donut Chart -->
                             <div class="card items-center justify-center text-center">
                                 <h3 class="font-semibold text-slate-200 text-lg mb-2">Эффективность продаж</h3>
                                 <div class="relative flex items-center justify-center">
@@ -512,9 +480,7 @@
                                             </linearGradient>
                                         </defs>
                                         <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#334155" stroke-width="6" />
-                                        <circle id="salesDonutArc" cx="21" cy="21" r="15.915" fill="transparent"
-                                            stroke="url(#salesGradient)" stroke-width="6" stroke-linecap="round"
-                                            transform="rotate(-90 21 21)" />
+                                        <circle id="salesDonutArc" cx="21" cy="21" r="15.915" fill="transparent" stroke="url(#salesGradient)" stroke-width="6" stroke-linecap="round" transform="rotate(-90 21 21)" />
                                     </svg>
                                     <div class="donut-center">
                                         <div class="value" id="salesDonutValue"></div>
@@ -523,11 +489,12 @@
                                 </div>
                                 <div class="mt-auto w-full pt-3 border-t border-slate-700 text-left">
                                     <h4 class="font-semibold text-sm text-slate-200 mb-1">Вывод</h4>
-                                    <p class="text-xs text-slate-400">Нестабильная. Выявлены упущенные возможности для доп. продаж и отсутствие проактивности.</p>
+                                    <p class="text-xs text-slate-400">Нестабильная. Выявлены упущенные возможности для доп. продаж.</p>
                                 </div>
                             </div>
 
-                            <div class="col-span-2 card justify-start">
+                            <!-- Цифровая активность -->
+                            <div class="col-span-2 card justify-start relative">
                                 <div id="digital-activity-content">
                                     <h3 class="font-semibold text-slate-200 text-base">Цифровая активность</h3>
                                     <div class="flex-grow grid grid-cols-2 gap-6 pt-2">
@@ -541,16 +508,13 @@
                                                 </div>
                                                 <p class="text-xs text-slate-400 mt-4 mb-2">Доля захвата рынка</p>
                                                 <div class="relative w-full bg-slate-700 rounded-full h-2.5">
-                                                    <div class="bg-gradient-to-r from-cyan-600 to-cyan-400 h-2.5 rounded-full"
-                                                        style="width: 10.4%"></div>
+                                                    <div class="bg-gradient-to-r from-cyan-600 to-cyan-400 h-2.5 rounded-full" style="width: 10.4%"></div>
                                                     <span class="absolute right-0 -top-5 text-xs font-bold text-white">10.4%</span>
                                                 </div>
                                             </div>
                                             <div class="mt-auto pt-4 border-t border-slate-700">
                                                 <h4 class="font-semibold text-sm text-slate-200 mb-1">Вывод</h4>
-                                                <p class="text-xs text-slate-400">Низкий охват говорит о значительном потенциале
-                                                    роста.
-                                                    Фокус на SEO и SMM может привлечь новую аудиторию.</p>
+                                                <p class="text-xs text-slate-400">Низкий охват говорит о значительном потенциале роста. Фокус на SEO и SMM может привлечь новую аудиторию.</p>
                                             </div>
                                         </div>
                                         <div class="flex flex-col">
@@ -568,19 +532,34 @@
                                             </div>
                                             <div class="mt-auto pt-4 border-t border-slate-700">
                                                 <h4 class="font-semibold text-sm text-slate-200 mb-1">Вывод</h4>
-                                                <p class="text-xs text-slate-400">Высокий показатель вовлеченности (DAU/MAU > 65%)
-                                                    подтверждает эффективность транзакционной бизнес-модели банка.</p>
+                                                <p class="text-xs text-slate-400">Высокий показатель вовлеченности (DAU/MAU > 65%) подтверждает эффективность транзакционной бизнес-модели банка.</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card-overlay" style="display: flex; position: absolute; background-color: rgba(30, 41, 59, 0.5);">
-                                    <div class="card-overlay-text" style="font-size: 1.125rem; padding: 12px 20px; background-color: rgba(15, 23, 42, 0.7); border-radius: 10px; border: 1px solid #334155;">Будет доступно позже</div>
+                                <div class="card-overlay">
+                                    <div class="card-overlay-text">Будет доступно позже</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- НОВЫЙ БЛОК: Стратегические рекомендации -->
+                <div class="w-full max-w-[1600px] mt-4 mx-auto" id="recommendations-block">
+                    <div class="card">
+                        <h3 class="font-semibold text-slate-200 text-xl mb-6 flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                            </svg>
+                            Стратегические рекомендации
+                        </h3>
+                        <div id="recommendations-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <!-- Сюда вставляются рекомендации JS-ом -->
+                        </div>
+                    </div>
+                </div>
+
                 <div id="dashboard-overlay" class="card-overlay" style="display: none;">
                     <div class="card-overlay-text">
                         Получить доступ к деталям исследования
@@ -634,600 +613,316 @@
     </footer>
 
 <script>
-// !!!!!!!!!!! ДАННЫЕ И ЛОГИКА ДЕШБОРДА (ИНТЕГРИРОВАНЫ И ОБНОВЛЕНЫ) !!!!!!!!!!!
 document.addEventListener('DOMContentLoaded', () => {
-    // === 1. ДАННЫЕ (Обновлено из ALL Uz - Final.csv) ===
+    // === ДАННЫЕ ===
     const appData = {
-        "bankNames": [
-            "Гарант банк",
-            "Давр-банк",
-            "Ипак Йули банк",
-            "Ипотека-банк",
-            "Капиталбанк",
-            "Народный банк",
-            "ОриентФинансБанк",
-            "Asakabank",
-            "Asia Alliance Bank",
-            "BRB",
-            "Hamkorbank",
-            "InFinBank",
-            "NBU",
-            "SQB",
-            "Tenge Bank"
-        ],
         "allBanksData": [
             {
                 "Bank": "Гарант банк",
-                "Индекс CCI": 2.78,
-                "Волатильность CCI": 2.23,
-                "Критерии индекса: Онлайн": 2.95,
-                "Критерии индекса: Офлайн": 2.61,
-                "Критерии индекса: Omni": 2.26,
-                "Критерии индекса: GenAI": 1.87,
-                "Критерии индекса: Культура": 2.89,
-                "Волатильность Онлайн": 2.08,
-                "Волатильность Офлайн": 2.38,
-                "Эффективность продаж": 2.58,
-                "Место по Индекс CCI": 6,
-                "Место по Волатильность общая": 15,
-                "Место по Онлайн": 2,
-                "Место по Офлайн": 10,
-                "Место по Omni": 11,
-                "Место по GenAI": 4,
-                "Место по Culture": 8,
-                "Сравнение каналов: Отделение": 2.61,
-                "Сравнение каналов: Web": 3.07,
-                "Сравнение каналов: Контакт центр": 2.93,
-                "Путь клиента: Первое касание": 3.47,
-                "Путь клиента: Изучение сайта": 2.67,
-                "Путь клиента: Звонок": 3.6,
-                "Путь клиента: Общение в чате": 2.27,
-                "Путь клиента: Визит": 2.74,
-                "Путь клиента: Обслуживание": 2.83
+                "Индекс CCI": 2.73, "Волатильность CCI": 2.23,
+                "Критерии индекса: Онлайн": 2.95, "Критерии индекса: Офлайн": 2.52, "Критерии индекса: Omni": 2.23, "Критерии индекса: GenAI": 1.76, "Критерии индекса: Культура": 2.73,
+                "Волатильность Онлайн": 2.08, "Волатильность Офлайн": 2.38, "Эффективность продаж": 2.56,
+                "Место по Индекс CCI": 6, "Место по Волатильность общая": 15,
+                "Сравнение каналов: Отделение": 2.52, "Сравнение каналов: Web": 3.07, "Сравнение каналов: Контакт центр": 2.93,
+                "Путь клиента: Первое касание": 3.47, "Путь клиента: Изучение сайта": 2.67, "Путь клиента: Звонок": 3.60, "Путь клиента: Общение в чате": 2.27, "Путь клиента: Визит": 2.80, "Путь клиента: Обслуживание": 2.59,
+                "Recommendations": [
+                    "Нестабильность сервиса\nИнсайт из данных: Вы занимаете 15-е место (последнее) по Волатильности. Это самый непредсказуемый банк в рейтинге. Комментарии: «Сначала сказали садитесь, а потом выгнали... сказали, что предыдущего недообслужили», «Сотрудница полностью задействована, уверенно отвечала» (позитив) VS «Отвратительное впечатление, злость после посещения».\nРекомендация: Стандартизация процессов. Клиент не должен зависеть от настроения конкретного сотрудника. Внедрить чек-листы обслуживания и «Золотой стандарт».",
+                    "«Мертвые души» в отделении\nИнсайт из данных: Офлайн — 10-е место (2.52). Комментарии: «Работает один сотрудник, а остальные непонятно чем занимаются», «Все скучают на работе и хотят скорее домой», «Сотрудники свободные просто лазают в компьютере».\nРекомендация: Ввести контроль активности, метрики эффективности (количество операций на сотрудника) и систему видеонаблюдения для контроля занятости.",
+                    "Технические сбои\nИнсайт из данных: Путь клиента «Визит» — 2.80, но с жалобами на скорость. Комментарии: «Талончик выдает, но на экране ничего не двигается», «Одного клиента обслуживают очень и очень долго... виснет все».\nРекомендация: Технический аудит IT-инфраструктуры отделений.",
+                    "Сильный Digital на фоне слабого Offline\nИнсайт из данных: Онлайн — 2-е место (2.95)! Комментарии: «Сайт очень приятный и стильный», «Дизайн современный», «Навигация логичная».\nРекомендация: Стратегия Digital-First. Продвигайте и улучшайте дистанционное обслуживание.",
+                    "Высокий потенциал для продаж\nИнсайт из данных: Эффективность продаж — 2.56. Потенциал не реализован. Комментарии: «Информацию в банке не получила, так как консультации не было», «Никого нет... сотрудникам плевать на клиента», «Не было консультации».\nРекомендация: Переход от обслуживания к продажам. Необходимо обучение активным продажам и доработка системы мотивации.",
+                    "Проблемы с доступностью локаций\nИнсайт из данных: Низкие оценки за навигацию и видимость. Комментарии: «Находится в углу, заходить тоже откуда-то скраю», «Заходишь как будто в тупик», «Вывеска заюзанная».\nРекомендация: Аудит внешней навигации."
+                ]
             },
             {
                 "Bank": "Давр-банк",
-                "Индекс CCI": 2.37,
-                "Волатильность CCI": 1.76,
-                "Критерии индекса: Онлайн": 2.64,
-                "Критерии индекса: Офлайн": 2.1,
-                "Критерии индекса: Omni": 2.11,
-                "Критерии индекса: GenAI": 2.07,
-                "Критерии индекса: Культура": 2.07,
-                "Волатильность Онлайн": 1.63,
-                "Волатильность Офлайн": 1.89,
-                "Эффективность продаж": 2.09,
-                "Место по Индекс CCI": 14,
-                "Место по Волатильность общая": 6,
-                "Место по Онлайн": 12,
-                "Место по Офлайн": 14,
-                "Место по Omni": 13,
-                "Место по GenAI": 3,
-                "Место по Culture": 14,
-                "Сравнение каналов: Отделение": 2.1,
-                "Сравнение каналов: Web": 3.13,
-                "Сравнение каналов: Контакт центр": 2.37,
-                "Путь клиента: Первое касание": 3.13,
-                "Путь клиента: Изучение сайта": 3.13,
-                "Путь клиента: Звонок": 2.07,
-                "Путь клиента: Общение в чате": 2.67,
-                "Путь клиента: Визит": 2.29,
-                "Путь клиента: Обслуживание": 2.1
+                "Индекс CCI": 2.34, "Волатильность CCI": 1.76,
+                "Критерии индекса: Онлайн": 2.64, "Критерии индекса: Офлайн": 2.03, "Критерии индекса: Omni": 2.13, "Критерии индекса: GenAI": 1.94, "Критерии индекса: Культура": 2.01,
+                "Волатильность Онлайн": 1.63, "Волатильность Офлайн": 1.89, "Эффективность продаж": 1.96,
+                "Место по Индекс CCI": 14, "Место по Волатильность общая": 6,
+                "Сравнение каналов: Отделение": 2.03, "Сравнение каналов: Web": 3.13, "Сравнение каналов: Контакт центр": 2.37,
+                "Путь клиента: Первое касание": 3.13, "Путь клиента: Изучение сайта": 3.13, "Путь клиента: Звонок": 2.07, "Путь клиента: Общение в чате": 2.67, "Путь клиента: Визит": 2.23, "Путь клиента: Обслуживание": 1.93,
+                "Recommendations": [
+                    "Агрессия в отделении\nИнсайт из данных: Критерий «Культура» — 2.01 (одно из самых низких значений). Комментарии: «Сотрудник встал из-за стола и звал выйти на улицу разобраться из-за того, что я сфотографировала», «Хамят, и кажется, хотят избить клиента», «Психически неуравновешенные сотрудники».\nРекомендация: Ситуация выходит за рамки плохого сервиса в плоскость физической безопасности. Необходим кадровый аудит и увольнение сотрудников, проявляющих агрессию, независимо от их KPI по продажам. Внедрить единый стандарт для охранников.",
+                    "Низкое качество отделений\nИнсайт из данных: Офлайн — 2.03 (14-е место). Путь клиента «Визит» — 2.14. Комментарии: «Банк не очень выглядит, вывескам лет 15», «Туалет на улице», «Грязно», «Некомфортное помещение».\nРекомендация: Прежде чем внедрять цифровые технологии, необходимо обеспечить базовую гигиену помещений. Если ремонт невозможен, рассмотрите закрытие самых проблемных точек, так как они наносят непоправимый ущерб репутации бренда.",
+                    "В большинстве отделений не работает СУО\nИнсайт из данных: Путь клиента «Навигация» (оценивается в блоке Визит) крайне низок. Комментарии: «Деления нет... непонятно, кто за что отвечает», «Нет электронной очереди, живая очередь, люди спорят», «Полный хаос».\nРекомендация: Поддерживать в рабочем состоянии СУО (Системы Управления Очередью). Внедрить ролевую модель в отделении.",
+                    "Улучшение цифрового опыта\nИнсайт из данных: «Критерии индекса: GenAI» — 1.94 (формально 3-е место, но в абсолюте низко), Web — 3.13 (единственное светлое пятно). Комментарии: При относительно неплохой оценке сайта, часть процессов требует улучшения: «Чат-бот есть, но он сразу переводит в чат с оператором», «Качество диалога с оператором ужасное», «Непонятно, работает терминал или нет».\nРекомендация: Провести аудит процессов. Клиенты отмечают, что сайт выглядит современно (оценка 3.13), но функционал поддержки не работает. Сфокусируйтесь на том, чтобы КЦ решал запросы клиентов.",
+                    "Необходима работа над отношениями\nИнсайт из данных: Эффективность продаж — 1.96 (Крайне низко). Комментарии: «Не предложил скачать приложение», «Не хотят ни обслуживать, ни продать», «Хотели быстрее избавиться от клиента».\nРекомендация: Сейчас попытки кросс-продаж могут вызывать агрессию у клиента. Необходимо провести работу над доверием, базовой вежливостью и решением вопроса. Возможно внедрить метрику «Оценку удовлетворенности» для сотрудников фронт-линий.",
+                    "Разрыв качества каналов\nИнсайт из данных: Сравнение каналов: Web (3.13) vs Отделение (2.03). Разрыв более 1 пункта. Комментарии: «Сайт выглядит современно и стильно... Банк не очень выглядит, вывескам лет 15».\nРекомендация: Гармонизация каналов. Клиент, привлеченный рекламой и неплохим сайтом, испытывает шок, приходя в отделение. Необходимо привести стандарты обслуживания в офисе к минимальному соответствию с обещаниями, которые дает сайт (или переводить максимум операций в онлайн, чтобы минимизировать визиты в офис)."
+                ]
             },
             {
                 "Bank": "Ипак Йули банк",
-                "Индекс CCI": 2.81,
-                "Волатильность CCI": 1.77,
-                "Критерии индекса: Онлайн": 2.77,
-                "Критерии индекса: Офлайн": 2.85,
-                "Критерии индекса: Omni": 2.56,
-                "Критерии индекса: GenAI": 1.67,
-                "Критерии индекса: Культура": 3.0,
-                "Волатильность Онлайн": 1.37,
-                "Волатильность Офлайн": 2.17,
-                "Эффективность продаж": 2.73,
-                "Место по Индекс CCI": 4,
-                "Место по Волатильность общая": 8,
-                "Место по Онлайн": 8,
-                "Место по Офлайн": 4,
-                "Место по Omni": 1,
-                "Место по GenAI": 12,
-                "Место по Culture": 4,
-                "Сравнение каналов: Отделение": 2.85,
-                "Сравнение каналов: Web": 3.03,
-                "Сравнение каналов: Контакт центр": 2.33,
-                "Путь клиента: Первое касание": 3.13,
-                "Путь клиента: Изучение сайта": 2.93,
-                "Путь клиента: Звонок": 3.13,
-                "Путь клиента: Общение в чате": 1.53,
-                "Путь клиента: Визит": 3.1,
-                "Путь клиента: Обслуживание": 2.9
+                "Индекс CCI": 2.78, "Волатильность CCI": 1.77,
+                "Критерии индекса: Онлайн": 2.77, "Критерии индекса: Офлайн": 2.79, "Критерии индекса: Omni": 2.52, "Критерии индекса: GenAI": 1.59, "Критерии индекса: Культура": 3.10,
+                "Волатильность Онлайн": 1.37, "Волатильность Офлайн": 2.17, "Эффективность продаж": 2.78,
+                "Место по Индекс CCI": 2, "Место по Волатильность общая": 8,
+                "Сравнение каналов: Отделение": 2.79, "Сравнение каналов: Web": 3.03, "Сравнение каналов: Контакт центр": 2.33,
+                "Путь клиента: Первое касание": 3.13, "Путь клиента: Изучение сайта": 2.93, "Путь клиента: Звонок": 3.13, "Путь клиента: Общение в чате": 1.53, "Путь клиента: Визит": 2.79, "Путь клиента: Обслуживание": 3.03,
+                "Recommendations": [
+                    "Дисциплинарна сотрудников требует внимания\nИнсайт из данных: Вы занимаете 1-е место по Культуре (3.10), но комментарии выявляют нарушения стандартов в отдельных точках. Комментарии: «Сотрудники в наглую болтают по личному телефону при полном зале», «Зал полон клиентов, а работники заняты личными делами и ржут», «Никакого внимания на клиентов».\nРекомендация: Ввести обязательное правило разделения поведения сотрудников «на сцене» и «за сценой». Внедрить практику «Тайный покупатель» с фокусом на дисциплину, а не только на скрипты.",
+                    "Необходима работа над продажами\nИнсайт из данных: Критический разрыв: 1-е место по Культуре, но 12-е место по Эффективности продаж (2.17). Сотрудники приятные, но пассивные. Комментарии: «Материалы в доступе, но никто не предлагает», «Всё объяснили, но кросс-продаж не было», «Сотрудник не пытается предложить дополнительный функционал».\nРекомендация: Трансформация из «Консультанта» в «Менеджера продаж». Сотрудники боятся «испортить» хорошее впечатление продажей. Необходимо внедрить скрипты мягких продаж (Soft Sell) и обучить персонал предлагать продукты как решение проблем клиента, а не как навязывание.",
+                    "Искусственный барьер в Digital (Web-to-App)\nИнсайт из данных: Место по Онлайн — 8-е. Пользователи отмечают неудобство процессов при хорошем дизайне. Комментарии: «Онлайн-заявку можно оформить только в приложении... на сайте такой функции нет», «Не самая удачная идея — требовать скачивание приложения для отправки заявки».\nРекомендация: Провести аудит процессов.",
+                    "Технологическое отставание в поддержке\nИнсайт из данных: 12-е место по GenAI (1.59). Контакт-центр работает по старинке. Комментарии: «Оператор технически не может увидеть переписку», «Голосовое вступление очень длинное... ушло 2 минуты, чтобы переключить на оператора».\nРекомендация: Внедрить умного чат-бота на сайт (а не только в Telegram) и сократить IVR (голосовое меню). При текущем потоке клиентов ручная обработка всех запросов снижает качество сервиса.",
+                    "Хаос в отделении\nИнсайт из данных: Офлайн — 1-е место, это привлекает огромный трафик, с которым инфраструктура и сотрудники не справляются. Комментарии: «Из-за количества людей некомфортно, слишком суматошно», «Клиентов как тараканов», «В зале шумно — клиенты ругаются».\nРекомендация: Оптимизация потоков. Необходимо выделить роль Digital-амбассадора в зале, который будет переводить простые операции (платежи, справки) в приложение прямо в очереди, разгружая окна операционистов. Также необходимо зонирование в отделении на короткие, средние и длинные операции.",
+                    "Проблема инфраструктуры связи\nИнсайт из данных: Общая оценка Атмосферы высокая, но есть технические «слепые зоны». Комментарии: «Единственный огромный минус — в здании не ловит мобильный интернет», «Терминал работал с перебоями».\nРекомендация: Обеспечение бесшовного Wi-Fi. Вы продвигаете цифровые услуги и приложение, клиенту нужно иметь доступ к сети внутри отделения."
+                ]
             },
             {
                 "Bank": "Ипотека-банк",
-                "Индекс CCI": 2.74,
-                "Волатильность CCI": 1.5,
-                "Критерии индекса: Онлайн": 2.8,
-                "Критерии индекса: Офлайн": 2.69,
-                "Критерии индекса: Omni": 2.48,
-                "Критерии индекса: GenAI": 1.8,
-                "Критерии индекса: Культура": 3.02,
-                "Волатильность Онлайн": 1.31,
-                "Волатильность Офлайн": 1.69,
-                "Эффективность продаж": 2.36,
-                "Место по Индекс CCI": 7,
-                "Место по Волатильность общая": 1,
-                "Место по Онлайн": 6,
-                "Место по Офлайн": 7,
-                "Место по Omni": 3,
-                "Место по GenAI": 8,
-                "Место по Culture": 3,
-                "Сравнение каналов: Отделение": 2.69,
-                "Сравнение каналов: Web": 3.1,
-                "Сравнение каналов: Контакт центр": 2.63,
-                "Путь клиента: Первое касание": 3.27,
-                "Путь клиента: Изучение сайта": 2.93,
-                "Путь клиента: Звонок": 2.8,
-                "Путь клиента: Общение в чате": 2.47,
-                "Путь клиента: Визит": 2.36,
-                "Путь клиента: Обслуживание": 3.17
+                "Индекс CCI": 2.70, "Волатильность CCI": 1.50,
+                "Критерии индекса: Онлайн": 2.80, "Критерии индекса: Офлайн": 2.60, "Критерии индекса: Omni": 2.45, "Критерии индекса: GenAI": 1.71, "Критерии индекса: Культура": 2.86,
+                "Волатильность Онлайн": 1.31, "Волатильность Офлайн": 1.69, "Эффективность продаж": 2.36,
+                "Место по Индекс CCI": 7, "Место по Волатильность общая": 1,
+                "Сравнение каналов: Отделение": 2.60, "Сравнение каналов: Web": 3.10, "Сравнение каналов: Контакт центр": 2.63,
+                "Путь клиента: Первое касание": 3.27, "Путь клиента: Изучение сайта": 2.93, "Путь клиента: Звонок": 2.80, "Путь клиента: Общение в чате": 2.47, "Путь клиента: Визит": 2.45, "Путь клиента: Обслуживание": 2.94,
+                "Recommendations": [
+                    "Лидер по стабильности, но требует улучшения\nИнсайт из данных: Вы занимаете 1-е место по стабильности (Волатильность CCI — 1.50). Клиенты получают предсказуемый сервис, но работа над сервисом все еще необходима. Комментарии: «Обычный банк, ничего особенного», «Среднее состояние, не грязно, но можно было бы подумать над перестановкой», «Нейтральное, формально-вежливое общение».\nРекомендация: Масштабирование единых критериев сервиса на все отделения. Возможно внедрение элементов геймификации или вау-эффекта в стандарт обслуживания.",
+                    "Слабая навигация и хаос на входе\nИнсайт из данных: Метрика «Путь клиента: Визит» — 2.45 (одна из самых низких в воронке). Комментарии: «На входе никто не встречает», «Непонятное деление», «Приходится спрашивать, если никто не встретит», «Нет аппарата для выдачи талона».\nРекомендация: Усилить Welcome-зону. Клиент теряется на старте. Необходим активный администратор, который не просто сидит, а встречает и направляет. Четкая навигация (напольные стикеры, крупные вывески зон) критически важна.",
+                    "Компетентность персонала vs Устаревшие инструменты\nИнсайт из данных: Высокая оценка за «Обслуживание» (2.94) и «Культуру» (2-е место), но жалобы на процессы. Комментарии: «Сотрудница была очень заинтересована... на все отвечала уверенно», «Всё в основном на бумаге», «Клиенты носятся с бумагами по залу».\nРекомендация: Редизайн процесса обслуживания в отделении. Цифровизация рабочего места сотрудника. Внедрение планшетов для сотрудников, чтобы они могли обслуживать клиента «безбарьерно».",
+                    "Низкое качество дистанционной поддержки\nИнсайт из данных: «Путь клиента: Общение в чате» — 2.47 и 8-е место по GenAI. Комментарии: «Чат-бот очень слабенький», «Сотрудник дал неверную информацию», «Оператор не решил проблему», «Долгий голосовой помощник».\nРекомендация: Перезагрузка Контакт-центра. Обучение операторов (комментарии про «новичков» и неточные ответы) и внедрение базы знаний для быстрого поиска верных ответов.",
+                    "Пассивность в продажах\nИнсайт из данных: Эффективность продаж — 2.36. Комментарии: «Нет, дополнительно не предлагали ничего», «Кросс-продаж не было», «Проблема не решена, цель не достигнута».\nРекомендация: Активация кросс-продаж через заботу. У вас лояльные клиенты (2-е место по Omni), они готовы покупать. Необходимо научить сотрудников предлагать продукты в контексте жизненной ситуации клиента (например, при оформлении вклада предложить карту с кэшбэком).",
+                    "Визуальная «серость» бренда\nИнсайт из данных: Офлайн — 2.60 (6-е место). Бренд не выделяется. Комментарии: «Видно, но не выделяется», «Старый офис на вид», «Сайт обычный, ничем не примечательный», «Дизайн немного скучный».\nРекомендация: Обновление визуального стиля. Необязательно делать капитальный ремонт везде, но обновить вывески, добавить яркие акценты в интерьер и освежить дизайн сайта для привлечения молодой аудитории."
+                ]
             },
             {
                 "Bank": "Капиталбанк",
-                "Индекс CCI": 2.74,
-                "Волатильность CCI": 2.18,
-                "Критерии индекса: Онлайн": 2.91,
-                "Критерии индекса: Офлайн": 2.57,
-                "Критерии индекса: Omni": 2.52,
-                "Критерии индекса: GenAI": 1.67,
-                "Критерии индекса: Культура": 2.81,
-                "Волатильность Онлайн": 1.93,
-                "Волатильность Офлайн": 2.43,
-                "Эффективность продаж": 2.56,
-                "Место по Индекс CCI": 8,
-                "Место по Волатильность общая": 14,
-                "Место по Онлайн": 4,
-                "Место по Офлайн": 11,
-                "Место по Omni": 2,
-                "Место по GenAI": 12,
-                "Место по Culture": 11,
-                "Сравнение каналов: Отделение": 2.57,
-                "Сравнение каналов: Web": 3.0,
-                "Сравнение каналов: Контакт центр": 2.6,
-                "Путь клиента: Первое касание": 3.07,
-                "Путь клиента: Изучение сайта": 2.93,
-                "Путь клиента: Звонок": 3.4,
-                "Путь клиента: Общение в чате": 1.8,
-                "Путь клиента: Визит": 2.83,
-                "Путь клиента: Обслуживание": 2.65
+                "Индекс CCI": 2.69, "Волатильность CCI": 2.18,
+                "Критерии индекса: Онлайн": 2.91, "Критерии индекса: Офлайн": 2.48, "Критерии индекса: Omni": 2.45, "Критерии индекса: GenAI": 1.59, "Критерии индекса: Культура": 2.63,
+                "Волатильность Онлайн": 1.93, "Волатильность Офлайн": 2.43, "Эффективность продаж": 2.45,
+                "Место по Индекс CCI": 8, "Место по Волатильность общая": 14,
+                "Сравнение каналов: Отделение": 2.48, "Сравнение каналов: Web": 3.00, "Сравнение каналов: Контакт центр": 2.60,
+                "Путь клиента: Первое касание": 3.07, "Путь клиента: Изучение сайта": 2.93, "Путь клиента: Звонок": 3.40, "Путь клиента: Общение в чате": 1.80, "Путь клиента: Визит": 2.88, "Путь клиента: Обслуживание": 2.50,
+                "Recommendations": [
+                    "Коллапс физической инфраструктуры\nИнсайт из данных: Офлайн — 12-е место (2.48). Волатильность Офлайна крайне высокая (2.43). Комментарии: «В помещении неразбериха из ожидающих клиентов... и в целом непонятная ситуация», «Из-за большого количества людей неприятный запах и очень тесно», «С утра в банке просто хаос».\nРекомендация: Оптимизация потоков. Необходимо выделить роль Digital-амбассадора в зале, который будет переводить простые операции (платежи, справки) в приложение прямо в очереди, разгружая окна операционистов. Также необходимо зонирование в отделении на короткие, средние и длинные операции. Необходима установка/починка СУО (многие пишут, что терминалы не работают).",
+                    "Проблемы с консультацией\nИнсайт из данных: Культура — 10-е место (2.63). Комментарии: «Консультация проходила стоя у входа, было ощущение, что ты на улице», «Сделала замечание... сказали ну давайте в бок отойдем», «Сотрудники бродят по залу, непонятно кто чем занят».\nРекомендация: Стандартизация и контроль зоны обслуживания. Необходимо закрепить сотрудников за рабочими местами или стойками. Ввести правило: консультация только сидя (или за стойкой), никаких переговоров «в проходе».",
+                    "Отличный Call-центр на фоне слабого чата\nИнсайт из данных: Путь клиента «Звонок» — 3.40, но «Общение в чате» — 1.80. Комментарии: «Оператор активно проявляет интерес, находит общий язык», «Сотрудник был асом в своем деле» (про телефон). VS «Чат бот не работает», «Сотрудник дал неверную информацию» (про чат-бот).\nРекомендация: Необходимо провести аудит поддержки через канал чата. Использовать сильные скрипты телефонных операторов для обучения сотрудников чата.",
+                    "Разрыв коммуникации между филиалами\nИнсайт из данных: Волатильность общая — 14-е место (предпоследнее). Комментарии: «Информация противоречит той, что я получила в другом их филиале», «Второй филиал этого банка и информация разнится».\nРекомендация: Внедрение единой базы знаний и контроль знаний сотрудников. Ответы операторов и менеджеров в разных точках должны быть идентичны.",
+                    "Упущенная выгода в Digital-продажах\nИнсайт из данных: Онлайн — 4-е место (2.91), Web — 3.00. Сайт хороший, но не продает. Комментарии: «Видно, что сайт старается продавать активно... но переход к оформлению требует скачивания приложения», «Не совсем удобно, что для подачи заявки нужно скачивать приложение».\nРекомендация: Упрощение Web-воронки. Сайт работает как отличная витрина, но «спотыкается» на оформлении. Дайте возможность оставить заявку на сайте без обязательной установки приложения, чтобы не терять клиентов, у которых нет времени/памяти на телефоне прямо сейчас."
+                ]
             },
             {
                 "Bank": "Народный банк",
-                "Индекс CCI": 2.31,
-                "Волатильность CCI": 1.71,
-                "Критерии индекса: Онлайн": 2.73,
-                "Критерии индекса: Офлайн": 1.89,
-                "Критерии индекса: Omni": 2.04,
-                "Критерии индекса: GenAI": 1.73,
-                "Критерии индекса: Культура": 1.82,
-                "Волатильность Онлайн": 1.8,
-                "Волатильность Офлайн": 1.62,
-                "Эффективность продаж": 1.93,
-                "Место по Индекс CCI": 15,
-                "Место по Волатильность общая": 4,
-                "Место по Онлайн": 9,
-                "Место по Офлайн": 15,
-                "Место по Omni": 14,
-                "Место по GenAI": 10,
-                "Место по Culture": 15,
-                "Сравнение каналов: Отделение": 1.89,
-                "Сравнение каналов: Web": 3.2,
-                "Сравнение каналов: Контакт центр": 2.3,
-                "Путь клиента: Первое касание": 3.13,
-                "Путь клиента: Изучение сайта": 3.27,
-                "Путь клиента: Звонок": 2.6,
-                "Путь клиента: Общение в чате": 2.0,
-                "Путь клиента: Визит": 2.33,
-                "Путь клиента: Обслуживание": 1.88
+                "Индекс CCI": 2.29, "Волатильность CCI": 1.71,
+                "Критерии индекса: Онлайн": 2.73, "Критерии индекса: Офлайн": 1.84, "Критерии индекса: Omni": 2.03, "Критерии индекса: GenAI": 1.65, "Критерии индекса: Культура": 1.75,
+                "Волатильность Онлайн": 1.80, "Волатильность Офлайн": 1.62, "Эффективность продаж": 1.84,
+                "Место по Индекс CCI": 15, "Место по Волатильность общая": 4,
+                "Сравнение каналов: Отделение": 1.84, "Сравнение каналов: Web": 3.20, "Сравнение каналов: Контакт центр": 2.30,
+                "Путь клиента: Первое касание": 3.13, "Путь клиента: Изучение сайта": 3.27, "Путь клиента: Звонок": 2.60, "Путь клиента: Общение в чате": 2.00, "Путь клиента: Визит": 2.27, "Путь клиента: Обслуживание": 1.83,
+                "Recommendations": [
+                    "Токсичная культура внутри отделений\nИнсайт из данных: Вы занимаете последнее 15-е место по Культуре (1.75) и последнее 15-е место по Офлайну (1.84). Комментарии: «Девушка на входе общается с тоном, как будто ей в карман \"нагадили\"», «Из 15 сотрудников работают 2, остальные заняты личными делами и ржут», «Плевать на проблемы клиента».\nРекомендация: Пересмотр мотивации для сотрудников фронт-линии. Необходимы массовые проверки «Тайным покупателем» с увольнением за грубость и безделие. Возможно внедрение KPI: премия только при отсутствии жалоб на отделение.",
+                    "Высокое качество сайта\nИнсайт из данных: Сайт (Web) получил 3.20 — это очень высокая оценка (выше, чем у многих лидеров). Онлайн — 9-е место, Офлайн — 15-е. Комментарии: «Сайт очень приятный и стильный», «Дизайн современный и приятный», «Сайт работает быстро и стабильно».\nРекомендация: Перевод трафика физических отделений и операций в онлайн.",
+                    "Грязь в отделениях\nИнсайт из данных: Путь клиента «Визит» — 2.27. Оценка состояния помещения низкая. Комментарии: «Находится в закоулке, с дороги не видно», «Неприятный запах», «В зале очень пыльные полы», «Туалет некомфортный, ощущение, что он грязный».\nРекомендация: Ревизия навигации в отделении и оценка качества помещений на необходимость ремонта/улучшения.",
+                    "Низкое качество продаж\nИнсайт из данных: Эффективность продаж — 1.84 (низкая). Комментарии: «Сотрудник сам ничего не предлагал», «Кросс-продаж не было», «Никто ничего не предлагал, нужно самостоятельно все находить».\nРекомендация: Развивать сервис и навыки кросс-продаж у сотрудников отделений.",
+                    "Поддержка недоступна\nИнсайт из данных: «Общение в чате» — 2.00, GenAI — 10-е место. Комментарии: «Связаться с оператором не удалось», «Чат-бот отсутствует», «С оператором в чате не общался, потому что его нельзя было вызвать».\nРекомендация: Обеспечить доступность к поддержке онлайн."
+                ]
             },
             {
                 "Bank": "ОриентФинансБанк",
-                "Индекс CCI": 2.85,
-                "Волатильность CCI": 1.87,
-                "Критерии индекса: Онлайн": 2.73,
-                "Критерии индекса: Офлайн": 2.97,
-                "Критерии индекса: Omni": 2.22,
-                "Критерии индекса: GenAI": 2.13,
-                "Критерии индекса: Культура": 2.89,
-                "Волатильность Онлайн": 1.55,
-                "Волатильность Офлайн": 2.2,
-                "Эффективность продаж": 2.62,
-                "Место по Индекс CCI": 3,
-                "Место по Волатильность общая": 11,
-                "Место по Онлайн": 10,
-                "Место по Офлайн": 2,
-                "Место по Omni": 12,
-                "Место по GenAI": 2,
-                "Место по Culture": 8,
-                "Сравнение каналов: Отделение": 2.97,
-                "Сравнение каналов: Web": 3.27,
-                "Сравнение каналов: Контакт центр": 2.2,
-                "Путь клиента: Первое касание": 3.2,
-                "Путь клиента: Изучение сайта": 3.33,
-                "Путь клиента: Звонок": 1.93,
-                "Путь клиента: Общение в чате": 2.47,
-                "Путь клиента: Визит": 3.45,
-                "Путь клиента: Обслуживание": 3.02
+                "Индекс CCI": 2.75, "Волатильность CCI": 1.87,
+                "Критерии индекса: Онлайн": 2.73, "Критерии индекса: Офлайн": 2.76, "Критерии индекса: Omni": 2.19, "Критерии индекса: GenAI": 2.00, "Критерии индекса: Культура": 2.75,
+                "Волатильность Онлайн": 1.55, "Волатильность Офлайн": 2.20, "Эффективность продаж": 2.53,
+                "Место по Индекс CCI": 3, "Место по Волатильность общая": 11,
+                "Сравнение каналов: Отделение": 2.76, "Сравнение каналов: Web": 3.27, "Сравнение каналов: Контакт центр": 2.20,
+                "Путь клиента: Первое касание": 3.20, "Путь клиента: Изучение сайта": 3.33, "Путь клиента: Звонок": 1.93, "Путь клиента: Общение в чате": 2.47, "Путь клиента: Визит": 3.13, "Путь клиента: Обслуживание": 2.84,
+                "Recommendations": [
+                    "Языковой барьер и коммуникация\nИнсайт из данных: Культура — 6-е место (2.75). Комментарии: «Плохо говорит и понимает по-русски», «Неуверенно консультирует», «Обыденная учтивость запросов по стандарту».\nРекомендация: Необходимо проведение тренингов по коммуникации для сотрудников фронт-линии.",
+                    "Сотрудники без интереса к работе\nИнсайт из данных: Волатильность Офлайна высокая (2.20). Комментарии: «Работают как будто отбывают срок», «Нет улыбок на лице сотрудников», «Здороваются без улыбки и молча дают талончик».\nРекомендация: Аудит системы мотивации. Внедрение программ нематериальной мотивации и геймификации.",
+                    "Слабый телефонный канал\nИнсайт из данных: Путь клиента «Звонок» — 1.93, Сравнение каналов: Контакт-центр — 2.20. Комментарии: «Невозможно дозвониться до колл-центра», «Не удалось связаться с оператором» (10 попыток).\nРекомендация: Необходим аудит контакт-центра.",
+                    "Редизайн процессов\nИнсайт из данных: Офлайн — 2-е место (2.76), Визит — 3.13. Комментарии: «Помещение отличное», «Оформление лакшери», «Все аккуратно и чисто», НО «Ожидание без причины», «Многие сотрудники сидят без дела».\nРекомендация: Требуется оптимизация и редизайн процессов в зале.",
+                    "Сложности с цифровым онбордингом\nИнсайт из данных: Онлайн — 10-е место. Разрыв между Web (3.27) и реальностью. Комментарии: «Онлайн информация другая, а в банке другая», «Не помнят о том, что есть приложение», «Для подачи заявки нужно скачивать приложение».\nРекомендация: Аудит информации для онлайн и офлайн каналов. Проведение продуктового обучения для сотрудников.",
+                    "Отсутствие инициативы в продажах\nИнсайт из данных: Эффективность продаж — 2.53. Комментарии: «Хотят скорее проконсультировать и избавиться от клиента», «О доп. функциях и услугах не рассказала», «Отпускают без доп. материалов».\nРекомендация: Необходима работа с сотрудниками для роста продаж, пересмотр системы мотивации. Внедрите скрипты, где предложение дополнительных услуг встроено в решение проблемы клиента (например, «карта для ребенка» при оформлении пособия)."
+                ]
             },
             {
                 "Bank": "Asakabank",
-                "Индекс CCI": 2.45,
-                "Волатильность CCI": 1.92,
-                "Критерии индекса: Онлайн": 2.51,
-                "Критерии индекса: Офлайн": 2.39,
-                "Критерии индекса: Omni": 2.04,
-                "Критерии индекса: GenAI": 1.4,
-                "Критерии индекса: Культура": 2.35,
-                "Волатильность Онлайн": 1.77,
-                "Волатильность Офлайн": 2.07,
-                "Эффективность продаж": 2.2,
-                "Место по Индекс CCI": 13,
-                "Место по Волатильность общая": 12,
-                "Место по Онлайн": 15,
-                "Место по Офлайн": 12,
-                "Место по Omni": 14,
-                "Место по GenAI": 15,
-                "Место по Culture": 12,
-                "Сравнение каналов: Отделение": 2.39,
-                "Сравнение каналов: Web": 3.47,
-                "Сравнение каналов: Контакт центр": 1.9,
-                "Путь клиента: Первое касание": 3.73,
-                "Путь клиента: Изучение сайта": 3.2,
-                "Путь клиента: Звонок": 2.4,
-                "Путь клиента: Общение в чате": 1.4,
-                "Путь клиента: Визит": 3.0,
-                "Путь клиента: Обслуживание": 2.33
+                "Индекс CCI": 2.57, "Волатильность CCI": 1.92,
+                "Критерии индекса: Онлайн": 2.51, "Критерии индекса: Офлайн": 2.63, "Критерии индекса: Omni": 2.19, "Критерии индекса: GenAI": 1.47, "Критерии индекса: Культура": 2.60,
+                "Волатильность Онлайн": 1.77, "Волатильность Офлайн": 2.07, "Эффективность продаж": 2.36,
+                "Место по Индекс CCI": 11, "Место по Волатильность общая": 12,
+                "Сравнение каналов: Отделение": 2.63, "Сравнение каналов: Web": 3.47, "Сравнение каналов: Контакт центр": 1.90,
+                "Путь клиента: Первое касание": 3.73, "Путь клиента: Изучение сайта": 3.20, "Путь клиента: Звонок": 2.40, "Путь клиента: Общение в чате": 1.40, "Путь клиента: Визит": 2.95, "Путь клиента: Обслуживание": 2.64,
+                "Recommendations": [
+                    "Игнорирование клиентов\nИнсайт из данных: Путь клиента «Визит» — 2.95, но в комментариях тайных покупателей критичные замечания. Комментарии: «С клиентами никто не разговаривает», «Никого не волнует, что зал полон», «Уходит с чувством впустую потерянного времени».\nРекомендация: Внедрение роли «Администратор зала» для управления потоком и первичного контакта с входящими клиентами.",
+                    "Проблемы с контакт-центром\nИнсайт из данных: 15-е место по Онлайн (2.51), несмотря на высокую оценку самого Сайта (3.47). Комментарии: «Сайт понятный... но банк не смог предоставить услуги», «Не работает чат-бот», «Невозможно дозвониться до оператора» (10 раз).\nРекомендация: Технический аудит дистанционных каналов. Необходимо обеспечить доступность контакт-центра и работоспособность чата.",
+                    "Отсутствие цифровизации в процессах\nИнсайт из данных: GenAI — 14-е место (1.47). Один из самых низких показателей. Комментарии: «Не было терминалов», «Много все равно приходится подписывать», «Задержки при выполнении операций».\nРекомендация: Цифровизация документооборота. Внедрение планшетов для сотрудников для ускорения обслуживания.",
+                    "Провал в продажах\nИнсайт из данных: Эффективность продаж — 2.36. Комментарии: «Не было консультации», «Цель не достигнута», «Никто ничего не предлагал».\nРекомендация: Аудит функции продаж. Введение обязательного предложения минимум одного продукта каждому клиенту.",
+                    "Проблемы с некоторыми помещениями\nИнсайт из данных: Несмотря на высокий общий рейтинг (5-е место), есть негативные комментарии. Комментарии: «Неприятная мебель, потертые грязные диваны», «Материал впитывает грязь», «Из-за количества народу начинает вонять».\nРекомендация: Проведение аудита состояния мебели и вентиляции в проблемных точках. Химчистка или замена мебели в зонах ожидания."
+                ]
             },
             {
                 "Bank": "Asia Alliance Bank",
-                "Индекс CCI": 2.68,
-                "Волатильность CCI": 1.77,
-                "Критерии индекса: Онлайн": 2.64,
-                "Критерии индекса: Офлайн": 2.71,
-                "Критерии индекса: Omni": 2.37,
-                "Критерии индекса: GenAI": 1.8,
-                "Критерии индекса: Культура": 2.96,
-                "Волатильность Онлайн": 1.91,
-                "Волатильность Офлайн": 1.62,
-                "Эффективность продаж": 2.6,
-                "Место по Индекс CCI": 10,
-                "Место по Волатильность общая": 7,
-                "Место по Онлайн": 12,
-                "Место по Офлайн": 6,
-                "Место по Omni": 6,
-                "Место по GenAI": 8,
-                "Место по Culture": 6,
-                "Сравнение каналов: Отделение": 2.71,
-                "Сравнение каналов: Web": 2.8,
-                "Сравнение каналов: Контакт центр": 2.3,
-                "Путь клиента: Первое касание": 2.8,
-                "Путь клиента: Изучение сайта": 2.8,
-                "Путь клиента: Звонок": 2.93,
-                "Путь клиента: Общение в чате": 1.67,
-                "Путь клиента: Визит": 2.74,
-                "Путь клиента: Обслуживание": 2.88
+                "Индекс CCI": 2.60, "Волатильность CCI": 1.77,
+                "Критерии индекса: Онлайн": 2.64, "Критерии индекса: Офлайн": 2.55, "Критерии индекса: Omni": 2.32, "Критерии индекса: GenAI": 1.71, "Критерии индекса: Культура": 2.78,
+                "Волатильность Онлайн": 1.91, "Волатильность Офлайн": 1.62, "Эффективность продаж": 2.55,
+                "Место по Индекс CCI": 10, "Место по Волатильность общая": 7,
+                "Сравнение каналов: Отделение": 2.55, "Сравнение каналов: Web": 2.80, "Сравнение каналов: Контакт центр": 2.30,
+                "Путь клиента: Первое касание": 2.80, "Путь клиента: Изучение сайта": 2.80, "Путь клиента: Звонок": 2.93, "Путь клиента: Общение в чате": 1.67, "Путь клиента: Визит": 2.61, "Путь клиента: Обслуживание": 2.72,
+                "Recommendations": [
+                    "Сильная культура обслуживания\nИнсайт из данных: Культура — 5-е место (2.78). Это одна из самых сильных сторон банка. Комментарии: «Сотрудница была максимально заинтересована», «Превзошла ожидания», «Искренне хотела помочь», «Приятные и позитивные эмоции».\nРекомендация: Удержание талантов и масштабирование опыта. Внедрение программы признания для лучших сотрудников и использование их в качестве менторов для новичков.",
+                    "Перегруженный и устаревший сайт\nИнсайт из данных: Онлайн — 12-е место. Оценка Web — 2.80. Комментарии: «Сайт выглядит не современно», «Слишком много ненужной информации», «Навигация усложненная», «Раздражение из-за перегруженного интерфейса».\nРекомендация: UX/UI аудит и упрощение. Необходимо упростить навигацию, убрать визуальный шум и сделать акцент на ключевых действиях (оформить, заказать).",
+                    "Слабая поддержка в чате\nИнсайт из данных: «Общение в чате» — 1.67. GenAI — 8-е место. Комментарии: «Чат-бот отсутствует», «Невозможно связаться с оператором», «Кнопка есть, но она не работает».\nРекомендация: Необходим аудит работы контакт-центра и внедрение рабочих инструментов онлайн-поддержки.",
+                    "Сложности с поддержкой по телефону\nИнсайт из данных: Сравнение каналов: Контакт-центр — 2.30. Комментарии: «Невозможно дозвониться до колл-центра», «Очень большая очередь», «Связаться не удалось» (4 попытки).\nРекомендация: Оптимизация загрузки контакт-центра.",
+                    "Разрыв онлайн-заявки\nИнсайт из данных: Эффективность продаж — 2.55. Комментарии: «Онлайн заявку невозможно осуществить на сайте», «Переводит на скачивание приложения», «Непонятно, на какие условия я соглашаюсь».\nРекомендация: Обеспечить бесшовный путь для выполнения задач клиента."
+                ]
             },
             {
                 "Bank": "BRB",
-                "Индекс CCI": 2.91,
-                "Волатильность CCI": 1.81,
-                "Критерии индекса: Онлайн": 2.72,
-                "Критерии индекса: Офлайн": 3.11,
-                "Критерии индекса: Omni": 2.33,
-                "Критерии индекса: GenAI": 1.87,
-                "Критерии индекса: Культура": 3.11,
-                "Волатильность Онлайн": 1.27,
-                "Волатильность Офлайн": 2.36,
-                "Эффективность продаж": 3.04,
-                "Место по Индекс CCI": 2,
-                "Место по Волатильность общая": 9,
-                "Место по Онлайн": 11,
-                "Место по Офлайн": 1,
-                "Место по Omni": 9,
-                "Место по GenAI": 4,
-                "Место по Culture": 1,
-                "Сравнение каналов: Отделение": 3.11,
-                "Сравнение каналов: Web": 3.33,
-                "Сравнение каналов: Контакт центр": 2.2,
-                "Путь клиента: Первое касание": 3.4,
-                "Путь клиента: Изучение сайта": 3.27,
-                "Путь клиента: Звонок": 2.53,
-                "Путь клиента: Общение в чате": 1.87,
-                "Путь клиента: Визит": 3.4,
-                "Путь клиента: Обслуживание": 3.13
+                "Индекс CCI": 2.74, "Волатильность CCI": 1.81,
+                "Критерии индекса: Онлайн": 2.72, "Критерии индекса: Офлайн": 2.76, "Критерии индекса: Omni": 2.23, "Критерии индекса: GenAI": 1.76, "Критерии индекса: Культура": 2.79,
+                "Волатильность Онлайн": 1.27, "Волатильность Офлайн": 2.36, "Эффективность продаж": 2.76,
+                "Место по Индекс CCI": 4, "Место по Волатильность общая": 9,
+                "Сравнение каналов: Отделение": 2.76, "Сравнение каналов: Web": 3.33, "Сравнение каналов: Контакт центр": 2.20,
+                "Путь клиента: Первое касание": 3.40, "Путь клиента: Изучение сайта": 3.27, "Путь клиента: Звонок": 2.53, "Путь клиента: Общение в чате": 1.87, "Путь клиента: Визит": 3.07, "Путь клиента: Обслуживание": 2.78,
+                "Recommendations": [
+                    "Низкая доступность цифровой поддержки\nИнсайт из данных: Путь клиента «Общение в чате» — 1.87. Комментарии: «Чат-бот на сайте не работает», «С оператором поговорить не удалось», «Ждал около 20 минут, ответа не получил».\nРекомендация: Необходимо обеспечить доступность цифровой поддержки для клиентов (настройка маршрутизации чатов, контроль присутствия операторов).",
+                    "Невозможно дозвониться\nИнсайт из данных: Сравнение каналов: Контакт-центр — 2.20. Комментарии: «Звонок просто сбросился» (4 раза!), «10 минут ожидания, первый в очереди, и сброс», «Не удалось связаться с оператором».\nРекомендация: Технический аудит телефонии для устранения сбросов звонков.",
+                    "Отделения требуют внимания\nИнсайт из данных: Офлайн — 3-е место (2.76), но Волатильность Офлайна высокая (2.36). Комментарии: «Внутри зала ощущение беспорядка и хаоса», «Из-за количества народу начинает вонять», «Стоял мужчина над душой».\nРекомендация: Оптимизация потоков. Необходимо зонирование в отделении на короткие, средние и длинные операции, а также контроль вентиляции.",
+                    "Безразличие персонала\nИнсайт из данных: Культура — 4-е место (2.79), но есть сбои. Комментарии: «Всем плевать, что человек ожидает 40 минут», «Здороваются без улыбки», «Смотрят на клиента как на врага».\nРекомендация: Необходима работа с сотрудниками фронт-линии: проведение тренингов и обучения. Аудит системы мотивации сотрудников."
+                ]
             },
             {
                 "Bank": "Hamkorbank",
-                "Индекс CCI": 2.72,
-                "Волатильность CCI": 2.08,
-                "Критерии индекса: Онлайн": 2.83,
-                "Критерии индекса: Офлайн": 2.62,
-                "Критерии индекса: Omni": 2.41,
-                "Критерии индекса: GenAI": 1.87,
-                "Критерии индекса: Культура": 2.91,
-                "Волатильность Онлайн": 1.84,
-                "Волатильность Офлайн": 2.32,
-                "Эффективность продаж": 2.71,
-                "Место по Индекс CCI": 9,
-                "Место по Волатильность общая": 13,
-                "Место по Онлайн": 5,
-                "Место по Офлайн": 9,
-                "Место по Omni": 5,
-                "Место по GenAI": 4,
-                "Место по Culture": 7,
-                "Сравнение каналов: Отделение": 2.62,
-                "Сравнение каналов: Web": 3.23,
-                "Сравнение каналов: Контакт центр": 2.57,
-                "Путь клиента: Первое касание": 3.4,
-                "Путь клиента: Изучение сайта": 3.07,
-                "Путь клиента: Звонок": 3.0,
-                "Путь клиента: Общение в чате": 2.13,
-                "Путь клиента: Визит": 2.26,
-                "Путь клиента: Обслуживание": 2.9
+                "Индекс CCI": 2.68, "Волатильность CCI": 2.08,
+                "Критерии индекса: Онлайн": 2.83, "Критерии индекса: Офлайн": 2.53, "Критерии индекса: Omni": 2.32, "Критерии индекса: GenAI": 1.76, "Критерии индекса: Культура": 2.71,
+                "Волатильность Онлайн": 1.84, "Волатильность Офлайн": 2.32, "Эффективность продаж": 2.64,
+                "Место по Индекс CCI": 9, "Место по Волатильность общая": 13,
+                "Сравнение каналов: Отделение": 2.53, "Сравнение каналов: Web": 3.23, "Сравнение каналов: Контакт центр": 2.57,
+                "Путь клиента: Первое касание": 3.40, "Путь клиента: Изучение сайта": 3.07, "Путь клиента: Звонок": 3.00, "Путь клиента: Общение в чате": 2.13, "Путь клиента: Визит": 2.26, "Путь клиента: Обслуживание": 2.9,
+                "Recommendations": [
+                    "Низкое качество обслуживания\nИнсайт из данных: Волатильность офлайна высокая (2.32), Культура — 8-е место. Комментарии: «Смеялись над тем, что не понимают моего запроса», «Сотрудники за компьютером спрашивают \"че пришли?\"», «Никакого уважения, только глупый смех».\nРекомендация: Необходимо провести аудит качества обслуживания клиентов в отделении. Обучение персонала стандартам общения.",
+                    "Слабый имидж банка\nИнсайт из данных: Офлайн — 9-е место (2.53). Комментарии: «Похоже на контору, в которой дают микрозайм», «Первый этаж как подвал для барахла», «Снаружи чисто, но внутри неприятно, стулья грязные».\nРекомендация: Необходимо провести аудит помещений банка на предмет чистоты и состояния мебели.",
+                    "Языковой барьер\nИнсайт из данных: Обслуживание — 2.69. Комментарии: «Не поняли, что я спрашивала, по-русски не говорят», «Вторая сотрудница пыталась помочь, но понимания 0», «Отсутствует знание продукта и понимание русского языка».\nРекомендация: Обеспечить доступность банковских услуг разным слоям населения.",
+                    "Большие очереди\nИнсайт из данных: Визит — 2.48. Комментарии: «Живая очередь, терминал не работал», «Аппарат, выдающий очередь, не работает», «Нет никаких указателей».\nРекомендация: Необходим контроль технического состояния и работы СУО (системы управления очередью).",
+                    "Игнорирование цифровых каналов в зале\nИнсайт из данных: Онлайн — 5-е место (2.83). Сайт хороший. Комментарии: «Сам сотрудник не упоминает про сайт или приложение», «Никакой информации не получила», «Совпадение с сайтом 0%».\nРекомендация: Аудит информации для онлайн- и офлайн-каналов. Проведение продуктового обучения для сотрудников."
+                ]
             },
             {
                 "Bank": "InFinBank",
-                "Индекс CCI": 2.55,
-                "Волатильность CCI": 1.7,
-                "Критерии индекса: Онлайн": 2.95,
-                "Критерии индекса: Офлайн": 2.16,
-                "Критерии индекса: Omni": 2.33,
-                "Критерии индекса: GenAI": 1.73,
-                "Критерии индекса: Культура": 2.35,
-                "Волатильность Онлайн": 1.44,
-                "Волатильность Офлайн": 1.96,
-                "Эффективность продаж": 2.11,
-                "Место по Индекс CCI": 12,
-                "Место по Волатильность общая": 3,
-                "Место по Онлайн": 2,
-                "Место по Офлайн": 13,
-                "Место по Omni": 9,
-                "Место по GenAI": 10,
-                "Место по Culture": 12,
-                "Сравнение каналов: Отделение": 2.16,
-                "Сравнение каналов: Web": 3.27,
-                "Сравнение каналов: Контакт центр": 2.53,
-                "Путь клиента: Первое касание": 3.2,
-                "Путь клиента: Изучение сайта": 3.33,
-                "Путь клиента: Звонок": 3.13,
-                "Путь клиента: Общение в чате": 1.93,
-                "Путь клиента: Визит": 2.26,
-                "Путь клиента: Обслуживание": 2.33
+                "Индекс CCI": 2.50, "Волатильность CCI": 1.70,
+                "Критерии индекса: Онлайн": 2.95, "Критерии индекса: Офлайн": 2.06, "Критерии индекса: Omni": 2.23, "Критерии индекса: GenAI": 1.65, "Критерии индекса: Культура": 2.14,
+                "Волатильность Онлайн": 1.44, "Волатильность Офлайн": 1.96, "Эффективность продаж": 2.07,
+                "Место по Индекс CCI": 13, "Место по Волатильность общая": 3,
+                "Сравнение каналов: Отделение": 2.06, "Сравнение каналов: Web": 3.27, "Сравнение каналов: Контакт центр": 2.53,
+                "Путь клиента: Первое касание": 3.20, "Путь клиента: Изучение сайта": 3.33, "Путь клиента: Звонок": 3.13, "Путь клиента: Общение в чате": 1.93, "Путь клиента: Визит": 2.26, "Путь клиента: Обслуживание": 2.33,
+                "Recommendations": [
+                    "Низкое качество отделений\nИнсайт из данных: Офлайн — 13-е место (2.06). Комментарии: «Как попадаешь в помещение, резко противно от ремонта», «Грязно и некомфортно, лестница как испытание», «Ощущение, что ты на стройке».\nРекомендация: Требуется аудит состояния помещений.",
+                    "Некомпетентность персонала\nИнсайт из данных: Культура — 13-е место (2.14). Комментарии: «Хаос не только из клиентов, но и из сотрудников», «Каждый загружен личными проблемами», «Некомпетентна в вопросе», «Устно быстро объяснила, чтоб поскорее избавиться».\nРекомендация: Внедрение стандартов обслуживания и контроля дисциплины. Обучение сотрудников продуктам и навыкам коммуникации.",
+                    "Сильный сайт при слабом сервисе\nИнсайт из данных: Онлайн — 2-е место (2.95), Web — 3.27 (высокая оценка). Комментарии: «Сайт удобный, современный», «Приятный легкий UI», «Все предельно понятно».\nРекомендация: Перевод трафика физических отделений и операций в онлайн.",
+                    "Проблемы с очередью\nИнсайт из данных: Визит — 2.30. Комментарии: «Ничего не понятно», «Живая очередь с талоном от встречающего», «Приходится кричать \"кто тут последний\"», «Аппарат не работал».\nРекомендация: Необходим контроль технического состояния и работы СУО (системы управления очередью).",
+                    "Отсутствие продаж\nИнсайт из данных: Эффективность продаж — 2.07. Комментарии: «Ушла без материалов, ничего не предложили», «Хотят скорее избавиться от клиента», «Не предлагал».\nРекомендация: Внедрение культуры продаж. Обучение сотрудников выявлению потребностей и предложению продуктов."
+                ]
             },
             {
                 "Bank": "NBU",
-                "Индекс CCI": 2.81,
-                "Волатильность CCI": 1.74,
-                "Критерии индекса: Онлайн": 2.79,
-                "Критерии индекса: Офлайн": 2.83,
-                "Критерии индекса: Omni": 2.37,
-                "Критерии индекса: GenAI": 1.87,
-                "Критерии индекса: Культура": 3.05,
-                "Волатильность Онлайн": 1.35,
-                "Волатильность Офлайн": 2.14,
-                "Эффективность продаж": 2.76,
-                "Место по Индекс CCI": 5,
-                "Место по Волатильность общая": 5,
-                "Место по Онлайн": 7,
-                "Место по Офлайн": 5,
-                "Место по Omni": 6,
-                "Место по GenAI": 4,
-                "Место по Culture": 2,
-                "Сравнение каналов: Отделение": 2.83,
-                "Сравнение каналов: Web": 3.13,
-                "Сравнение каналов: Контакт центр": 2.6,
-                "Путь клиента: Первое касание": 3.33,
-                "Путь клиента: Изучение сайта": 2.93,
-                "Путь клиента: Звонок": 3.07,
-                "Путь клиента: Общение в чате": 2.13,
-                "Путь клиента: Визит": 3.1,
-                "Путь клиента: Обслуживание": 2.92
+                "Индекс CCI": 2.74, "Волатильность CCI": 1.74,
+                "Критерии индекса: Онлайн": 2.79, "Критерии индекса: Офлайн": 2.69, "Критерии индекса: Omni": 2.26, "Критерии индекса: GenAI": 1.76, "Критерии индекса: Культура": 2.85,
+                "Волатильность Онлайн": 1.35, "Волатильность Офлайн": 2.14, "Эффективность продаж": 2.64,
+                "Место по Индекс CCI": 5, "Место по Волатильность общая": 5,
+                "Сравнение каналов: Отделение": 2.69, "Сравнение каналов: Web": 3.13, "Сравнение каналов: Контакт центр": 2.60,
+                "Путь клиента: Первое касание": 3.33, "Путь клиента: Изучение сайта": 2.93, "Путь клиента: Звонок": 3.07, "Путь клиента: Общение в чате": 2.13, "Путь клиента: Визит": 3.1, "Путь клиента: Обслуживание": 2.92,
+                "Recommendations": [
+                    "Безразличие персонала\nИнсайт из данных: Культура — 3-е место (2.85) по данным, но комментарии говорят об обратном. Комментарии: «Сотрудники хотят быстрее ответить и чтобы клиент ушел», «Абсолютно не считывает эмоции клиента», «Каждый сам по себе», «Смотрят на клиента как на врага».\nРекомендация: Проведение тренингов по эмпатии и клиентоориентированности для сотрудников.",
+                    "Неудобства в отделении\nИнсайт из данных: Офлайн — 4-е место (2.69). Комментарии: «Помещение кажется тесным, стены давят», «Очень мрачный туалет», «Ощущение беспорядка и хаоса», «Банк невзрачный, не бросается в глаза».\nРекомендация: Редизайн пространства отделений и улучшение условий комфорта в зонах ожидания и общего пользования.",
+                    "Языковой барьер и некомпетентность\nИнсайт из данных: Обслуживание — 2.69. Комментарии: «Не смогли перевести листовку с узбекского на русский», «Не могли сразу дать нужную информацию», «Консультант сам плавает в ответах».\nРекомендация: Обеспечить доступность банковских услуг разным слоям населения.",
+                    "Проблемы с навигацией и процессами\nИнсайт из данных: Визит — 3.05 (высоко), но есть жалобы на организацию. Комментарии: «Непонятное расположение сотрудников», «Только касса понятно где», «Консультация проходит стоя», «Не могли ни с банкомата закинуть деньги, ни в кассе».\nРекомендация: Упорядочивание потоков клиентов и обеспечение зонирования рабочих мест.",
+                    "Отсутствие продаж\nИнсайт из данных: Эффективность продаж — 2.64. Комментарии: «Абсолютно ничего дополнительно не упомянул», «Сказала про приложение, но не предлагала воспользоваться», «Просто безэмоциональная консультация».\nРекомендация: Внедрение стандартов кросс-продаж и обучение сотрудников проактивному предложению услуг.",
+                    "Разрыв между каналами\nИнсайт из данных: Онлайн — 7-е место (2.79). Комментарии: «50 на 50 получена информация, все равно не вселяет уверенности», «Онлайн информация другая, а в банке другая».\nРекомендация: Использование единого источника информации для синхронизации данных на сайте, в контакт-центре и отделениях."
+                ]
             },
             {
                 "Bank": "SQB",
-                "Индекс CCI": 2.93,
-                "Волатильность CCI": 1.85,
-                "Критерии индекса: Онлайн": 3.0,
-                "Критерии индекса: Офлайн": 2.86,
-                "Критерии индекса: Omni": 2.37,
-                "Критерии индекса: GenAI": 2.2,
-                "Критерии индекса: Культура": 2.98,
-                "Волатильность Онлайн": 1.43,
-                "Волатильность Офлайн": 2.27,
-                "Эффективность продаж": 2.8,
-                "Место по Индекс CCI": 1,
-                "Место по Волатильность общая": 10,
-                "Место по Онлайн": 1,
-                "Место по Офлайн": 3,
-                "Место по Omni": 6,
-                "Место по GenAI": 1,
-                "Место по Culture": 5,
-                "Сравнение каналов: Отделение": 2.86,
-                "Сравнение каналов: Web": 3.1,
-                "Сравнение каналов: Контакт центр": 2.97,
-                "Путь клиента: Первое касание": 3.27,
-                "Путь клиента: Изучение сайта": 2.93,
-                "Путь клиента: Звонок": 3.27,
-                "Путь клиента: Общение в чате": 2.67,
-                "Путь клиента: Визит": 3.24,
-                "Путь клиента: Обслуживание": 2.96
+                "Индекс CCI": 2.80, "Волатильность CCI": 1.85,
+                "Критерии индекса: Онлайн": 3.00, "Критерии индекса: Офлайн": 2.60, "Критерии индекса: Omni": 2.26, "Критерии индекса: GenAI": 2.06, "Критерии индекса: Культура": 2.71,
+                "Волатильность Онлайн": 1.43, "Волатильность Офлайн": 2.27, "Эффективность продаж": 2.60,
+                "Место по Индекс CCI": 1, "Место по Волатильность общая": 10,
+                "Сравнение каналов: Отделение": 2.60, "Сравнение каналов: Web": 3.10, "Сравнение каналов: Контакт центр": 2.97,
+                "Путь клиента: Первое касание": 3.27, "Путь клиента: Изучение сайта": 2.93, "Путь клиента: Звонок": 3.27, "Путь клиента: Общение в чате": 2.67, "Путь клиента: Визит": 3.00, "Путь клиента: Обслуживание": 2.69,
+                "Recommendations": [
+                    {
+                        "title": "Устранение разрыва в Культуре",
+                        "desc": "Инсайт из данных: Вы занимаете 1-е место по индексу, но 10-е место по волатильности. Мы видим полярные комментарии: от «Сотрудницы на ресепшене доброжелательно с улыбкой поприветствовали» до «Надменное лицо и отвратительный тон сразу раздражают». «Гармоничность культуры» у вас даже чуть ниже рынка. Рекомендация: Фокусироваться на «стабильности стандартов обслуживания». Внедрите «Индекс Эмпатии» и речевую аналитику (аудио-бейджи) для мониторинга тона голоса (Tone of Voice) в реальном времени. Грубость должна выявляться алгоритмом мгновенно и влиять на мотивацию сотрудника."
+                    },
+                    {
+                        "title": "Внедрить обязательный протокол «Warm Exit»",
+                        "desc": "Инсайт из данных: В Offline-канале, несмотря на сильное начало (Навигация +1.74 к рынку), конец требует внимания. Этап «Путь клиента [Закрытие]» показывает -0.50 к рынку, а «Расставание» — -0.27. Сотрудники решают задачу, но не «закрывают» отношения. Рекомендация: Внедрите обязательный протокол «Warm Exit» (Теплое прощание). Сотрудник не должен отпускать клиента сразу после печати документов. Чек-лист финала: «Остались ли вопросы?», «Установлено ли приложение?», «Спасибо, что выбрали SQB»."
+                    },
+                    {
+                        "title": "Переход от «Оформления» к «Релевантности» в Online",
+                        "desc": "Инсайт из данных: Ваш Online-канал №1 в рейтинге (Score 3.0), но детализация показывает проблему в метрике «Актуальность и соответствие» (-0.21 к рынку). Клиенты пишут: «Дополнительной релевантности услуг нет... предложения не персонализированы и воспринимаются как стандартный список». Рекомендация: Трансформируйте сайт из «витрины продуктов» в «инструмент решений». Используйте ваше лидерство в GenAI для гипер-персонализации. Вместо статических баннеров клиент должен видеть «Сравнение выгоды» для своего конкретного сценария."
+                    },
+                    {
+                        "title": "Активация Cross-sales через «Человеческий диалог»",
+                        "desc": "Инсайт из данных: Эффективность продаж (2.16) выше рынка, но в абсолютном значении это всего 2 балла из 5. Комментарии: «Сотрудник помог, потому что нужно, а не потому что хочет... о других продуктах не пытались рассказать». Рекомендация: Выстройте модель продаж «Care» (забота). Сотрудник не предлагает продукты, потому что боится отказа или не знает контекста. Дайте им в CRM «Next Best Action» подсказки. Настройте призентор."
+                    },
+                    {
+                        "title": "Phygital-связка: Используйте сильную навигацию для миграции",
+                        "desc": "Инсайт из данных: Ваша сильнейшая сторона в офлайне — Навигация (+1.74 к рынку) и Атмосфера (+0.47). Клиентам комфортно у вас в офисе. Рекомендация: Используйте этот комфорт для онбординга в цифровые каналы. Пока клиент ждет в комфортной зоне (где у вас высокие оценки), консультант в зале должен не просто выдавать талон, а проводить демо-тур по приложению. Это решит проблему «разрыва» между каналами. Если клиент научится пользоваться приложением в уютном офисе с помощью сотрудника, его лояльность к цифровому каналу вырастет, а нагрузка на отделения снизится."
+                    }
+                ]
             },
             {
                 "Bank": "Tenge Bank",
-                "Индекс CCI": 2.63,
-                "Волатильность CCI": 1.56,
-                "Критерии индекса: Онлайн": 2.57,
-                "Критерии индекса: Офлайн": 2.69,
-                "Критерии индекса: Omni": 2.44,
-                "Критерии индекса: GenAI": 1.47,
-                "Критерии индекса: Культура": 2.82,
-                "Волатильность Онлайн": 1.63,
-                "Волатильность Офлайн": 1.49,
-                "Эффективность продаж": 2.47,
-                "Место по Индекс CCI": 11,
-                "Место по Волатильность общая": 2,
-                "Место по Онлайн": 14,
-                "Место по Офлайн": 7,
-                "Место по Omni": 4,
-                "Место по GenAI": 14,
-                "Место по Culture": 10,
-                "Сравнение каналов: Отделение": 2.69,
-                "Сравнение каналов: Web": 3.07,
-                "Сравнение каналов: Контакт центр": 2.03,
-                "Путь клиента: Первое касание": 3.0,
-                "Путь клиента: Изучение сайта": 3.13,
-                "Путь клиента: Звонок": 2.6,
-                "Путь клиента: Общение в чате": 1.47,
-                "Путь клиента: Визит": 2.83,
-                "Путь клиента: Обслуживание": 2.9
+                "Индекс CCI": 2.53, "Волатильность CCI": 1.56,
+                "Критерии индекса: Онлайн": 2.57, "Критерии индекса: Офлайн": 2.49, "Критерии индекса: Omni": 2.35, "Критерии индекса: GenAI": 1.41, "Критерии индекса: Культура": 2.60,
+                "Волатильность Онлайн": 1.63, "Волатильность Офлайн": 1.49, "Эффективность продаж": 2.29,
+                "Место по Индекс CCI": 12, "Место по Волатильность общая": 2,
+                "Сравнение каналов: Отделение": 2.49, "Сравнение каналов: Web": 3.07, "Сравнение каналов: Контакт центр": 2.03,
+                "Путь клиента: Первое касание": 3.00, "Путь клиента: Изучение сайта": 3.13, "Путь клиента: Звонок": 2.60, "Путь клиента: Общение в чате": 1.47, "Путь клиента: Визит": 2.64, "Путь клиента: Обслуживание": 2.67,
+                "Recommendations": [
+                    "Проблемы с поддержкой\nИнсайт из данных: Критический провал в цифровых каналах коммуникации. GenAI — 15-е место (1.41, худший результат на рынке), «Общение в чате» — 1.47.Комментарии: «Чат-бот не работает», «Минимальный интеллект у бота, постоянно задает один и тот же вопрос», «Оператор так и не позвонил», «Нельзя точно сказать, не взяли трубку».\nРекомендация: Аудит и перезагрузка контакт-центра.",
+                    "Низкое качество обслуживания\nИнсайт из данных: Культура — 11-е место (2.60). Атмосфера страдает не от дизайна, а от поведения персонала и охраны.Комментарии: «Охранник очень пристально следил и показывал, что фото запрещено», «Сотрудница общалась чуть надменно», «Всем плевать, что электронная очередь не работает», «Смотрят с подозрением».\nРекомендация: Необходимо обучение охраны сервисному поведению и тренинги по эмпатии для фронт-офиса.",
+                    "Сложность в навигации\nИнсайт из данных: Офлайн — 11-е место (2.49). Клиент теряется сразу после входа.Комментарии: «Навигация практически отсутствует», «Никто не встречает на входе», «Зонирование неочевидно: где юрлица, где физлица — неясно», «Справа от входа аппарат, но чеки не дает».\nРекомендация: Внедрение роли администратора зала. Настройка навигации в отделении.",
+                    "Низкие продажи\nИнсайт из данных: Эффективность продаж — 2.29. Потенциал продаж не используется.Комментарии: «Кросс-продаж не было вообще», «Сотрудник ни разу не упомянул сайт или приложение», «Клиент уходит без каких-либо материалов», «Не предложила конкретную карту, просто перечислила».\nРекомендация: Активация кросс-продаж через заботу. Необходимо научить сотрудников предлагать продукты в контексте жизненной ситуации клиента.",
+                    "Технические сбои инфраструктуры\nИнсайт из данных: Путь клиента «Визит» — 2.64. Оборудование подводит персонал.Комментарии: «Банкоматы не работают», «Терминал с очередью зависает и не выдает талоны», «Выдача талончика виснет, меню не налажено», «Сотрудники видят, что клиенты мучаются с очередью, но не реагируют».\nРекомендация: Технический аудит устройств самообслуживания."
+                ]
             }
         ],
-        "marketData": {
-            "criteria": {
-                "average": {
-                    "Критерии индекса: Онлайн": 2.7693333333333334,
-                    "Критерии индекса: Офлайн": 2.603333333333333,
-                    "Критерии индекса: Omni": 2.3173333333333335,
-                    "Критерии индекса: GenAI": 1.8046666666666667,
-                    "Критерии индекса: Культура": 2.750666666666667,
-                    "Волатильность Онлайн": 1.6286666666666666,
-                    "Волатильность Офлайн": 2.043333333333333
-                },
-                "leader": {
-                    "Критерии индекса: Онлайн": 3.0,
-                    "Критерии индекса: Офлайн": 3.11,
-                    "Критерии индекса: Omni": 2.56,
-                    "Критерии индекса: GenAI": 2.2,
-                    "Критерии индекса: Культура": 3.11,
-                    "Волатильность Онлайн": 2.08,
-                    "Волатильность Офлайн": 2.43
-                }
-            },
-            "journey": {
-                "average": {
-                    "Путь клиента: Первое касание": 3.262,
-                    "Путь клиента: Изучение сайта": 3.082,
-                    "Путь клиента: Звонок": 2.8633333333333333,
-                    "Путь клиента: Общение в чате": 2.04,
-                    "Путь клиента: Визит": 2.798666666666667,
-                    "Путь клиента: Обслуживание": 2.782666666666667
-                },
-                "leader": {
-                    "Путь клиента: Первое касание": 3.73,
-                    "Путь клиента: Изучение сайта": 3.33,
-                    "Путь клиента: Звонок": 3.6,
-                    "Путь клиента: Общение в чате": 2.67,
-                    "Путь клиента: Визит": 3.45,
-                    "Путь клиента: Обслуживание": 3.17
-                }
-            },
-            "channels": {
-                "average": {
-                    "Сравнение каналов: Отделение": 2.603333333333333,
-                    "Сравнение каналов: Web": 3.146666666666667,
-                    "Сравнение каналов: Контакт центр": 2.45
-                },
-                "leader": {
-                    "Сравнение каналов: Отделение": 3.11,
-                    "Сравнение каналов: Web": 3.47,
-                    "Сравнение каналов: Контакт центр": 2.97
-                }
-            },
-            "all_banks_scatter": [
-                {
-                    "Bank": "Гарант банк",
-                    "Критерии индекса: Онлайн": 2.95,
-                    "Критерии индекса: Офлайн": 2.61
-                },
-                {
-                    "Bank": "Давр-банк",
-                    "Критерии индекса: Онлайн": 2.64,
-                    "Критерии индекса: Офлайн": 2.1
-                },
-                {
-                    "Bank": "Ипак Йули банк",
-                    "Критерии индекса: Онлайн": 2.77,
-                    "Критерии индекса: Офлайн": 2.85
-                },
-                {
-                    "Bank": "Ипотека-банк",
-                    "Критерии индекса: Онлайн": 2.8,
-                    "Критерии индекса: Офлайн": 2.69
-                },
-                {
-                    "Bank": "Капиталбанк",
-                    "Критерии индекса: Онлайн": 2.91,
-                    "Критерии индекса: Офлайн": 2.57
-                },
-                {
-                    "Bank": "Народный банк",
-                    "Критерии индекса: Онлайн": 2.73,
-                    "Критерии индекса: Офлайн": 1.89
-                },
-                {
-                    "Bank": "ОриентФинансБанк",
-                    "Критерии индекса: Онлайн": 2.73,
-                    "Критерии индекса: Офлайн": 2.97
-                },
-                {
-                    "Bank": "Asakabank",
-                    "Критерии индекса: Онлайн": 2.51,
-                    "Критерии индекса: Офлайн": 2.39
-                },
-                {
-                    "Bank": "Asia Alliance Bank",
-                    "Критерии индекса: Онлайн": 2.64,
-                    "Критерии индекса: Офлайн": 2.71
-                },
-                {
-                    "Bank": "BRB",
-                    "Критерии индекса: Онлайн": 2.72,
-                    "Критерии индекса: Офлайн": 3.11
-                },
-                {
-                    "Bank": "Hamkorbank",
-                    "Критерии индекса: Онлайн": 2.83,
-                    "Критерии индекса: Офлайн": 2.62
-                },
-                {
-                    "Bank": "InFinBank",
-                    "Критерии индекса: Онлайн": 2.95,
-                    "Критерии индекса: Офлайн": 2.16
-                },
-                {
-                    "Bank": "NBU",
-                    "Критерии индекса: Онлайн": 2.79,
-                    "Критерии индекса: Офлайн": 2.83
-                },
-                {
-                    "Bank": "SQB",
-                    "Критерии индекса: Онлайн": 3.0,
-                    "Критерии индекса: Офлайн": 2.86
-                },
-                {
-                    "Bank": "Tenge Bank",
-                    "Критерии индекса: Онлайн": 2.57,
-                    "Критерии индекса: Офлайн": 2.69
-                }
-            ]
-        }
+        // Будет рассчитано автоматически
+        "marketData": null 
     };
 
-    // === 2. ЛОГИКА ДЕШБОРДА ===
+    // ФУНКЦИЯ РАСЧЕТА РЫНКА (Среднее и Лидер)
+    function calculateMarketData(allBanks) {
+        const keysToAverage = [
+            // Критерии
+            "Критерии индекса: Онлайн", "Критерии индекса: Офлайн", "Критерии индекса: Omni", 
+            "Критерии индекса: GenAI", "Критерии индекса: Культура", "Волатильность Онлайн", "Волатильность Офлайн",
+            // Каналы
+            "Сравнение каналов: Отделение", "Сравнение каналов: Web", "Сравнение каналов: Контакт центр",
+            // Путь
+            "Путь клиента: Первое касание", "Путь клиента: Изучение сайта", "Путь клиента: Звонок", 
+            "Путь клиента: Общение в чате", "Путь клиента: Визит", "Путь клиента: Обслуживание"
+        ];
 
-    const SELECTED_BANK_COLOR = '#22d3ee'; // Цвет для выделенного банка
-    const LEADER_COLOR = '#818cf8';
-    const MARKET_COLOR = '#64748b';
+        const averages = {};
+        const count = allBanks.length;
+
+        keysToAverage.forEach(key => {
+            const sum = allBanks.reduce((acc, bank) => acc + bank[key], 0);
+            averages[key] = sum / count;
+        });
+
+        // Находим лидера (Место 1)
+        const leader = allBanks.find(b => b["Место по Индекс CCI"] === 1);
+
+        return {
+            average: averages,
+            leader: leader,
+            all_banks_scatter: allBanks.map(b => ({
+                Bank: b.Bank,
+                "Критерии индекса: Онлайн": b["Критерии индекса: Онлайн"],
+                "Критерии индекса: Офлайн": b["Критерии индекса: Офлайн"]
+            }))
+        };
+    }
+
+    // Инициализируем расчеты
+    appData.marketData = calculateMarketData(appData.allBanksData);
+
+    const SELECTED_BANK_COLOR = '#22d3ee'; // Cyan
+    const LEADER_COLOR = '#818cf8'; // Indigo
+    const MARKET_COLOR = '#64748b'; // Slate
     const WHITE_COLOR = '#f8fafc';
 
     const criteriaColors = {
@@ -1238,27 +933,26 @@ document.addEventListener('DOMContentLoaded', () => {
         'Критерии индекса: Культура': '#ef4444'
     };
 
-    // --- DOM Элементы ---
     const bankSelector = document.getElementById('bank-selector');
     const rankingContainer = document.getElementById('competitors-ranking');
     const rankingTabs = document.getElementById('ranking-tabs');
-    const digitalActivityContent = document.getElementById('digital-activity-content');
+    const recommendationsContainer = document.getElementById('recommendations-container');
+    const recommendationsBlock = document.getElementById('recommendations-block');
     
-    // Новые DOM элементы из лендинга
+    // Новые элементы из лендинга
     const countryRankingContainer = document.getElementById('country-rankings');
     const countrySorter = document.getElementById('country-ranking-sorter');
     const segmentTabs = document.getElementById('segment-tabs');
     const mainDashboardContent = document.getElementById('main-dashboard-content');
     const dashboardOverlay = document.getElementById('dashboard-overlay');
+    const digitalActivityContent = document.getElementById('digital-activity-content');
 
-
-    // --- Экземпляры чартов ---
     let choiceChart, scatterChart, radarChart;
+    
+    // Сортируем список банков для селектора
+    const sortedBankNames = [...appData.allBanksData].sort((a,b) => a.Bank.localeCompare(b.Bank)).map(b => b.Bank);
+    let currentSelectedBank = "SQB"; 
 
-    // --- Глобальное состояние ---
-    let currentSelectedBank = appData.bankNames[0];
-
-    // --- Глобальные настройки Chart.js ---
     Chart.register(ChartDataLabels);
     Chart.defaults.color = '#94a3b8';
     Chart.defaults.font.family = "'Inter', sans-serif";
@@ -1266,31 +960,231 @@ document.addEventListener('DOMContentLoaded', () => {
     Chart.defaults.responsive = true;
     Chart.defaults.maintainAspectRatio = false;
 
-    // --- 3. ФУНКЦИИ РЕНДЕРА ---
+    // --- ИНИЦИАЛИЗАЦИЯ ---
 
-    // --- Функция обновления рейтинга (ОБНОВЛЕНА для 2-х списков) ---
+    // Заполняем селектор
+    sortedBankNames.forEach(name => {
+        const option = document.createElement('option');
+        option.value = name;
+        option.textContent = name;
+        if(name === currentSelectedBank) option.selected = true;
+        bankSelector.appendChild(option);
+    });
+
+    if (digitalActivityContent) {
+        digitalActivityContent.classList.add('card-blurred');
+    }
+
+    // Слушатели событий
+    bankSelector.addEventListener('change', (e) => {
+        currentSelectedBank = e.target.value;
+        updateDashboard(currentSelectedBank);
+    });
+
+    rankingTabs.addEventListener('click', (e) => {
+        if (e.target.tagName === 'BUTTON') {
+            rankingTabs.querySelector('.active').classList.remove('active');
+            e.target.classList.add('active');
+            
+            // Синхронизация с верхним сортером
+            const sortType = e.target.dataset.sort;
+            if(countrySorter) {
+                const twinBtn = countrySorter.querySelector(`[data-sort="${sortType}"]`);
+                if(twinBtn) {
+                     countrySorter.querySelector('.active')?.classList.remove('active');
+                     twinBtn.classList.add('active');
+                }
+            }
+            
+            renderRanking(sortType);
+        }
+    });
+    
+    // Клик по строке рейтинга (внутри дашборда)
+    rankingContainer.addEventListener('click', (e) => {
+        const bankRow = e.target.closest('[data-bank-name]');
+        if (!bankRow) return;
+        const bankName = bankRow.dataset.bankName;
+        if (bankName) {
+            currentSelectedBank = bankName;
+            bankSelector.value = bankName;
+            updateDashboard(bankName);
+        }
+    });
+
+    // --- ЛОГИКА ЛЕНДИНГА (Табы регионов/стран и т.д.) ---
+    if (countrySorter) {
+        countrySorter.addEventListener('click', (e) => {
+             if (e.target.tagName === 'BUTTON') {
+                countrySorter.querySelector('.active').classList.remove('active');
+                e.target.classList.add('active');
+                
+                // Синхронизация с нижним сортером
+                const sortType = e.target.dataset.sort;
+                const twinBtn = rankingTabs.querySelector(`[data-sort="${sortType}"]`);
+                if(twinBtn) {
+                     rankingTabs.querySelector('.active')?.classList.remove('active');
+                     twinBtn.classList.add('active');
+                }
+                
+                renderRanking(sortType);
+            }
+        });
+    }
+
+    if (countryRankingContainer) {
+        countryRankingContainer.addEventListener('click', (e) => {
+            const bankRow = e.target.closest('[data-bank-name]');
+            if (!bankRow) return;
+            const bankName = bankRow.dataset.bankName;
+            if (bankName) {
+                currentSelectedBank = bankName;
+                bankSelector.value = bankName;
+                updateDashboard(bankName);
+                document.getElementById('main-dashboard-content').scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    }
+
+    if (segmentTabs) {
+        segmentTabs.addEventListener('click', (e) => {
+            if (e.target.tagName === 'BUTTON' && !e.target.classList.contains('active')) {
+                segmentTabs.querySelector('.active').classList.remove('active');
+                e.target.classList.add('active');
+                
+                const segment = e.target.dataset.segment;
+                const isCCI = segment === 'CCI';
+
+                // Блюр контента
+                mainDashboardContent.style.filter = isCCI ? 'none' : 'blur(5px)';
+                mainDashboardContent.style.pointerEvents = isCCI ? 'auto' : 'none';
+                recommendationsBlock.style.filter = isCCI ? 'none' : 'blur(5px)';
+                bankSelector.style.filter = isCCI ? 'none' : 'blur(5px)';
+                bankSelector.style.pointerEvents = isCCI ? 'auto' : 'none';
+                
+                dashboardOverlay.style.display = isCCI ? 'none' : 'flex';
+            }
+        });
+    }
+
+    // --- ФУНКЦИИ ---
+
+    // Функция парсинга текста рекомендаций
+    function parseRecommendation(textOrObj) {
+        // Если пришел объект (как у SQB), возвращаем его
+        if (typeof textOrObj === 'object' && textOrObj !== null) {
+            return textOrObj;
+        }
+        
+        if (!textOrObj || typeof textOrObj !== 'string') return { title: 'Нет данных', insight: '', action: '' };
+        
+        // Делим текст на строки
+        const lines = textOrObj.split('\n').map(l => l.trim()).filter(l => l);
+        if (lines.length === 0) return null;
+
+        let title = lines[0]; // Первая строка - заголовок
+        let insight = "";
+        let action = "";
+
+        // Ищем ключевые слова
+        let insightIndex = lines.findIndex(l => l.toLowerCase().includes('инсайт из данных:'));
+        let actionIndex = lines.findIndex(l => l.toLowerCase().includes('рекомендация:'));
+
+        if (insightIndex !== -1) {
+            // Инсайт идет до рекомендации или до конца
+            let endIndex = actionIndex !== -1 ? actionIndex : lines.length;
+            // Собираем строки инсайта, убираем префикс
+            let insightLines = lines.slice(insightIndex, endIndex);
+            insight = insightLines.join(' ').replace(/^инсайт из данных:/i, '').trim();
+        }
+
+        if (actionIndex !== -1) {
+            let actionLines = lines.slice(actionIndex);
+            action = actionLines.join(' ').replace(/^рекомендация:/i, '').trim();
+        }
+
+        // Если ключевые слова не найдены, но есть текст после заголовка, считаем его описанием (инсайтом)
+        if (!insight && !action && lines.length > 1) {
+            insight = lines.slice(1).join(' ');
+        }
+
+        // Для совместимости с объектом SQB мапим поля
+        return { title, desc: insight + (action ? '\n\n' + action : ''), action }; 
+    }
+
+    function renderRecommendations(bankData) {
+        const recs = bankData.Recommendations;
+        
+        if (recs && recs.length > 0) {
+            recommendationsContainer.innerHTML = recs.map(recItem => {
+                const parsed = parseRecommendation(recItem);
+                if (!parsed) return '';
+
+                // Если это объект SQB, у него есть поле desc. Если строка - мы собрали desc в парсере
+                // Но для красивого отображения разделим инсайт и рекомендацию, если они есть
+                
+                // Проверяем, удалось ли распарсить action отдельно (для строковых рекомендаций)
+                const hasSeparateAction = parsed.action && parsed.action.length > 0;
+                
+                // Описание (либо desc из объекта, либо insight из парсера)
+                let description = parsed.desc || parsed.insight; 
+                // Если мы распарсили строку и нашли action, убираем его из desc, чтобы не дублировать, если вдруг desc был собран из всего
+                if(hasSeparateAction && description.includes(parsed.action)) {
+                     description = description.replace(parsed.action, '').trim();
+                }
+
+                return `
+                <div class="rec-card h-full">
+                    <h4 class="text-cyan-400 font-bold text-sm leading-tight border-b border-slate-700/50 pb-3 mb-2 min-h-[40px] flex items-center">
+                        ${parsed.title}
+                    </h4>
+                    
+                    <div class="flex-grow flex flex-col gap-3">
+                        <div class="text-xs text-slate-400 leading-relaxed">
+                            ${description}
+                        </div>
+                        
+                        ${hasSeparateAction ? `
+                        <div class="mt-auto bg-slate-800/50 rounded-md p-3 border-l-2 border-cyan-500">
+                            <span class="rec-label text-cyan-500/80">Рекомендация</span>
+                            <p class="text-xs text-slate-200 leading-relaxed font-medium">${parsed.action}</p>
+                        </div>
+                        ` : ''}
+                    </div>
+                </div>
+                `;
+            }).join('');
+        } else {
+            recommendationsContainer.innerHTML = `
+                <div class="col-span-1 md:col-span-3 flex flex-col items-center justify-center py-12 text-slate-500 opacity-60 bg-slate-900/20 rounded-lg border border-dashed border-slate-700">
+                    <span class="text-sm font-medium">Нет индивидуальных рекомендаций для этого банка</span>
+                </div>
+            `;
+        }
+    }
+
     function renderRanking(sortBy = 'score') {
         const sortKey = sortBy === 'score' ? 'Индекс CCI' : 'Волатильность CCI';
-
+        
         const sortedData = [...appData.allBanksData].sort((a, b) => {
             if (sortBy === 'score') return b[sortKey] - a[sortKey];
-            return a[sortKey] - b[sortKey]; // По волатильности - от меньшей к большей
+            return a[sortKey] - b[sortKey]; 
         });
 
-        // 1. Рендер рейтинга ВНУТРИ дешборда
+        // 1. Рендер внутри дашборда
         if (rankingContainer) {
             rankingContainer.innerHTML = sortedData.map((item) => {
                 const isSelected = item.Bank === currentSelectedBank;
                 return `
                 <div class="ranking-row flex items-center" data-bank-name="${item.Bank}">
-                    <span class="w-20 truncate ${isSelected ? 'text-cyan-300 font-semibold' : 'text-slate-300'}">${item.Bank}</span>
-                    <div class="flex-1 mx-2 bg-slate-700 rounded-full h-2.5">
-                        <div class="${isSelected ? 'bg-cyan-400' : 'bg-slate-500'} h-2.5 rounded-full" style="width: ${item['Индекс CCI'] / 5 * 100}%"></div>
+                    <span class="w-24 truncate text-xs font-semibold ${isSelected ? 'text-cyan-300' : 'text-slate-300'}">${item.Bank}</span>
+                    <div class="flex-1 mx-2 bg-slate-700 rounded-full h-2">
+                        <div class="${isSelected ? 'bg-cyan-400' : 'bg-slate-500'} h-2 rounded-full" style="width: ${item['Индекс CCI'] / 5 * 100}%"></div>
                     </div>
                     <div class="w-20 text-right flex items-center justify-end gap-2">
-                        <span class="font-bold text-white">${item['Индекс CCI'].toFixed(2)}</span>
-                        <span class="text-xs text-slate-400 flex items-center gap-1" title="Волатильность">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" /></svg>
+                        <span class="font-bold text-white text-xs">${item['Индекс CCI'].toFixed(2)}</span>
+                        <span class="text-[10px] text-slate-400 flex items-center gap-0.5" title="Волатильность">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-2.5 w-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" /></svg>
                             ${item['Волатильность CCI'].toFixed(2)}
                         </span>
                     </div>
@@ -1298,16 +1192,16 @@ document.addEventListener('DOMContentLoaded', () => {
             }).join('');
         }
 
-        // 2. Рендер рейтинга в секции "Масштаб"
+        // 2. Рендер в секции масштаба
         if (countryRankingContainer) {
-            document.getElementById('ranking-country-title').textContent = 'Рейтинг банков: Узбекистан';
-            countryRankingContainer.innerHTML = sortedData.map((item, index) => {
+             document.getElementById('ranking-country-title').textContent = 'Рейтинг банков: Узбекистан';
+             countryRankingContainer.innerHTML = sortedData.map((item, index) => {
                 const isSelected = item.Bank === currentSelectedBank;
                 return `
                 <div class="ranking-item" data-bank-name="${item.Bank}" style="cursor: pointer; ${isSelected ? 'background-color: #334155;' : ''}">
-                    <span class="w-8 font-bold text-slate-400">${index + 1}</span>
+                    <span class="w-8 font-bold text-slate-400 pl-2">${index + 1}</span>
                     <span class="flex-grow font-semibold ${isSelected ? 'text-cyan-300' : 'text-white'}">${item.Bank}</span>
-                    <div class="w-28 text-right flex items-center justify-end gap-3">
+                    <div class="w-28 text-right flex items-center justify-end gap-3 pr-2">
                         <span class="font-bold text-white">${item['Индекс CCI'].toFixed(2)}</span>
                         <span class="text-xs text-slate-400 flex items-center gap-1" title="Волатильность">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" /></svg>
@@ -1317,69 +1211,65 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>`;
             }).join('');
         }
-    };
+    }
 
-    // --- Главная функция обновления дешборда ---
     function updateDashboard(selectedBankName) {
         const bankData = appData.allBanksData.find(b => b.Bank === selectedBankName);
-        if (!bankData) {
-            console.error("Банк не найден:", selectedBankName);
-            return;
-        }
+        if (!bankData) return;
 
-        // === ЛЕВАЯ КОЛОНКА ===
+        // 1. Карточка
         document.getElementById('bank-name').textContent = bankData.Bank;
         document.getElementById('bank-rank').textContent = bankData['Место по Индекс CCI'];
-
         const cciScore = bankData['Индекс CCI'];
         document.getElementById('gaugeValue').textContent = cciScore.toFixed(2);
         document.getElementById('gaugePath').style.strokeDashoffset = 251.2 * (1 - cciScore / 5);
 
-        // Обновляем ОБА рейтинга, чтобы подсветить выбранный банк
-        const currentSort = rankingTabs.querySelector('.active').dataset.sort;
+        // 2. Рендер списка и рекомендаций
+        const currentSort = rankingTabs.querySelector('.active') ? rankingTabs.querySelector('.active').dataset.sort : 'score';
         renderRanking(currentSort);
+        renderRecommendations(bankData);
 
-        // === ПРАВАЯ КОЛОНКА ===
+        // 3. Графики
         updateChoiceChart(bankData);
         updateIndexCriteria(bankData);
         updateScatterChart(bankData);
         updateRadarChart(bankData);
 
+        // 4. Donut
         const salesScore = bankData['Эффективность продаж'];
         const salesPercentage = (salesScore / 5) * 100;
-        document.getElementById('salesDonutValue').textContent = salesScore.toFixed(2);
+        document.getElementById('salesDonutValue').textContent = salesScore.toFixed(1);
         document.getElementById('salesDonutArc').style.strokeDasharray = `${salesPercentage} 100`;
     }
 
-    // --- 4. ФУНКЦИИ ОБНОВЛЕНИЯ ГРАФИКОВ ---
-    // (Эти функции остались без изменений из прошлого шага)
     function updateChoiceChart(bankData) {
-        const marketJourney = appData.marketData.journey;
-        const leaderBank = appData.allBanksData.find(b => b['Место по Индекс CCI'] === 1);
-        const journeyKeys = Object.keys(marketJourney.average);
-        const journeyLabels = journeyKeys.map(k => k.replace('Путь клиента: ', ''));
-        const selectedBankJourney = journeyKeys.map(key => bankData[key]);
-        const leaderJourney = journeyKeys.map(key => leaderBank[key]);
-        const marketJourneyAvg = Object.values(marketJourney.average);
+        const marketAvg = appData.marketData.average;
+        const leaderData = appData.marketData.leader;
+        
+        const labels = ["Первое касание", "Изучение сайта", "Звонок", "Общение в чате", "Визит", "Обслуживание"];
+        const keys = labels.map(l => "Путь клиента: " + l);
 
+        const bankValues = keys.map(k => bankData[k]);
+        const leaderValues = keys.map(k => leaderData[k]);
+        const marketValues = keys.map(k => marketAvg[k]);
+
+        // Легенда
         document.getElementById('journey-legend').innerHTML = `
-            <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full" style="background-color: ${SELECTED_BANK_COLOR}"></div>${bankData.Bank}</div>
-            <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full" style="background-color: ${LEADER_COLOR}"></div>${leaderBank.Bank} (Лидер)</div>
-            <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full" style="background-color: ${MARKET_COLOR}"></div>Рынок</div>
+            <div class="flex items-center gap-2"><div class="w-2.5 h-2.5 rounded-full" style="background-color: ${SELECTED_BANK_COLOR}"></div>${bankData.Bank}</div>
+            <div class="flex items-center gap-2"><div class="w-2.5 h-2.5 rounded-full" style="background-color: ${LEADER_COLOR}"></div>${leaderData.Bank} (Лидер)</div>
+            <div class="flex items-center gap-2"><div class="w-2.5 h-2.5 rounded-full" style="background-color: ${MARKET_COLOR}"></div>Рынок</div>
         `;
 
-        if (choiceChart) {
-            choiceChart.destroy();
-        }
+        if (choiceChart) choiceChart.destroy();
 
         choiceChart = new Chart('choiceChart', {
             type: 'line',
             data: {
-                labels: journeyLabels,
+                labels: labels,
                 datasets: [
                     {
-                        label: `${leaderBank.Bank} (Лидер)`,
-                        data: leaderJourney,
+                        label: `${leaderData.Bank} (Лидер)`,
+                        data: leaderValues,
                         borderColor: LEADER_COLOR,
                         borderWidth: 1.5,
                         pointRadius: 0,
@@ -1388,7 +1278,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     },
                     {
                         label: 'Рынок (среднее)',
-                        data: marketJourneyAvg,
+                        data: marketValues,
                         borderColor: MARKET_COLOR,
                         borderWidth: 1.5,
                         pointRadius: 0,
@@ -1397,7 +1287,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     },
                     {
                         label: bankData.Bank,
-                        data: selectedBankJourney,
+                        data: bankValues,
                         borderColor: SELECTED_BANK_COLOR,
                         borderWidth: 4,
                         pointBackgroundColor: SELECTED_BANK_COLOR,
@@ -1411,121 +1301,93 @@ document.addEventListener('DOMContentLoaded', () => {
                             offset: 8,
                             color: WHITE_COLOR,
                             font: { size: 14, weight: 'bold' },
-                            formatter: (v) => v.toFixed(2)
-                        },
-                    },
+                            formatter: (v) => v.toFixed(1)
+                        }
+                    }
                 ]
             },
             options: {
-                plugins: {
-                    datalabels: {
-                        display: false
-                    },
-                },
+                plugins: { datalabels: { display: false } },
                 scales: {
                     y: { display: false, min: 1, max: 5.5 },
                     x: { grid: { display: false }, ticks: { color: '#94a3b8', font: { size: 10 } } }
                 }
-            },
+            }
         });
     }
 
     function updateIndexCriteria(bankData) {
-        const criteriaContainer = document.getElementById('index-criteria');
-        const marketCriteria = appData.marketData.criteria;
+        const container = document.getElementById('index-criteria');
+        const marketAvg = appData.marketData.average;
+        const leader = appData.marketData.leader;
 
-        criteriaContainer.innerHTML = Object.keys(marketCriteria.average)
-            .filter(key => key.startsWith('Критерии индекса:'))
-            .map(key => {
-                const shortName = key.replace('Критерии индекса: ', '');
-                const score = bankData[key];
-                const leaderScore = marketCriteria.leader[key];
-                const marketScore = marketCriteria.average[key];
+        const keys = Object.keys(criteriaColors);
 
-                return `
+        container.innerHTML = keys.map(key => {
+            const shortName = key.replace('Критерии индекса: ', '');
+            const score = bankData[key];
+            const leaderScore = leader[key];
+            const marketScore = marketAvg[key];
+
+            return `
                 <div class="flex items-center">
                     <span class="w-24 truncate text-slate-300">${shortName}</span>
                     <div class="relative flex-1 mx-2 bg-slate-700 rounded-full h-2">
                         <div class="h-2 rounded-full" style="width: ${score / 5 * 100}%; background-color: ${criteriaColors[key]};"></div>
-                        <div class="benchmark-dot" style="left: ${leaderScore / 5 * 100}%; background-color:${LEADER_COLOR}" title="Лидер: ${leaderScore.toFixed(2)}"></div>
-                        <div class="benchmark-dot" style="left: ${marketScore / 5 * 100}%; background-color:${MARKET_COLOR}" title="Рынок: ${marketScore.toFixed(2)}"></div>
+                        <div class="benchmark-dot" style="left: ${leaderScore / 5 * 100}%; background-color:${LEADER_COLOR}" title="Лидер: ${leaderScore.toFixed(1)}"></div>
+                        <div class="benchmark-dot" style="left: ${marketScore / 5 * 100}%; background-color:${MARKET_COLOR}" title="Рынок: ${marketScore.toFixed(1)}"></div>
                     </div>
-                    <span class="w-8 text-right font-bold text-white">${score.toFixed(2)}</span>
+                    <span class="w-8 text-right font-bold text-white">${score.toFixed(1)}</span>
                 </div>`;
-            }).join('');
+        }).join('');
     }
 
     function updateScatterChart(bankData) {
-        const leaderBank = appData.allBanksData.find(b => b['Место по Индекс CCI'] === 1);
+        const leader = appData.marketData.leader;
+        const leaderPoint = { x: leader['Критерии индекса: Онлайн'], y: leader['Критерии индекса: Офлайн'], r: 10 };
+        const selectedPoint = { x: bankData['Критерии индекса: Онлайн'], y: bankData['Критерии индекса: Офлайн'], r: 12 };
 
-        const allBanksPoints = appData.marketData.all_banks_scatter
-            .filter(b => b.Bank !== bankData.Bank && b.Bank !== leaderBank.Bank)
+        const allPoints = appData.marketData.all_banks_scatter
+            .filter(b => b.Bank !== bankData.Bank && b.Bank !== leader.Bank)
             .map(b => ({
                 x: b['Критерии индекса: Онлайн'],
                 y: b['Критерии индекса: Офлайн'],
                 r: 8
             }));
-        
-        const selectedBankPoint = {
-            x: bankData['Критерии индекса: Онлайн'],
-            y: bankData['Критерии индекса: Офлайн'],
-            r: 12
-        };
-        
+
         const datasets = [
             {
                 label: 'Конкуренты',
-                data: allBanksPoints,
+                data: allPoints,
                 backgroundColor: MARKET_COLOR
             }
         ];
 
-        if (bankData.Bank === leaderBank.Bank) {
+        if (bankData.Bank === leader.Bank) {
             datasets.push({
-                label: bankData.Bank + " (Лидер)",
-                data: [selectedBankPoint],
+                label: `${bankData.Bank} (Лидер)`,
+                data: [selectedPoint],
                 backgroundColor: SELECTED_BANK_COLOR
             });
         } else {
             datasets.push({
-                label: leaderBank.Bank + " (Лидер)",
-                data: [{
-                    x: leaderBank['Критерии индекса: Онлайн'],
-                    y: leaderBank['Критерии индекса: Офлайн'],
-                    r: 10
-                }],
+                label: `${leader.Bank} (Лидер)`,
+                data: [leaderPoint],
                 backgroundColor: LEADER_COLOR
             });
             datasets.push({
                 label: bankData.Bank,
-                data: [selectedBankPoint],
+                data: [selectedPoint],
                 backgroundColor: SELECTED_BANK_COLOR
             });
         }
 
-
-        if (scatterChart) {
-            scatterChart.destroy();
-        }
+        if (scatterChart) scatterChart.destroy();
 
         scatterChart = new Chart('scatterChart', {
             type: 'bubble',
-            data: { datasets: datasets },
+            data: { datasets },
             options: {
-                scales: {
-                    x: {
-                        title: { display: true, text: 'Онлайн опыт', font: { size: 10 } },
-                        min: 2.0, max: 3.2,
-                        grid: { color: '#334155' },
-                        ticks: { stepSize: 0.2, font: { size: 10 } }
-                    },
-                    y: {
-                        title: { display: true, text: 'Офлайн опыт', font: { size: 10 } },
-                        min: 1.5, max: 3.5,
-                        grid: { color: '#334155' },
-                        ticks: { stepSize: 0.5, font: { size: 10 } }
-                    }
-                },
                 plugins: {
                     datalabels: { display: false },
                     tooltip: {
@@ -1533,12 +1395,25 @@ document.addEventListener('DOMContentLoaded', () => {
                         borderColor: '#334155',
                         borderWidth: 1,
                         callbacks: {
-                            label: function (context) {
-                                const label = context.dataset.label;
-                                const d = context.raw;
-                                return `${label}: (Онлайн: ${d.x.toFixed(2)}, Офлайн: ${d.y.toFixed(2)})`;
+                            label: (ctx) => {
+                                const p = ctx.raw;
+                                return `${ctx.dataset.label}: (Онлайн: ${p.x.toFixed(1)}, Офлайн: ${p.y.toFixed(1)})`;
                             }
                         }
+                    }
+                },
+                scales: {
+                    x: {
+                        title: { display: true, text: 'Онлайн опыт', font: { size: 10 } },
+                        min: 2.0, max: 3.2,
+                        grid: { color: '#334155' },
+                        ticks: { stepSize: 0.2, font: { size: 10 }, color: '#94a3b8' }
+                    },
+                    y: {
+                        title: { display: true, text: 'Офлайн опыт', font: { size: 10 } },
+                        min: 1.5, max: 3.5,
+                        grid: { color: '#334155' },
+                        ticks: { stepSize: 0.5, font: { size: 10 }, color: '#94a3b8' }
                     }
                 }
             }
@@ -1546,42 +1421,36 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateRadarChart(bankData) {
-        const marketChannels = appData.marketData.channels;
-        const leaderBank = appData.allBanksData.find(b => b['Место по Индекс CCI'] === 1);
+        const leader = appData.marketData.leader;
+        const avg = appData.marketData.average;
 
-        const channelKeys = Object.keys(marketChannels.average);
-        const channelLabels = channelKeys.map(k => k.replace('Сравнение каналов: ', ''));
+        const keys = ["Сравнение каналов: Отделение", "Сравнение каналов: Web", "Сравнение каналов: Контакт центр"];
+        const labels = ["Отделение", "Web", "Контакт центр"];
 
-        const selectedBankChannels = channelKeys.map(key => bankData[key]);
-        const leaderChannels = channelKeys.map(key => leaderBank[key]);
-        const marketChannelsAvg = Object.values(marketChannels.average);
-
-        if (radarChart) {
-            radarChart.destroy();
-        }
+        if (radarChart) radarChart.destroy();
 
         radarChart = new Chart('radarChart', {
             type: 'radar',
             data: {
-                labels: channelLabels,
+                labels: labels,
                 datasets: [
                     {
                         label: bankData.Bank,
-                        data: selectedBankChannels,
+                        data: keys.map(k => bankData[k]),
                         backgroundColor: 'rgba(34, 211, 238, 0.2)',
                         borderColor: SELECTED_BANK_COLOR,
                         borderWidth: 2
                     },
                     {
-                        label: leaderBank.Bank + " (Лидер)",
-                        data: leaderChannels,
+                        label: `${leader.Bank} (Лидер)`,
+                        data: keys.map(k => leader[k]),
                         backgroundColor: 'rgba(129, 140, 248, 0.2)',
                         borderColor: LEADER_COLOR,
                         borderWidth: 2
                     },
                     {
                         label: 'Среднее',
-                        data: marketChannelsAvg,
+                        data: keys.map(k => avg[k]),
                         backgroundColor: 'rgba(100, 116, 139, 0.2)',
                         borderColor: MARKET_COLOR,
                         borderWidth: 2
@@ -1592,16 +1461,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 plugins: {
                     datalabels: { display: false },
                     tooltip: {
-                        enabled: true,
                         backgroundColor: '#1e293b',
                         borderColor: '#334155',
                         borderWidth: 1,
                         callbacks: {
-                            label: function(context) {
-                                let label = context.dataset.label || '';
-                                let value = context.raw;
-                                return `${label}: ${value.toFixed(2)}`;
-                            }
+                            label: (ctx) => `${ctx.dataset.label}: ${ctx.raw.toFixed(1)}`
                         }
                     }
                 },
@@ -1619,118 +1483,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 5. СЛУШАТЕЛИ СОБЫТИЙ ---
-
-    // --- Заполнение селектора ---
-    appData.bankNames.forEach(name => {
-        const option = document.createElement('option');
-        option.value = name;
-        option.textContent = name;
-        bankSelector.appendChild(option);
-    });
-
-    // "Блюрим" блок цифровой активности
-    if (digitalActivityContent) {
-        digitalActivityContent.classList.add('card-blurred');
-    }
-
-    // --- Слушатель селектора банка ---
-    bankSelector.addEventListener('change', (e) => {
-        currentSelectedBank = e.target.value;
-        updateDashboard(currentSelectedBank);
-    });
-
-    // --- Слушатель табов рейтинга (ВНУТРИ дешборда) ---
-    rankingTabs.addEventListener('click', (e) => {
-        if (e.target.tagName === 'BUTTON') {
-            rankingTabs.querySelector('.active').classList.remove('active');
-            e.target.classList.add('active');
-            
-            // Синхронизируем с другим сортировщиком
-            const countrySorterButton = document.querySelector(`#country-ranking-sorter button[data-sort="${e.target.dataset.sort}"]`);
-            if (countrySorterButton) {
-                document.querySelector('#country-ranking-sorter .active').classList.remove('active');
-                countrySorterButton.classList.add('active');
-            }
-            
-            renderRanking(e.target.dataset.sort);
-        }
-    });
-    
-    // --- Слушатель клика по строке рейтинга (ВНУТРИ дешборда) ---
-    rankingContainer.addEventListener('click', (e) => {
-        const bankRow = e.target.closest('[data-bank-name]');
-        if (!bankRow) return;
-
-        const bankName = bankRow.dataset.bankName;
-        if (bankName) {
-            currentSelectedBank = bankName;
-            bankSelector.value = bankName;
-            updateDashboard(bankName);
-        }
-    });
-    
-    // --- НОВЫЙ Слушатель табов рейтинга (Секция "Масштаб") ---
-    if (countrySorter) {
-        countrySorter.addEventListener('click', (e) => {
-            if (e.target.tagName === 'BUTTON') {
-                countrySorter.querySelector('.active').classList.remove('active');
-                e.target.classList.add('active');
-                
-                // Синхронизируем с другим сортировщиком
-                const otherSorterButton = document.querySelector(`#ranking-tabs button[data-sort="${e.target.dataset.sort}"]`);
-                if (otherSorterButton) {
-                    document.querySelector('#ranking-tabs .active').classList.remove('active');
-                    otherSorterButton.classList.add('active');
-                }
-                
-                renderRanking(e.target.dataset.sort);
-            }
-        });
-    }
-    
-    // --- НОВЫЙ Слушатель клика по строке рейтинга (Секция "Масштаб") ---
-    if (countryRankingContainer) {
-        countryRankingContainer.addEventListener('click', (e) => {
-            const bankRow = e.target.closest('[data-bank-name]');
-            if (!bankRow) return;
-
-            const bankName = bankRow.dataset.bankName;
-            if (bankName) {
-                currentSelectedBank = bankName;
-                bankSelector.value = bankName;
-                updateDashboard(bankName);
-                
-                // Плавный скролл к дешборду
-                document.getElementById('main-dashboard-content').scrollIntoView({ behavior: 'smooth' });
-            }
-        });
-    }
-    
-    // --- НОВЫЙ Слушатель табов "Разреза результатов" (CCI / Online / Offline) ---
-    if (segmentTabs) {
-        segmentTabs.addEventListener('click', (e) => {
-            if (e.target.tagName === 'BUTTON' && !e.target.classList.contains('active')) {
-                segmentTabs.querySelector('.active').classList.remove('active');
-                e.target.classList.add('active');
-                
-                const segment = e.target.dataset.segment;
-                const isCCI = segment === 'CCI';
-
-                mainDashboardContent.style.filter = isCCI ? 'none' : 'blur(5px)';
-                mainDashboardContent.style.pointerEvents = isCCI ? 'auto' : 'none';
-                bankSelector.style.filter = isCCI ? 'none' : 'blur(5px)';
-                bankSelector.style.pointerEvents = isCCI ? 'auto' : 'none';
-                dashboardOverlay.style.display = isCCI ? 'none' : 'flex';
-            }
-        });
-    }
-
-    // --- 6. ПЕРВЫЙ ЗАПУСК ---
+    // Старт
     updateDashboard(currentSelectedBank);
-    
-    // Первый рендер рейтинга в секции "Масштаб" (уже вызывается в updateDashboard)
-    // renderRanking('score'); 
 });
 </script>
 
